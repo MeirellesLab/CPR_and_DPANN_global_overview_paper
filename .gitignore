@@ -10,3 +10,7 @@ data/summaries/
 # Ignoring RData and statistics folders
 #data/RData/
 #data/statistics/
+
+# Ignoring log files
+*_log.txt
+*.log
