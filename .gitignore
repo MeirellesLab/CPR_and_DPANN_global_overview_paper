@@ -1,1 +1,12 @@
+# Ignoring large data files
 data/taxa_compositions/kraken_biomedb_relative_*.csv
+
+# Ignoring treat data folder
+data/treated/
+
+# Ignoring data summaries folder
+data/summaries/
+
+# Ignoring RData and statistics folders
+data/RData/
+data/statistics/
