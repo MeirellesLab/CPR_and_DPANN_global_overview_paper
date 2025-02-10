@@ -6,7 +6,7 @@
 
 ################################# Environment ##################################
 set.seed(201094)
-source("R/src/install_and_load.R")
+source("src/util/install_and_load.R")
 install_and_load(libs = c(
   "lmPerm" = "2.1.0",
   "multcomp" = "1.4-25",
@@ -37,7 +37,7 @@ merged_df <- phyla_abundances %>%
   filter(total_samples >= 5) %>%
   select(-total_samples) %>%
   ungroup()
-source("R/src/visualization_treatment.R")
+source("src/util/visualization_treatment.R")
 merged_df <- treatment(merged_df)
 write_csv(merged_df, paste0(treated_dir, "phyla_abundances_wide.csv"))
 
@@ -181,7 +181,7 @@ if (!file.exists(paste0(rdata_dir, "simper.RData"))) {
 } else {
   print("Simper output already exists. Generating tables!")
   load(paste0(rdata_dir, "simper.RData"))
-  source("R/simper_ranking.R")
+  source("src/util/simper_ranking.R")
 }
 
 ############################## Attach Phyla Groups #############################
@@ -367,7 +367,7 @@ capture.output(
 )
 
 ############################# Peranova Analysis ################################
-source("R/src/do_peranova.R")
+source("src/util/do_peranova.R")
 
 for (i in c("Bonafide", "CPR", "DPANN")) {
   print(paste("Doing:", i, "general richness"))

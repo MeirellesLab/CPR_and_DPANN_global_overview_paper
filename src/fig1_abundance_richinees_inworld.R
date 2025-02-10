@@ -18,8 +18,8 @@ install_and_load(libs = c(
 ))
 font_import(pattern = "Arial", prompt = FALSE)
 extrafont::loadfonts(device = c("all"))
-source("R/visualization_settings.R")
-source("R/src/visualization_treatment.R")
+source("src/util/visualization_settings.R")
+source("src/util/visualization_treatment.R")
 
 ################################ Load data #####################################
 phyla_abundances_long <- read_csv("data/treated/phyla_abundances_long.csv") %>%
@@ -80,7 +80,7 @@ worldmap <- ggplot(ne_countries(scale = "medium", returnclass = "sf")) +
   scale_color_manual(values = ecosystem_colors)
 
 ############################# Richness vs Latitude #############################
-source("R/src/draw_latitude_gam.R")
+source("src/util/draw_latitude_gam.R")
 bonafide_latitude_plot <- draw_latitude_gam(
   data = microgroups_prevalence_persite %>% filter(microgroup == "Bonafide"),
   breaks = c(41.4, 42.42, 43.5),
@@ -111,7 +111,7 @@ plot_latitude <- plot_grid(
 )
 
 ##################### barplots for richness and abundance ######################
-source("R/src/draw_barplot_simple.R")
+source("src/util/draw_barplot_simple.R")
 # Life Style -------------------------------------------------------------------
 ## Richness ----------------------------
 bonafide_barplot_richness_lifestyle <- draw_barplot_simple(
