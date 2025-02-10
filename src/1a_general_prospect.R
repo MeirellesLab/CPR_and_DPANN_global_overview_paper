@@ -6,15 +6,15 @@
 
 ################################# Environment ##################################
 set.seed(201094)
-source("src/util/install_and_load.R")
-install_and_load(libs = c(
-  "lmPerm" = "2.1.0",
-  "multcomp" = "1.4-25",
-  "mgcv" = "1.9.0",
-  "vegan" = "2.6-4",
-  "tidyverse" = "2.0.0",
-  "funrar" = "1.5.0"
-))
+#source("src/util/install_and_load.R")
+#install_and_load(libs = c(
+#  "lmPerm" = "2.1.0",
+#  "multcomp" = "1.4-25",
+#  "mgcv" = "1.9.0",
+#  "vegan" = "2.6-4",
+#  "tidyverse" = "2.0.0",
+#  "funrar" = "1.5.0"
+#))
 
 ################################# Load data ####################################
 phyla_abundances <-
