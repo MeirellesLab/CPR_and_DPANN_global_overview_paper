@@ -8,5 +8,5 @@ data/treated/
 data/summaries/
 
 # Ignoring RData and statistics folders
-data/RData/
-data/statistics/
+#data/RData/
+#data/statistics/
