@@ -7,7 +7,7 @@
 ################################# Environment ##################################
 set.seed(201094)
 
-source("R/src/install_and_load.R")
+source("src/util/install_and_load.R")
 install_and_load(libs = c(
   "tidyverse" = "2.0.0",
   "ggpubr" = "0.6.0",
@@ -405,56 +405,78 @@ nmds_allsamples <-
   scale_x_continuous(breaks = c(-1, 0, 1, 2))
 
 ############################### Merge plots ####################################
-result_dir <- "results/panel1/"
+result_dir <- "results/figures/"
 if (!dir.exists(result_dir)) {
   dir.create(result_dir, recursive = TRUE)
 }
-top_right <- plot_grid(
-  barplot_richness_lifestyle, barplot_abundance_lifestyle,
-  ncol = 1, align = "hv",
-  rel_widths = c(1, 1),
-  labels = c("d", "e"),
-  label_size = 13,
-  label_fontfamily = "Arial"
-)
-bottom_right <- plot_grid(
-  barplot_richness_ecosystem, barplot_abundance_ecosystem,
-  ncol = 1, align = "hv",
-  rel_heights = c(1, 1),
-  labels = c("f", "g"),
-  label_fontfamily = "Arial",
-  label_size = 13
-)
-right_panel <- plot_grid(
-  top_right,
-  bottom_right,
-  nrow = 2,
-  rel_widths = c(1, 1)
-)
-left_panel <- plot_grid(worldmap, nmds_allsamples, plot_latitude,
+
+## Panel 1 (Latitude GAM plots and NMDS)
+
+panel_1 <- plot_grid(
+  nmds_allsamples, plot_latitude,
   ncol = 1,
-  rel_heights = c(1.5, 2, 1),
-  labels = c("a", "b", "c"),
-  label_size = 13,
-  label_fontfamily = "Arial"
+  nrow = 2,
+  rel_widths = c(1, 1),
+  rel_heights = c(3, 1)
 )
 
-panel1 <- plot_grid(left_panel, right_panel, ncol = 2, rel_widths = c(1, 1))
-ggsave(
-  paste0(result_dir, "panel1.pdf"),
-  plot = panel1,
-  width = 11,
-  height = 8,
-)
+## Sabe panel 1
 ggsave(
   paste0(result_dir, "panel1.svg"),
-  plot = panel1,
-  width = 11,
-  height = 8,
+  plot = panel_1,
+  width = 16,
+  height = 18,
+  units = "cm"
 )
-ggsave(
-  paste0(result_dir, "panel1.png"),
-  plot = panel1,
-  width = 11,
-  height = 8,
-)
+
+
+
+#top_right <- plot_grid(
+#  barplot_richness_lifestyle, barplot_abundance_lifestyle,
+#  ncol = 1, align = "hv",
+#  rel_widths = c(1, 1),
+#  labels = c("d", "e"),
+#  label_size = 13,
+#  label_fontfamily = "Arial"
+#)
+#bottom_right <- plot_grid(
+#  barplot_richness_ecosystem, barplot_abundance_ecosystem,
+#  ncol = 1, align = "hv",
+#  rel_heights = c(1, 1),
+#  labels = c("f", "g"),
+#  label_fontfamily = "Arial",
+#  label_size = 13
+#)
+#right_panel <- plot_grid(
+#  top_right,
+#  bottom_right,
+#  nrow = 2,
+#  rel_widths = c(1, 1)
+#)
+#left_panel <- plot_grid(worldmap, nmds_allsamples, plot_latitude,
+#  ncol = 1,
+#  rel_heights = c(1.5, 2, 1),
+#  labels = c("a", "b", "c"),
+#  label_size = 13,
+#  label_fontfamily = "Arial"
+#)
+
+#panel1 <- plot_grid(left_panel, right_panel, ncol = 2, rel_widths = c(1, 1))
+#ggsave(
+#  paste0(result_dir, "panel1.pdf"),
+#  plot = panel1,
+#  width = 11,
+#  height = 8,
+#)
+#ggsave(
+#  paste0(result_dir, "panel1.svg"),
+#  plot = panel1,
+#  width = 11,
+#  height = 8,
+#)
+#ggsave(
+#  paste0(result_dir, "panel1.png"),
+#  plot = panel1,
+#  width = 11,
+#  height = 8,
+#)
