@@ -6,7 +6,7 @@
 #' @date 2022
 
 
-source("R/src/install_and_load.R")
+source("src/util/install_and_load.R")
 install_and_load(c("tidyverse" = "2.0.0"))
 
 load("data/rdata/simper.RData")

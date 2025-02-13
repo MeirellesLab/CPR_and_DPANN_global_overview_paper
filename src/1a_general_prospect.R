@@ -97,7 +97,7 @@ if (!dir.exists(statistics_dir)) {
   dir.create(statistics_dir)
 }
 
-# NMDS ---------------------------------
+# Main MDS ---------------------------------
 standarized_abundances <- merged_df %>%
   select(-c(samples, latitude, longitude, ecosystem, life_style, habitat)) %>%
   decostand(method = "hellinger") %>%
@@ -305,6 +305,214 @@ write_csv(
   ecosystem_microgroups_prevalence,
   paste0(summary_dir, "ecosystem_microgroups_prevalence.csv")
 )
+################################# NMDS by microgroup ###########################
+# Bonafide NMDS -----------------------
+standarized_abundances_bonafide <- phyla_abundances_persite_long %>%
+  filter(microgroup == "Bonafide") %>%
+  select(-c(latitude, longitude, ecosystem, life_style, habitat, microgroup)) %>%
+  decostand(method = "hellinger") %>%
+  vegdist(method = "jaccard")
+if (!file.exists(paste0(rdata_dir, "nmds_bonafide.RData"))) {
+  print("NMDS Bonafide not found! Running...")
+  nmds_bonafide <- metaMDS(
+    standarized_abundances_bonafide,
+    distance = "jaccard", try = 1, trymax = 4999, stress = 1, parallel = 60
+  )
+  save(nmds_bonafide, file = paste0(rdata_dir, "nmds_bonafide.RData"))
+  print(paste0("NMDS Bonafide saved in: ", rdata_dir))
+} else {
+  print("NMDS Bonafide found! Jumping!")
+}
+
+# CPR NMDS ---------------------------
+standarized_abundances_cpr <- phyla_abundances_persite_long %>%
+  filter(microgroup == "CPR") %>%
+  select(-c(latitude, longitude, ecosystem, life_style, habitat, microgroup)) %>%
+  decostand(method = "hellinger") %>%
+  vegdist(method = "jaccard")
+if (!file.exists(paste0(rdata_dir, "nmds_cpr.RData"))) {
+  print("NMDS CPR not found! Running...")
+  nmds_cpr <- metaMDS(
+    standarized_abundances_cpr,
+    distance = "jaccard", try = 1, trymax = 4999, stress = 1, parallel = 60
+  )
+  save(nmds_cpr, file = paste0(rdata_dir, "nmds_cpr.RData"))
+  print(paste0("NMDS CPR saved in: ", rdata_dir))
+} else {
+  print("NMDS CPR found! Jumping!")
+}
+
+# DPANN NMDS -------------------------
+standarized_abundances_dpann <- phyla_abundances_persite_long %>%
+  filter(microgroup == "DPANN") %>%
+  select(-c(latitude, longitude, ecosystem, life_style, habitat, microgroup)) %>%
+  decostand(method = "hellinger") %>%
+  vegdist(method = "jaccard")
+if (!file.exists(paste0(rdata_dir, "nmds_dpann.RData"))) {
+  print("NMDS DPANN not found! Running...")
+  nmds_dpann <- metaMDS(
+    standarized_abundances_dpann,
+    distance = "jaccard", try = 1, trymax = 4999, stress = 1, parallel = 60
+  )
+  save(nmds_dpann, file = paste0(rdata_dir, "nmds_dpann.RData"))
+  print(paste0("NMDS DPANN saved in: ", rdata_dir))
+} else {
+  print("NMDS DPANN found! Jumping!")
+}
+
+################################# Permanova by microgroup #######################
+# Bonafide Permanova -----------------
+# Process ------------------------------
+phyla_abundances_persite_long_bonafide <-
+  phyla_abundances_persite_long %>%
+  filter(microgroup == "Bonafide")
+standarized_abundances_persite_matrix_bonafide <-
+  phyla_abundances_persite_long_bonafide %>%
+  select(-c(latitude, longitude, ecosystem, life_style, habitat, microgroup)) %>%
+  decostand(method = "hellinger") %>%
+  vegdist(method = "jaccard")
+
+# Execute for lifestyle -----------------------------
+if (!file.exists(paste0(rdata_dir, "permanova_lifestyle_bonafide.RData"))) {
+  print("Permanova for lifestyle Bonafide not found! Running...")
+  permanova_lifestyle_bonafide <- adonis2(
+    standarized_abundances_persite_matrix_bonafide ~ phyla_abundances_persite_long_bonafide$life_style,
+    permutations = 4999, parallel = 30
+  )
+  save(
+    permanova_lifestyle_bonafide,
+    file = paste0(rdata_dir, "permanova_lifestyle_bonafide.RData")
+  )
+  capture.output(
+    permanova_lifestyle_bonafide,
+    file = paste0(statistics_dir, "permanova_lifestyle_bonafide.txt")
+  )
+  print(paste0("Permanova for lifestyle Bonafide saved in: ", rdata_dir))
+} else {
+  print("Permanova for lifestyle Bonafide found! Jumping...")
+}
+
+# Execute for ecosystem -----------------------------
+if (!file.exists(paste0(rdata_dir, "permanova_ecosystem_bonafide.RData"))) {
+  print("Permanova for ecosystem Bonafide not found! Running...")
+  permanova_ecosystem_bonafide <- adonis2(
+    standarized_abundances_persite_matrix_bonafide ~ phyla_abundances_persite_long_bonafide$ecosystem,
+    permutations = 4999, parallel = 30
+  )
+  save(
+    permanova_ecosystem_bonafide,
+    file = paste0(rdata_dir, "permanova_ecosystem_bonafide.RData")
+  )
+  capture.output(
+    permanova_ecosystem_bonafide,
+    file = paste0(statistics_dir, "permanova_ecosystem_bonafide.txt")
+  )
+  print(paste0("Permanova for ecosystem Bonafide saved in: ", rdata_dir))
+} else {
+  print("Permanova for ecosystem Bonafide found! Jumping...")
+}
+
+# CPR Permanova ------------------------
+# Process ------------------------------
+phyla_abundances_persite_long_cpr <-
+  phyla_abundances_persite_long %>%
+  filter(microgroup == "CPR")
+standarized_abundances_persite_matrix_cpr <-
+  phyla_abundances_persite_long_cpr %>%
+  select(-c(latitude, longitude, ecosystem, life_style, habitat, microgroup)) %>%
+  decostand(method = "hellinger") %>%
+  vegdist(method = "jaccard")
+
+# Execute for lifestyle -----------------------------
+if (!file.exists(paste0(rdata_dir, "permanova_lifestyle_cpr.RData"))) {
+  print("Permanova for lifestyle CPR not found! Running...")
+  permanova_lifestyle_cpr <- adonis2(
+    standarized_abundances_persite_matrix_cpr ~ phyla_abundances_persite_long_cpr$life_style,
+    permutations = 4999, parallel = 30
+  )
+  save(
+    permanova_lifestyle_cpr,
+    file = paste0(rdata_dir, "permanova_lifestyle_cpr.RData")
+  )
+  capture.output(
+    permanova_lifestyle_cpr,
+    file = paste0(statistics_dir, "permanova_lifestyle_cpr.txt")
+  )
+  print(paste0("Permanova for lifestyle CPR saved in: ", rdata_dir))
+} else {
+  print("Permanova for lifestyle CPR found! Jumping...")
+}
+
+# Execute for ecosystem -----------------------------
+if (!file.exists(paste0(rdata_dir, "permanova_ecosystem_cpr.RData"))) {
+  print("Permanova for ecosystem CPR not found! Running...")
+  permanova_ecosystem_cpr <- adonis2(
+    standarized_abundances_persite_matrix_cpr ~ phyla_abundances_persite_long_cpr$ecosystem,
+    permutations = 4999, parallel = 30
+  )
+  save(
+    permanova_ecosystem_cpr,
+    file = paste0(rdata_dir, "permanova_ecosystem_cpr.RData")
+  )
+  capture.output(
+    permanova_ecosystem_cpr,
+    file = paste0(statistics_dir, "permanova_ecosystem_cpr.txt")
+  )
+  print(paste0("Permanova for ecosystem CPR saved in: ", rdata_dir))
+} else {
+  print("Permanova for ecosystem CPR found! Jumping...")
+}
+
+# DPANN Permanova -----------------------
+# Process ------------------------------
+phyla_abundances_persite_long_dpann <-
+  phyla_abundances_persite_long %>%
+  filter(microgroup == "DPANN")
+standarized_abundances_persite_matrix_dpann <-
+  phyla_abundances_persite_long_dpann %>%
+  select(-c(latitude, longitude, ecosystem, life_style, habitat, microgroup)) %>%
+  decostand(method = "hellinger") %>%
+  vegdist(method = "jaccard")
+
+# Execute for lifestyle -----------------------------
+if (!file.exists(paste0(rdata_dir, "permanova_lifestyle_dpann.RData"))) {
+  print("Permanova for lifestyle DPANN not found! Running...")
+  permanova_lifestyle_dpann <- adonis2(
+    standarized_abundances_persite_matrix_dpann ~ phyla_abundances_persite_long_dpann$life_style,
+    permutations = 4999, parallel = 30
+  )
+  save(
+    permanova_lifestyle_dpann,
+    file = paste0(rdata_dir, "permanova_lifestyle_dpann.RData")
+  )
+  capture.output(
+    permanova_lifestyle_dpann,
+    file = paste0(statistics_dir, "permanova_lifestyle_dpann.txt")
+  )
+  print(paste0("Permanova for lifestyle DPANN saved in: ", rdata_dir))
+} else {
+  print("Permanova for lifestyle DPANN found! Jumping...")
+}
+
+# Execute for ecosystem -----------------------------
+if (!file.exists(paste0(rdata_dir, "permanova_ecosystem_dpann.RData"))) {
+  print("Permanova for ecosystem DPANN not found! Running...")
+  permanova_ecosystem_dpann <- adonis2(
+    standarized_abundances_persite_matrix_dpann ~ phyla_abundances_persite_long_dpann$ecosystem,
+    permutations = 4999, parallel = 30
+  )
+  save(
+    permanova_ecosystem_dpann,
+    file = paste0(rdata_dir, "permanova_ecosystem_dpann.RData")
+  )
+  capture.output(
+    permanova_ecosystem_dpann,
+    file = paste0(statistics_dir, "permanova_ecosystem_dpann.txt")
+  )
+  print(paste0("Permanova for ecosystem DPANN saved in: ", rdata_dir))
+} else {
+  print("Permanova for ecosystem DPANN found! Jumping...")
+}
 
 ################################# GAM Analysis #################################
 
