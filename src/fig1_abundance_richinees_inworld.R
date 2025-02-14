@@ -104,19 +104,12 @@ dpann_latitude_plot <- draw_latitude_gam(
   main_title = "DPANN",
   title_x = ""
 )
-plot_latitude <- plot_grid(
-  bonafide_latitude_plot,
-  cpr_latitude_plot,
-  dpann_latitude_plot,
-  ncol = 3,
-  rel_widths = c(1, 1, 1)
-)
 
 ##################### barplots for richness and abundance ######################
-source("src/util/draw_barplot_simple.R")
+source("src/util/draw_violinplot.R")
 # Life Style -------------------------------------------------------------------
 ## Richness ----------------------------
-bonafide_barplot_richness_lifestyle <- draw_barplot_simple(
+bonafide_barplot_richness_lifestyle <- draw_violinplot(
   data = subset(lifestyle_microgroups_prevalence, microgroup == "Bonafide"),
   title = "Bonafide",
   x_var = "life_style",
@@ -379,34 +372,42 @@ nmds_allsamples <-
       "%)"
     )
   ) +
-  annotate(
-    "text",
-    x = min(nmds_df$MDS1) + 2,
-    y = max(nmds_df$MDS2) - 0.5,
-    label = paste(
-      "Stress =",
-      round(unique(nmds_df$stress)[1], digits = 3),
-      "\n",
-      "Life style R² =", round(unique(permanova_lifestyle$R2)[1], digits = 3),
-      "\n",
-      "p-value < ", round(unique(permanova_lifestyle$"Pr(>F)")[1], digits = 4),
-      "\n",
-      "Ecossystem R² =", round(unique(permanova_ecosystem$R2)[1], digits = 3),
-      "\n",
-      "p-value <", round(unique(permanova_ecosystem$"Pr(>F)")[1], digits = 4)
-    ),
-    size = unit(3, "points"),
-    family = "Arial"
-  ) +
-  guides(color = guide_legend(
-    override.aes = list(size = 4, shape = 16)
-  )) +
-  annotation_custom(
-    life_style_legend, xmin = 1, xmax = 3.1, ymin = 1, ymax = 2
-  ) +
+  # annotate(
+  #   "text",
+  #   x = min(nmds_df$MDS1) + 2,
+  #   y = max(nmds_df$MDS2) - 0.5,
+  #   label = paste(
+  #     "Stress =",
+  #     round(unique(nmds_df$stress)[1], digits = 3),
+  #     "\n",
+  #     "Life style R² =", round(unique(permanova_lifestyle$R2)[1], digits = 3),
+  #     "\n",
+  #     "p-value < ", round(unique(permanova_lifestyle$"Pr(>F)")[1], digits = 4),
+  #     "\n",
+  #     "Ecossystem R² =", round(unique(permanova_ecosystem$R2)[1], digits = 3),
+  #     "\n",
+  #     "p-value <", round(unique(permanova_ecosystem$"Pr(>F)")[1], digits = 4)
+  #   ),
+  #   size = unit(3, "points"),
+  #   family = "Arial"
+  # ) +
+  # guides(color = guide_legend(
+  #   override.aes = list(size = 4, shape = 16)
+  # )) +
+  # annotation_custom(
+  #   life_style_legend, xmin = 1, xmax = 3.1, ymin = 1, ymax = 2
+  # ) +
   scale_y_continuous(breaks = c(-1, -0.2, 0.6, 1.4)) +
   scale_x_continuous(breaks = c(-1, 0, 1, 2))
 
+# Save plot
+ggsave(
+  "results/figures/nmds_allsamples.svg",
+  plot = nmds_allsamples,
+  width = 10,
+  height = 10,
+  units = "cm"
+)
 
 # NMDS bonafide plot ----------------------------------------------------------
 # Create dataframe ---------------------
@@ -417,7 +418,7 @@ nmds_bonafide_df <-
     phyla_abundances_wide$samples
   ) %>%
   mutate(stress = nmds_bonafide$stress)
-colnames(nmds_bonafide_df) <- c("ecosystem", "MDS1", "MDS2", "samples", "stress")]
+colnames(nmds_bonafide_df) <- c("ecosystem", "MDS1", "MDS2", "samples", "stress")
 
 # Plot ---------------------------------
 nmds_bonafide <-
@@ -460,35 +461,44 @@ nmds_bonafide <-
       "%)"
     )
   ) +
-  annotate(
-    "text",
-    x = min(nmds_bonafide_df$MDS1) + 2,
-    y = max(nmds_bonafide_df$MDS2) - 0.5,
-    label = paste(
-      "Stress =",
-      round(unique(nmds_bonafide_df$stress)[1], digits = 3),
-      "\n",
-      "Life style R² =",
-      round(unique(permanova_lifestyle$R2)[1], digits = 3),
-      "\n",
-      "p-value < ", round(unique(permanova_lifestyle$"Pr(>F)")[1], digits = 4),
-      "\n",
-      "Ecossystem R² =",
-      round(unique(permanova_ecosystem$R2)[1], digits = 3),
-      "\n",
-      "p-value < ", round(unique(permanova_ecosystem$"Pr(>F)")[1], digits = 4)
-    ),
-    size = unit(3, "points"),
-    family = "Arial"
-  ) +
-  guides(color = guide_legend(
-    override.aes = list(size = 4, shape = 16)
-  )) +
-  annotation_custom(
-    life_style_legend, xmin = 1, xmax = 3.1, ymin = 1, ymax = 2
-  ) +
+  # annotate(
+  #   "text",
+  #   x = min(nmds_bonafide_df$MDS1) + 2,
+  #   y = max(nmds_bonafide_df$MDS2) - 0.5,
+  #   label = paste(
+  #     "Stress =",
+  #     round(unique(nmds_bonafide_df$stress)[1], digits = 3),
+  #     "\n",
+  #     "Life style R² =",
+  #     round(unique(permanova_lifestyle$R2)[1], digits = 3),
+  #     "\n",
+  #     "p-value < ", round(unique(permanova_lifestyle$"Pr(>F)")[1], digits = 4),
+  #     "\n",
+  #     "Ecossystem R² =",
+  #     round(unique(permanova_ecosystem$R2)[1], digits = 3),
+  #     "\n",
+  #     "p-value < ", round(unique(permanova_ecosystem$"Pr(>F)")[1], digits = 4)
+  #   ),
+  #   size = unit(3, "points"),
+  #   family = "Arial"
+  # ) +
+  # guides(color = guide_legend(
+  #   override.aes = list(size = 4, shape = 16)
+  # )) +
+  # annotation_custom(
+  #   life_style_legend, xmin = 1, xmax = 3.1, ymin = 1, ymax = 2
+  # ) +
   scale_y_continuous(breaks = c(-1, -0.2, 0.6, 1.4)) +
   scale_x_continuous(breaks = c(-1, 0, 1, 2))
+
+# Save plot
+ggsave(
+  "results/figures/nmds_bonafide.svg",
+  plot = nmds_bonafide,
+  width = 10,
+  height = 10,
+  units = "cm"
+)
 
 # NMDS CPR plot --------------------------------------------------------------
 # Create dataframe ---------------------
@@ -542,36 +552,44 @@ nmds_cpr <-
       "%)"
     )
   ) +
-  annotate(
-    "text",
-    x = min(nmds_cpr_df$MDS1) + 2,
-    y = max(nmds_cpr_df$MDS2) - 0.5,
-    label = paste(
-      "Stress =",
-      round(unique(nmds_cpr_df$stress)[1], digits = 3),
-      "\n",
-      "Life style R² =",
-      round(unique(permanova_lifestyle$R2)[1], digits = 3),
-      "\n",
-      "p-value < ", round(unique(permanova_lifestyle$"Pr(>F)")[1], digits = 4),
-      "\n",
-      "Ecossystem R² =",
-      round(unique(permanova_ecosystem$R2)[1], digits = 3),
-      "\n",
-      "p-value < ", round(unique(permanova_ecosystem$"Pr(>F)")[1], digits = 4)
-    ),
-    size = unit(3, "points"),
-    family = "Arial"
-  ) +
-  guides(color = guide_legend(
-    override.aes = list(size = 4, shape = 16)
-  )) +
-  annotation_custom(
-    life_style_legend, xmin = 1, xmax = 3.1, ymin = 1, ymax = 2
-  ) +
-  scale_y_continuous(breaks = c(-1, -0.2, 0.6, 1.4)) +
-  scale_x_continuous(breaks = c(-1, 0, 1, 2))
+  # annotate(
+  #   "text",
+  #   x = min(nmds_cpr_df$MDS1) + 2,
+  #   y = max(nmds_cpr_df$MDS2) - 0.5,
+  #   label = paste(
+  #     "Stress =",
+  #     round(unique(nmds_cpr_df$stress)[1], digits = 3),
+  #     "\n",
+  #     "Life style R² =",
+  #     round(unique(permanova_lifestyle$R2)[1], digits = 3),
+  #     "\n",
+  #     "p-value < ", round(unique(permanova_lifestyle$"Pr(>F)")[1], digits = 4),
+  #     "\n",
+  #     "Ecossystem R² =",
+  #     round(unique(permanova_ecosystem$R2)[1], digits = 3),
+  #     "\n",
+  #     "p-value < ", round(unique(permanova_ecosystem$"Pr(>F)")[1], digits = 4)
+  #   ),
+  #   size = unit(3, "points"),
+  #   family = "Arial"
+  # ) +
+  # guides(color = guide_legend(
+  #   override.aes = list(size = 4, shape = 16)
+  # )) +
+  # annotation_custom(
+  #   life_style_legend, xmin = 1, xmax = 3.1, ymin = 1, ymax = 2
+  # ) +
+  scale_y_continuous(breaks = c(-2, -1, 0, 1, 2)) +
+  scale_x_continuous(breaks = c(-4, -2, 0, 2, 4))
 
+# Save plot
+ggsave(
+  "results/figures/nmds_cpr.svg",
+  plot = nmds_cpr,
+  width = 10,
+  height = 10,
+  units = "cm"
+)
 
 ############################### Merge plots ####################################
 result_dir <- "results/figures/"
@@ -579,26 +597,42 @@ if (!dir.exists(result_dir)) {
   dir.create(result_dir, recursive = TRUE)
 }
 
-## Panel 1 (Latitude GAM plots and NMDS)
+## Panel 1 (all NMDS)
 
 panel_1 <- plot_grid(
-  nmds_allsamples, plot_latitude,
+  nmds_allsamples, 
   ncol = 1,
   nrow = 2,
   rel_widths = c(1, 1),
   rel_heights = c(3, 1)
 )
 
-## Sabe panel 1
+## Save panel 1
 ggsave(
-  paste0(result_dir, "panel1.svg"),
+  paste0(result_dir, "panel_1.svg"),
   plot = panel_1,
   width = 16,
   height = 18,
   units = "cm"
 )
 
+## Panel 2 (latitude plots)
+plot_latitude <- plot_grid(
+  bonafide_latitude_plot,
+  cpr_latitude_plot,
+  dpann_latitude_plot,
+  ncol = 3,
+  rel_widths = c(1, 1, 1)
+)
 
+## Save panel 2
+ggsave(
+  paste0(result_dir, "panel_2.svg"),
+  plot = plot_latitude,
+  width = 18,
+  height = 6,
+  units = "cm"
+)
 
 #top_right <- plot_grid(
 #  barplot_richness_lifestyle, barplot_abundance_lifestyle,
