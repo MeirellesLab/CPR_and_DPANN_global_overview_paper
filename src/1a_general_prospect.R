@@ -546,6 +546,13 @@ phyla_abundances_persite_long_dpann <-
   ungroup() %>%
   spread(taxon, abundance, fill = 0)
 
+#Chek if there is any row with all zeros in phyla_abundances_persite_long_dpann
+print("Checking if there is any row with all zeros in phyla_abundances_persite_long_dpann...")
+print(sum(apply(phyla_abundances_persite_long_dpann[, -c(1, 2, 3, 4, 5, 6)], 1, sum) == 0))
+
+print("Had 3 zeros rows, so we will remove them")
+phyla_abundances_persite_long_dpann <- phyla_abundances_persite_long_dpann[apply(phyla_abundances_persite_long_dpann[, -c(1, 2, 3, 4, 5, 6)], 1, sum) != 0, ]
+
 standarized_abundances_persite_matrix_dpann <-
   phyla_abundances_persite_long_dpann %>%
   dplyr::select(-c(latitude, longitude, ecosystem, life_style, habitat)) %>%
@@ -682,3 +689,5 @@ for (i in c("Bonafide", "CPR", "DPANN")) {
     permutations = 4999
   )
 }
+
+print("General prospect done!")

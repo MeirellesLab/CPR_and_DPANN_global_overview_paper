@@ -1,0 +1,11 @@
+Permutation test for adonis under reduced model
+Permutation: free
+Number of permutations: 4999
+
+adonis2(formula = standarized_abundances_persite_matrix_bonafide ~ phyla_abundances_persite_long_bonafide$ecosystem, permutations = 4999, parallel = 30)
+          Df SumOfSqs      R2      F Pr(>F)    
+Model      8   24.475 0.38044 43.214  2e-04 ***
+Residual 563   39.858 0.61956                  
+Total    571   64.333 1.00000                  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
