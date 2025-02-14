@@ -6,6 +6,7 @@
 
 ################################# Environment ##################################
 set.seed(201094)
+print("Loading libraries...")
 source("src/util/install_and_load.R")
 install_and_load(libs = c(
   "lmPerm" = "2.1.0",
@@ -17,6 +18,7 @@ install_and_load(libs = c(
 ))
 
 ################################# Load data ####################################
+print("Loading data...")
 phyla_abundances <-
   read_csv("data/taxa_compositions/kraken_biomedb_relative_phyla.csv")
 metadata <- read_csv("data/metadata/biome_classification.csv") %>%
@@ -30,6 +32,7 @@ if (!dir.exists(treated_dir)) {
 }
 
 # Merge --------------------------------
+print("Merging data...")
 merged_df <- phyla_abundances %>%
   inner_join(metadata, by = "samples") %>%
   group_by(ecosystem, habitat) %>%
@@ -54,6 +57,7 @@ if (!dir.exists(summary_dir)) {
 }
 
 # Count samples ------------------------
+print("Counting samples...")
 total_samples <- merged_df %>%
   mutate(category = "total") %>%
   group_by(category) %>%
@@ -98,6 +102,7 @@ if (!dir.exists(statistics_dir)) {
 }
 
 # Main MDS ---------------------------------
+print("Running general NMDS...")
 standarized_abundances <- merged_df %>%
   select(-c(samples, latitude, longitude, ecosystem, life_style, habitat)) %>%
   decostand(method = "hellinger") %>%
@@ -115,6 +120,7 @@ if (!file.exists(paste0(rdata_dir, "nmds.RData"))) {
 }
 
 # Permanova ----------------------------
+print("Running general Permanova...")
 ## Process data
 phyla_abundances_persite <- phyla_abundances_long %>%
   group_by(latitude, longitude, ecosystem, life_style, habitat, taxon) %>%
@@ -167,6 +173,7 @@ if (!file.exists(paste0(rdata_dir, "permanova_ecosystem.RData"))) {
 }
 
 # Simper -------------------------------
+print("Running Simper...")
 if (!file.exists(paste0(rdata_dir, "simper.RData"))) {
   print("Simper not found!, running...")
   category <- phyla_abundances_persite[["ecosystem"]]
@@ -185,6 +192,7 @@ if (!file.exists(paste0(rdata_dir, "simper.RData"))) {
 }
 
 ############################## Attach Phyla Groups #############################
+print("Attaching phyla groups...")
 dpann_groups <- radiation %>%
   filter(microgroup == "DPANN") %>%
   pull(taxon)
@@ -219,6 +227,7 @@ write_csv(
 )
 
 ###################### Summaries of phyla groups prevalences ###################
+print("Summarizing phyla groups prevalences...")
 microgroups_totalabundance <- phyla_abundances_persite_long %>%
   group_by(microgroup) %>%
   summarise(abundance = sum(abundance)) %>%
@@ -306,10 +315,28 @@ write_csv(
   paste0(summary_dir, "ecosystem_microgroups_prevalence.csv")
 )
 ################################# NMDS by microgroup ###########################
+print("Running NMDS by microgroup...")
+
+# Creating abundance table by microgroup (the taxa are in the columns, filter them by the variables cpr_groups and dpann_groups, and the rest id bonafide)
+print("Creating abundance table by microgroup...")
+# Remember that the taxa are the columns 2 to 160
+merged_df_cpr <- merged_df %>%
+  select(one_of(c("samples", "ecosystem", "habitat", "life_style", "latitude", "longitude"), cpr_groups))
+
+merged_df_dpann <- merged_df %>%
+  select(one_of(c("samples", "ecosystem", "habitat", "life_style", "latitude", "longitude"), dpann_groups))
+
+all_unculturable <- c(cpr_groups, dpann_groups)
+
+# Selecione as colunas desejadas, excluindo as colunas em exclude_groups
+merged_df_bonafide <- merged_df %>%
+  select(setdiff(colnames(merged_df), all_unculturable))
+
 # Bonafide NMDS -----------------------
-standarized_abundances_bonafide <- phyla_abundances_persite_long %>%
-  filter(microgroup == "Bonafide") %>%
-  select(-c(latitude, longitude, ecosystem, life_style, habitat, microgroup)) %>%
+print("Running NMDS Bonafide...")
+
+standarized_abundances_bonafide <- merged_df_bonafide %>%
+  select(-c(samples, latitude, longitude, ecosystem, life_style, habitat)) %>%
   decostand(method = "hellinger") %>%
   vegdist(method = "jaccard")
 if (!file.exists(paste0(rdata_dir, "nmds_bonafide.RData"))) {
@@ -325,9 +352,9 @@ if (!file.exists(paste0(rdata_dir, "nmds_bonafide.RData"))) {
 }
 
 # CPR NMDS ---------------------------
-standarized_abundances_cpr <- phyla_abundances_persite_long %>%
-  filter(microgroup == "CPR") %>%
-  select(-c(latitude, longitude, ecosystem, life_style, habitat, microgroup)) %>%
+print("Running NMDS CPR...")
+standarized_abundances_cpr <- merged_df_cpr %>%
+  select(-c(samples, latitude, longitude, ecosystem, life_style, habitat)) %>%
   decostand(method = "hellinger") %>%
   vegdist(method = "jaccard")
 if (!file.exists(paste0(rdata_dir, "nmds_cpr.RData"))) {
@@ -343,9 +370,9 @@ if (!file.exists(paste0(rdata_dir, "nmds_cpr.RData"))) {
 }
 
 # DPANN NMDS -------------------------
-standarized_abundances_dpann <- phyla_abundances_persite_long %>%
-  filter(microgroup == "DPANN") %>%
-  select(-c(latitude, longitude, ecosystem, life_style, habitat, microgroup)) %>%
+print("Running NMDS DPANN...")
+standarized_abundances_dpann <- merged_df_dpann %>%
+  select(-c(samples, latitude, longitude, ecosystem, life_style, habitat)) %>%
   decostand(method = "hellinger") %>%
   vegdist(method = "jaccard")
 if (!file.exists(paste0(rdata_dir, "nmds_dpann.RData"))) {
@@ -361,14 +388,16 @@ if (!file.exists(paste0(rdata_dir, "nmds_dpann.RData"))) {
 }
 
 ################################# Permanova by microgroup #######################
+print("Running Permanova by microgroup...")
 # Bonafide Permanova -----------------
+print("Running Permanova Bonafide...")
 # Process ------------------------------
 phyla_abundances_persite_long_bonafide <-
   phyla_abundances_persite_long %>%
   filter(microgroup == "Bonafide")
 standarized_abundances_persite_matrix_bonafide <-
   phyla_abundances_persite_long_bonafide %>%
-  select(-c(latitude, longitude, ecosystem, life_style, habitat, microgroup)) %>%
+  select(-c(latitude, longitude, ecosystem, life_style, habitat, microgroup, taxon)) %>%
   decostand(method = "hellinger") %>%
   vegdist(method = "jaccard")
 
@@ -413,13 +442,14 @@ if (!file.exists(paste0(rdata_dir, "permanova_ecosystem_bonafide.RData"))) {
 }
 
 # CPR Permanova ------------------------
+print("Running Permanova CPR...")
 # Process ------------------------------
 phyla_abundances_persite_long_cpr <-
   phyla_abundances_persite_long %>%
   filter(microgroup == "CPR")
 standarized_abundances_persite_matrix_cpr <-
   phyla_abundances_persite_long_cpr %>%
-  select(-c(latitude, longitude, ecosystem, life_style, habitat, microgroup)) %>%
+  select(-c(latitude, longitude, ecosystem, life_style, habitat, microgroup, taxon)) %>%
   decostand(method = "hellinger") %>%
   vegdist(method = "jaccard")
 
@@ -464,13 +494,14 @@ if (!file.exists(paste0(rdata_dir, "permanova_ecosystem_cpr.RData"))) {
 }
 
 # DPANN Permanova -----------------------
+print("Running Permanova DPANN...")
 # Process ------------------------------
 phyla_abundances_persite_long_dpann <-
   phyla_abundances_persite_long %>%
   filter(microgroup == "DPANN")
 standarized_abundances_persite_matrix_dpann <-
   phyla_abundances_persite_long_dpann %>%
-  select(-c(latitude, longitude, ecosystem, life_style, habitat, microgroup)) %>%
+  select(-c(latitude, longitude, ecosystem, life_style, habitat, microgroup, taxon)) %>%
   decostand(method = "hellinger") %>%
   vegdist(method = "jaccard")
 
@@ -515,7 +546,7 @@ if (!file.exists(paste0(rdata_dir, "permanova_ecosystem_dpann.RData"))) {
 }
 
 ################################# GAM Analysis #################################
-
+print("Running GAM analysis...")
 # Richness -----------------------------
 bonafide_richness_gam <- gam(
   richness ~ s(latitude, bs = "tp", k = 20),
@@ -575,6 +606,7 @@ capture.output(
 )
 
 ############################# Peranova Analysis ################################
+print("Running Peranova analysis...")
 source("src/util/do_peranova.R")
 
 for (i in c("Bonafide", "CPR", "DPANN")) {
