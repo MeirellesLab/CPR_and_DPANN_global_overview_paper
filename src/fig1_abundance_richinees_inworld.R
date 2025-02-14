@@ -39,6 +39,8 @@ ecosystem_microgroups_prevalence <- read_csv(
 ) %>%
   treatment()
 load("data/rdata/nmds.RData")
+load("data/rdata/nmds_bonafide.RData")
+load("data/rdata/nmds_cpr.RData")
 load("data/rdata/permanova_lifestyle.RData")
 load("data/rdata/permanova_ecosystem.RData")
 
@@ -325,6 +327,7 @@ barplot_abundance_ecosystem <- ggarrange(
 
 ############# nmds plot #######################################################
 
+# NMDS general plot -----------------------------------------------------------
 # Create dataframe ---------------------
 nmds_df <-
   cbind(
@@ -403,6 +406,172 @@ nmds_allsamples <-
   ) +
   scale_y_continuous(breaks = c(-1, -0.2, 0.6, 1.4)) +
   scale_x_continuous(breaks = c(-1, 0, 1, 2))
+
+
+# NMDS bonafide plot ----------------------------------------------------------
+# Create dataframe ---------------------
+nmds_bonafide_df <-
+  cbind(
+    phyla_abundances_wide$ecosystem,
+    as.data.frame(nmds_bonafide$points),
+    phyla_abundances_wide$samples
+  ) %>%
+  mutate(stress = nmds_bonafide$stress)
+colnames(nmds_bonafide_df) <- c("ecosystem", "MDS1", "MDS2", "samples", "stress")]
+
+# Plot ---------------------------------
+nmds_bonafide <-
+  ggplot(nmds_bonafide_df, aes(x = MDS1, y = MDS2, color = ecosystem)) +
+  theme_pubr() +
+  theme(
+    text = element_text(size = unit(8, "points"), family = "Arial"),
+    plot.title = element_text(
+      hjust = 0.5, family = "Arial", size = unit(8, "points")
+    ),
+    strip.background = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    legend.position = "right",
+    legend.title = element_text(
+      face = "bold", family = "Arial", size = unit(8, "points")
+    ),
+    legend.spacing.x = unit(0.1, "points"),
+    legend.spacing.y = unit(0.1, "points"),
+    axis.title.x = element_text(
+      size = unit(8, "points"), face = "bold", family = "Arial"
+    ),
+    axis.title.y = element_text(
+      size = unit(8, "points"), face = "bold", family = "Arial"
+    ),
+    legend.text = element_text(size = unit(8, "points"), family = "Arial")
+  ) +
+  geom_point(size = 1, shape = 20) +
+  scale_color_manual(values = ecosystem_colors, name = "Ecosystem") +
+  ggtitle("") +
+  labs(
+    x = paste0(
+      "MDS1 (",
+      round(attr(nmds_bonafide$species, "shrinkage")[1] * 100, digits = 2),
+      "%)"
+    ),
+    y = paste0(
+      "MDS2 (",
+      round(attr(nmds_bonafide$species, "shrinkage")[2] * 100, digits = 2),
+      "%)"
+    )
+  ) +
+  annotate(
+    "text",
+    x = min(nmds_bonafide_df$MDS1) + 2,
+    y = max(nmds_bonafide_df$MDS2) - 0.5,
+    label = paste(
+      "Stress =",
+      round(unique(nmds_bonafide_df$stress)[1], digits = 3),
+      "\n",
+      "Life style R² =",
+      round(unique(permanova_lifestyle$R2)[1], digits = 3),
+      "\n",
+      "p-value < ", round(unique(permanova_lifestyle$"Pr(>F)")[1], digits = 4),
+      "\n",
+      "Ecossystem R² =",
+      round(unique(permanova_ecosystem$R2)[1], digits = 3),
+      "\n",
+      "p-value < ", round(unique(permanova_ecosystem$"Pr(>F)")[1], digits = 4)
+    ),
+    size = unit(3, "points"),
+    family = "Arial"
+  ) +
+  guides(color = guide_legend(
+    override.aes = list(size = 4, shape = 16)
+  )) +
+  annotation_custom(
+    life_style_legend, xmin = 1, xmax = 3.1, ymin = 1, ymax = 2
+  ) +
+  scale_y_continuous(breaks = c(-1, -0.2, 0.6, 1.4)) +
+  scale_x_continuous(breaks = c(-1, 0, 1, 2))
+
+# NMDS CPR plot --------------------------------------------------------------
+# Create dataframe ---------------------
+nmds_cpr_df <-
+  cbind(
+    phyla_abundances_wide$ecosystem,
+    as.data.frame(nmds_cpr$points),
+    phyla_abundances_wide$samples
+  ) %>%
+  mutate(stress = nmds_cpr$stress)
+colnames(nmds_cpr_df) <- c("ecosystem", "MDS1", "MDS2", "samples", "stress")
+
+# Plot ---------------------------------
+nmds_cpr <-
+  ggplot(nmds_cpr_df, aes(x = MDS1, y = MDS2, color = ecosystem)) +
+  theme_pubr() +
+  theme(
+    text = element_text(size = unit(8, "points"), family = "Arial"),
+    plot.title = element_text(
+      hjust = 0.5, family = "Arial", size = unit(8, "points")
+    ),
+    strip.background = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    legend.position = "right",
+    legend.title = element_text(
+      face = "bold", family = "Arial", size = unit(8, "points")
+    ),
+    legend.spacing.x = unit(0.1, "points"),
+    legend.spacing.y = unit(0.1, "points"),
+    axis.title.x = element_text(
+      size = unit(8, "points"), face = "bold", family = "Arial"
+    ),
+    axis.title.y = element_text(
+      size = unit(8, "points"), face = "bold", family = "Arial"
+    ),
+    legend.text = element_text(size = unit(8, "points"), family = "Arial")
+  ) +
+  geom_point(size = 1, shape = 20) +
+  scale_color_manual(values = ecosystem_colors, name = "Ecosystem") +
+  ggtitle("") +
+  labs(
+    x = paste0(
+      "MDS1 (",
+      round(attr(nmds_cpr$species, "shrinkage")[1] * 100, digits = 2),
+      "%)"
+    ),
+    y = paste0(
+      "MDS2 (",
+      round(attr(nmds_cpr$species, "shrinkage")[2] * 100, digits = 2),
+      "%)"
+    )
+  ) +
+  annotate(
+    "text",
+    x = min(nmds_cpr_df$MDS1) + 2,
+    y = max(nmds_cpr_df$MDS2) - 0.5,
+    label = paste(
+      "Stress =",
+      round(unique(nmds_cpr_df$stress)[1], digits = 3),
+      "\n",
+      "Life style R² =",
+      round(unique(permanova_lifestyle$R2)[1], digits = 3),
+      "\n",
+      "p-value < ", round(unique(permanova_lifestyle$"Pr(>F)")[1], digits = 4),
+      "\n",
+      "Ecossystem R² =",
+      round(unique(permanova_ecosystem$R2)[1], digits = 3),
+      "\n",
+      "p-value < ", round(unique(permanova_ecosystem$"Pr(>F)")[1], digits = 4)
+    ),
+    size = unit(3, "points"),
+    family = "Arial"
+  ) +
+  guides(color = guide_legend(
+    override.aes = list(size = 4, shape = 16)
+  )) +
+  annotation_custom(
+    life_style_legend, xmin = 1, xmax = 3.1, ymin = 1, ymax = 2
+  ) +
+  scale_y_continuous(breaks = c(-1, -0.2, 0.6, 1.4)) +
+  scale_x_continuous(breaks = c(-1, 0, 1, 2))
+
 
 ############################### Merge plots ####################################
 result_dir <- "results/figures/"

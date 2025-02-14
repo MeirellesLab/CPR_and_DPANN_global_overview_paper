@@ -173,41 +173,41 @@ if (!file.exists(paste0(rdata_dir, "permanova_ecosystem.RData"))) {
 }
 
 # Simper -------------------------------
-print("Running Simper ecosystems...")
-if (!file.exists(paste0(rdata_dir, "simper.RData"))) {
-  print("Simper not found!, running...")
-  category <- phyla_abundances_persite[["ecosystem"]]
-  raw_simper <-  simper(
-    standarized_abundances_persite,
-    group = category,
-    parallel = 1,
-    permutations = 4999
-  )
-  save(raw_simper, file = paste0(rdata_dir, "simper.RData"))
-  print("Done!")
-} else {
-  print("Simper output already exists. Generating tables!")
-  load(paste0(rdata_dir, "simper.RData"))
-  source("src/util/simper_ranking.R")
-}
+#print("Running Simper ecosystems...")
+#if (!file.exists(paste0(rdata_dir, "simper.RData"))) {
+#  print("Simper not found!, running...")
+#  category <- phyla_abundances_persite[["ecosystem"]]
+#  raw_simper <-  simper(
+#    standarized_abundances_persite,
+#    group = category,
+#    parallel = 1,
+#    permutations = 4999
+#  )
+#  save(raw_simper, file = paste0(rdata_dir, "simper.RData"))
+#  print("Done!")
+#} else {
+#  print("Simper output already exists. Generating tables!")
+#  load(paste0(rdata_dir, "simper.RData"))
+#  source("src/util/simper_ranking.R")
+#}
 
-print("Running Simper habitats...")
-if (!file.exists(paste0(rdata_dir, "simper_habitats.RData"))) {
-  print("Simper habitats not found!, running...")
-  category <- phyla_abundances_persite[["habitat"]]
-  raw_simper_habitats <- simper(
-    standarized_abundances_persite,
-    group = category,
-    parallel = 1,
-    permutations = 4999
-  )
-  save(raw_simper_habitats, file = paste0(rdata_dir, "simper_habitats.RData"))
-  print("Done!")
-} else {
-  print("Simper habitats output already exists. Generating tables!")
-  load(paste0(rdata_dir, "simper_habitats.RData"))
-  source("src/util/simper_ranking_habitats.R")
-}
+#print("Running Simper habitats...")
+#if (!file.exists(paste0(rdata_dir, "simper_habitats.RData"))) {
+#  print("Simper habitats not found!, running...")
+#  category <- phyla_abundances_persite[["habitat"]]
+#  raw_simper_habitats <- simper(
+#    standarized_abundances_persite,
+#    group = category,
+#    parallel = 1,
+#    permutations = 4999
+#  )
+#  save(raw_simper_habitats, file = paste0(rdata_dir, "simper_habitats.RData"))
+#  print("Done!")
+#} else {
+#  print("Simper habitats output already exists. Generating tables!")
+#  load(paste0(rdata_dir, "simper_habitats.RData"))
+#  source("src/util/simper_ranking_habitats.R")
+#}
 
 ############################## Attach Phyla Groups #############################
 print("Attaching phyla groups...")
@@ -345,10 +345,23 @@ merged_df_dpann <- merged_df %>%
   select(one_of(c("samples", "ecosystem", "habitat", "life_style", "latitude", "longitude"), dpann_groups))
 
 all_unculturable <- c(cpr_groups, dpann_groups)
-
 # Selecione as colunas desejadas, excluindo as colunas em exclude_groups
 merged_df_bonafide <- merged_df %>%
   select(setdiff(colnames(merged_df), all_unculturable))
+
+#Chek if there is any row with all zeros in each df 
+print("Checking if there is any row with all zeros in each df...")
+print("CPR")
+print(sum(apply(merged_df_cpr[, -c(1, 2, 3, 4, 5, 6)], 1, sum) == 0))
+
+print("DPANN")
+print(sum(apply(merged_df_dpann[, -c(1, 2, 3, 4, 5, 6)], 1, sum) == 0))
+
+print("bonafide")
+print(sum(apply(merged_df_bonafide[, -c(1, 45, 46, 47, 48, 49)], 1, sum) == 0))
+
+print("Only DPANN df has rows with all zeros, so we will remove them")
+merged_df_dpann <- merged_df_dpann[apply(merged_df_dpann[, -c(1, 2, 3, 4, 5, 6)], 1, sum) != 0, ]
 
 # Bonafide NMDS -----------------------
 print("Running NMDS Bonafide...")
@@ -517,6 +530,7 @@ print("Running Permanova DPANN...")
 phyla_abundances_persite_long_dpann <-
   phyla_abundances_persite_long %>%
   filter(microgroup == "DPANN")
+
 standarized_abundances_persite_matrix_dpann <-
   phyla_abundances_persite_long_dpann %>%
   select(-c(latitude, longitude, ecosystem, life_style, habitat, microgroup, taxon)) %>%
