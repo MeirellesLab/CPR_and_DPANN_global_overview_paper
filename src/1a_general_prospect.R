@@ -21,8 +21,10 @@ install_and_load(libs = c(
 print("Loading data...")
 phyla_abundances <-
   read_csv("data/taxa_compositions/kraken_biomedb_relative_phyla.csv")
+
 metadata <- read_csv("data/metadata/biome_classification.csv") %>%
-  select(samples, life_style, ecosystem, habitat, latitude, longitude)
+  dplyr::select(samples, life_style, ecosystem, habitat, latitude, longitude)
+  
 radiation <- read_csv("data/taxa_compositions/radiation_phyla.csv")
 
 ################################# Merge and Treat ##############################
@@ -128,7 +130,7 @@ phyla_abundances_persite <- phyla_abundances_long %>%
   ungroup() %>%
   spread(taxon, abundance, fill = 0)
 standarized_abundances_persite <- phyla_abundances_persite %>%
-  select(-c(latitude, longitude, ecosystem, life_style, habitat)) %>%
+  dplyr::select(-c(latitude, longitude, ecosystem, life_style, habitat)) %>%
   decostand(method = "hellinger")
 standarized_abundances_persite_matrix <- standarized_abundances_persite %>%
   vegdist(method = "jaccard")
@@ -339,15 +341,15 @@ print("Running NMDS by microgroup...")
 print("Creating abundance table by microgroup...")
 # Remember that the taxa are the columns 2 to 160
 merged_df_cpr <- merged_df %>%
-  select(one_of(c("samples", "ecosystem", "habitat", "life_style", "latitude", "longitude"), cpr_groups))
+  dplyr::select(one_of(c("samples", "ecosystem", "habitat", "life_style", "latitude", "longitude"), cpr_groups))
 
 merged_df_dpann <- merged_df %>%
-  select(one_of(c("samples", "ecosystem", "habitat", "life_style", "latitude", "longitude"), dpann_groups))
+  dplyr::select(one_of(c("samples", "ecosystem", "habitat", "life_style", "latitude", "longitude"), dpann_groups))
 
 all_unculturable <- c(cpr_groups, dpann_groups)
 # Selecione as colunas desejadas, excluindo as colunas em exclude_groups
 merged_df_bonafide <- merged_df %>%
-  select(setdiff(colnames(merged_df), all_unculturable))
+  dplyr::select(setdiff(colnames(merged_df), all_unculturable))
 
 #Chek if there is any row with all zeros in each df 
 print("Checking if there is any row with all zeros in each df...")
@@ -367,7 +369,7 @@ merged_df_dpann <- merged_df_dpann[apply(merged_df_dpann[, -c(1, 2, 3, 4, 5, 6)]
 print("Running NMDS Bonafide...")
 
 standarized_abundances_bonafide <- merged_df_bonafide %>%
-  select(-c(samples, latitude, longitude, ecosystem, life_style, habitat)) %>%
+  dplyr::select(-c(samples, latitude, longitude, ecosystem, life_style, habitat)) %>%
   decostand(method = "hellinger") %>%
   vegdist(method = "jaccard")
 if (!file.exists(paste0(rdata_dir, "nmds_bonafide.RData"))) {
@@ -385,7 +387,7 @@ if (!file.exists(paste0(rdata_dir, "nmds_bonafide.RData"))) {
 # CPR NMDS ---------------------------
 print("Running NMDS CPR...")
 standarized_abundances_cpr <- merged_df_cpr %>%
-  select(-c(samples, latitude, longitude, ecosystem, life_style, habitat)) %>%
+  dplyr::select(-c(samples, latitude, longitude, ecosystem, life_style, habitat)) %>%
   decostand(method = "hellinger") %>%
   vegdist(method = "jaccard")
 if (!file.exists(paste0(rdata_dir, "nmds_cpr.RData"))) {
@@ -403,7 +405,7 @@ if (!file.exists(paste0(rdata_dir, "nmds_cpr.RData"))) {
 # DPANN NMDS -------------------------
 print("Running NMDS DPANN...")
 standarized_abundances_dpann <- merged_df_dpann %>%
-  select(-c(samples, latitude, longitude, ecosystem, life_style, habitat)) %>%
+  dplyr::select(-c(samples, latitude, longitude, ecosystem, life_style, habitat)) %>%
   decostand(method = "hellinger") %>%
   vegdist(method = "jaccard")
 if (!file.exists(paste0(rdata_dir, "nmds_dpann.RData"))) {
@@ -423,12 +425,15 @@ print("Running Permanova by microgroup...")
 # Bonafide Permanova -----------------
 print("Running Permanova Bonafide...")
 # Process ------------------------------
-phyla_abundances_persite_long_bonafide <-
-  phyla_abundances_persite_long %>%
-  filter(microgroup == "Bonafide")
-standarized_abundances_persite_matrix_bonafide <-
-  phyla_abundances_persite_long_bonafide %>%
-  select(-c(latitude, longitude, ecosystem, life_style, habitat, microgroup, taxon)) %>%
+phyla_abundances_persite_long_bonafide <- phyla_abundances_persite_long %>%
+  filter(microgroup == "Bonafide") %>%
+  dplyr::select(-c(microgroup)) %>%
+  group_by(latitude, longitude, ecosystem, life_style, habitat, taxon) %>%
+  dplyr::summarise(abundance = mean(abundance)) %>%
+  ungroup() %>%
+  spread(taxon, abundance, fill = 0)
+standarized_abundances_persite_matrix_bonafide <- phyla_abundances_persite_long_bonafide %>%
+  dplyr::select(-c(latitude, longitude, ecosystem, life_style, habitat)) %>%
   decostand(method = "hellinger") %>%
   vegdist(method = "jaccard")
 
@@ -477,10 +482,15 @@ print("Running Permanova CPR...")
 # Process ------------------------------
 phyla_abundances_persite_long_cpr <-
   phyla_abundances_persite_long %>%
-  filter(microgroup == "CPR")
+  filter(microgroup == "CPR")%>%
+  dplyr::select(-c(microgroup)) %>%
+  group_by(latitude, longitude, ecosystem, life_style, habitat, taxon) %>%
+  dplyr::summarise(abundance = mean(abundance)) %>%
+  ungroup() %>%
+  spread(taxon, abundance, fill = 0)
 standarized_abundances_persite_matrix_cpr <-
   phyla_abundances_persite_long_cpr %>%
-  select(-c(latitude, longitude, ecosystem, life_style, habitat, microgroup, taxon)) %>%
+  dplyr::select(-c(latitude, longitude, ecosystem, life_style, habitat)) %>%
   decostand(method = "hellinger") %>%
   vegdist(method = "jaccard")
 
@@ -529,11 +539,16 @@ print("Running Permanova DPANN...")
 # Process ------------------------------
 phyla_abundances_persite_long_dpann <-
   phyla_abundances_persite_long %>%
-  filter(microgroup == "DPANN")
+  filter(microgroup == "DPANN")%>%
+  dplyr::select(-c(microgroup)) %>%
+  group_by(latitude, longitude, ecosystem, life_style, habitat, taxon) %>%
+  dplyr::summarise(abundance = mean(abundance)) %>%
+  ungroup() %>%
+  spread(taxon, abundance, fill = 0)
 
 standarized_abundances_persite_matrix_dpann <-
   phyla_abundances_persite_long_dpann %>%
-  select(-c(latitude, longitude, ecosystem, life_style, habitat, microgroup, taxon)) %>%
+  dplyr::select(-c(latitude, longitude, ecosystem, life_style, habitat)) %>%
   decostand(method = "hellinger") %>%
   vegdist(method = "jaccard")
 
