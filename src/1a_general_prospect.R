@@ -173,7 +173,7 @@ if (!file.exists(paste0(rdata_dir, "permanova_ecosystem.RData"))) {
 }
 
 # Simper -------------------------------
-print("Running Simper...")
+print("Running Simper ecosystems...")
 if (!file.exists(paste0(rdata_dir, "simper.RData"))) {
   print("Simper not found!, running...")
   category <- phyla_abundances_persite[["ecosystem"]]
@@ -189,6 +189,24 @@ if (!file.exists(paste0(rdata_dir, "simper.RData"))) {
   print("Simper output already exists. Generating tables!")
   load(paste0(rdata_dir, "simper.RData"))
   source("src/util/simper_ranking.R")
+}
+
+print("Running Simper habitats...")
+if (!file.exists(paste0(rdata_dir, "simper_habitats.RData"))) {
+  print("Simper habitats not found!, running...")
+  category <- phyla_abundances_persite[["habitat"]]
+  raw_simper_habitats <- simper(
+    standarized_abundances_persite,
+    group = category,
+    parallel = 1,
+    permutations = 4999
+  )
+  save(raw_simper_habitats, file = paste0(rdata_dir, "simper_habitats.RData"))
+  print("Done!")
+} else {
+  print("Simper habitats output already exists. Generating tables!")
+  load(paste0(rdata_dir, "simper_habitats.RData"))
+  source("src/util/simper_ranking_habitats.R")
 }
 
 ############################## Attach Phyla Groups #############################
