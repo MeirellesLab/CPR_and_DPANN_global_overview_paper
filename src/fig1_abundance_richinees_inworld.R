@@ -372,31 +372,31 @@ nmds_allsamples <-
       "%)"
     )
   ) +
-  # annotate(
-  #   "text",
-  #   x = min(nmds_df$MDS1) + 2,
-  #   y = max(nmds_df$MDS2) - 0.5,
-  #   label = paste(
-  #     "Stress =",
-  #     round(unique(nmds_df$stress)[1], digits = 3),
-  #     "\n",
-  #     "Life style R² =", round(unique(permanova_lifestyle$R2)[1], digits = 3),
-  #     "\n",
-  #     "p-value < ", round(unique(permanova_lifestyle$"Pr(>F)")[1], digits = 4),
-  #     "\n",
-  #     "Ecossystem R² =", round(unique(permanova_ecosystem$R2)[1], digits = 3),
-  #     "\n",
-  #     "p-value <", round(unique(permanova_ecosystem$"Pr(>F)")[1], digits = 4)
-  #   ),
-  #   size = unit(3, "points"),
-  #   family = "Arial"
-  # ) +
-  # guides(color = guide_legend(
-  #   override.aes = list(size = 4, shape = 16)
-  # )) +
-  # annotation_custom(
-  #   life_style_legend, xmin = 1, xmax = 3.1, ymin = 1, ymax = 2
-  # ) +
+  annotate(
+    "text",
+    x = min(nmds_df$MDS1) + 2,
+    y = max(nmds_df$MDS2) - 0.5,
+    label = paste(
+      "Stress =",
+      round(unique(nmds_df$stress)[1], digits = 3),
+      "\n",
+      "Life style R² =", round(unique(permanova_lifestyle$R2)[1], digits = 3),
+      "\n",
+      "p-value < ", round(unique(permanova_lifestyle$"Pr(>F)")[1], digits = 4),
+      "\n",
+      "Ecossystem R² =", round(unique(permanova_ecosystem$R2)[1], digits = 3),
+      "\n",
+      "p-value <", round(unique(permanova_ecosystem$"Pr(>F)")[1], digits = 4)
+    ),
+    size = unit(3, "points"),
+    family = "Arial"
+  ) +
+  guides(color = guide_legend(
+    override.aes = list(size = 4, shape = 16)
+  )) +
+  annotation_custom(
+    life_style_legend, xmin = 1, xmax = 3.1, ymin = 1, ymax = 2
+  ) +
   scale_y_continuous(breaks = c(-1, -0.2, 0.6, 1.4)) +
   scale_x_continuous(breaks = c(-1, 0, 1, 2))
 
@@ -461,33 +461,33 @@ nmds_bonafide <-
       "%)"
     )
   ) +
-  # annotate(
-  #   "text",
-  #   x = min(nmds_bonafide_df$MDS1) + 2,
-  #   y = max(nmds_bonafide_df$MDS2) - 0.5,
-  #   label = paste(
-  #     "Stress =",
-  #     round(unique(nmds_bonafide_df$stress)[1], digits = 3),
-  #     "\n",
-  #     "Life style R² =",
-  #     round(unique(permanova_lifestyle$R2)[1], digits = 3),
-  #     "\n",
-  #     "p-value < ", round(unique(permanova_lifestyle$"Pr(>F)")[1], digits = 4),
-  #     "\n",
-  #     "Ecossystem R² =",
-  #     round(unique(permanova_ecosystem$R2)[1], digits = 3),
-  #     "\n",
-  #     "p-value < ", round(unique(permanova_ecosystem$"Pr(>F)")[1], digits = 4)
-  #   ),
-  #   size = unit(3, "points"),
-  #   family = "Arial"
-  # ) +
-  # guides(color = guide_legend(
-  #   override.aes = list(size = 4, shape = 16)
-  # )) +
-  # annotation_custom(
-  #   life_style_legend, xmin = 1, xmax = 3.1, ymin = 1, ymax = 2
-  # ) +
+  annotate(
+    "text",
+    x = min(nmds_bonafide_df$MDS1) + 2,
+    y = max(nmds_bonafide_df$MDS2) - 0.5,
+    label = paste(
+      "Stress =",
+      round(unique(nmds_bonafide_df$stress)[1], digits = 3),
+      "\n",
+      "Life style R² =",
+      round(unique(permanova_lifestyle_bonafide$R2)[1], digits = 3),
+      "\n",
+      "p-value < ", round(unique(permanova_lifestyle_bonafide$"Pr(>F)")[1], digits = 4),
+      "\n",
+      "Ecossystem R² =",
+      round(unique(permanova_ecosystem_bonafide$R2)[1], digits = 3),
+      "\n",
+      "p-value < ", round(unique(permanova_ecosystem_bonafide$"Pr(>F)")[1], digits = 4)
+    ),
+    size = unit(3, "points"),
+    family = "Arial"
+  ) +
+  guides(color = guide_legend(
+    override.aes = list(size = 4, shape = 16)
+  )) +
+  annotation_custom(
+    life_style_legend, xmin = 1, xmax = 3.1, ymin = 1, ymax = 2
+  ) +
   scale_y_continuous(breaks = c(-1, -0.2, 0.6, 1.4)) +
   scale_x_continuous(breaks = c(-1, 0, 1, 2))
 
@@ -552,33 +552,33 @@ nmds_cpr <-
       "%)"
     )
   ) +
-  # annotate(
-  #   "text",
-  #   x = min(nmds_cpr_df$MDS1) + 2,
-  #   y = max(nmds_cpr_df$MDS2) - 0.5,
-  #   label = paste(
-  #     "Stress =",
-  #     round(unique(nmds_cpr_df$stress)[1], digits = 3),
-  #     "\n",
-  #     "Life style R² =",
-  #     round(unique(permanova_lifestyle$R2)[1], digits = 3),
-  #     "\n",
-  #     "p-value < ", round(unique(permanova_lifestyle$"Pr(>F)")[1], digits = 4),
-  #     "\n",
-  #     "Ecossystem R² =",
-  #     round(unique(permanova_ecosystem$R2)[1], digits = 3),
-  #     "\n",
-  #     "p-value < ", round(unique(permanova_ecosystem$"Pr(>F)")[1], digits = 4)
-  #   ),
-  #   size = unit(3, "points"),
-  #   family = "Arial"
-  # ) +
-  # guides(color = guide_legend(
-  #   override.aes = list(size = 4, shape = 16)
-  # )) +
-  # annotation_custom(
-  #   life_style_legend, xmin = 1, xmax = 3.1, ymin = 1, ymax = 2
-  # ) +
+  annotate(
+    "text",
+    x = min(nmds_cpr_df$MDS1) + 2,
+    y = max(nmds_cpr_df$MDS2) - 0.5,
+    label = paste(
+      "Stress =",
+      round(unique(nmds_cpr_df$stress)[1], digits = 3),
+      "\n",
+      "Life style R² =",
+      round(unique(permanova_lifestyle_cpr$R2)[1], digits = 3),
+      "\n",
+      "p-value < ", round(unique(permanova_lifestyle_cpr$"Pr(>F)")[1], digits = 4),
+      "\n",
+      "Ecossystem R² =",
+      round(unique(permanova_ecosystem_cpr$R2)[1], digits = 3),
+      "\n",
+      "p-value < ", round(unique(permanova_ecosystem_cpr$"Pr(>F)")[1], digits = 4)
+    ),
+    size = unit(3, "points"),
+    family = "Arial"
+  ) +
+  guides(color = guide_legend(
+    override.aes = list(size = 4, shape = 16)
+  )) +
+  annotation_custom(
+    life_style_legend, xmin = 1, xmax = 3.1, ymin = 1, ymax = 2
+  ) +
   scale_y_continuous(breaks = c(-2, -1, 0, 1, 2)) +
   scale_x_continuous(breaks = c(-4, -2, 0, 2, 4))
 
@@ -591,6 +591,91 @@ ggsave(
   units = "cm"
 )
 
+# NMDS DPANN plot ------------------------------------------------------------
+# Create dataframe ---------------------
+nmds_dpann_df <-
+  cbind(
+    phyla_abundances_wide$ecosystem,
+    as.data.frame(nmds_dpann$points),
+    phyla_abundances_wide$samples
+  ) %>%
+  mutate(stress = nmds_dpann$stress)
+
+colnames(nmds_dpann_df) <- c("ecosystem", "MDS1", "MDS2", "samples", "stress")
+
+# Plot ---------------------------------
+nmds_dpann <- 
+  ggplot(nmds_dpann_df, aes(x = MDS1, y = MDS2, color = ecosystem)) +
+  theme_pubr() +
+  theme(
+    text = element_text(size = unit(8, "points"), family = "Arial"),
+    plot.title = element_text(
+      hjust = 0.5, family = "Arial", size = unit(8, "points")
+    ),
+    strip.background = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    legend.position = "right",
+    legend.title = element_text(
+      face = "bold", family = "Arial", size = unit(8, "points")
+    ),
+    legend.spacing.x = unit(0.1, "points"),
+    legend.spacing.y = unit(0.1, "points"),
+    axis.title.x = element_text(
+      size = unit(8, "points"), face = "bold", family = "Arial"
+    ),
+    axis.title.y = element_text(
+      size = unit(8, "points"), face = "bold", family = "Arial"
+    ),
+    legend.text = element_text(size = unit(8, "points"), family = "Arial")
+  ) +
+  geom_point(size = 1, shape = 20) +
+  scale_color_manual(values = ecosystem_colors, name = "Ecosystem") +
+  ggtitle("DPANN") +
+  labs(
+    x = paste0(
+      "MDS1 (",
+      round(attr(nmds_dpann$species, "shrinkage")[1] * 100, digits = 2),
+      "%)"
+    ),
+    y = paste0(
+      "MDS2 (",
+      round(attr(nmds_dpann$species, "shrinkage")[2] * 100, digits = 2),
+      "%)"
+    )
+  ) +
+  annotate(
+    "text",
+    x = min(nmds_dpann_df$MDS1) + 2,
+    y = max(nmds_dpann_df$MDS2) - 0.5,
+    label = paste(
+      "Stress =",
+      round(unique(nmds_dpann_df$stress)[1], digits = 3),
+      "\n",
+      "Life style R² =",
+      round(unique(permanova_lifestyle_dpann$R2)[1], digits = 3),
+      "\n",
+      "p-value < ", round(unique(permanova_lifestyle_dpann$"Pr(>F)")[1], digits = 4),
+      "\n",
+      "Ecossystem R² =",
+      round(unique(permanova_ecosystem_dpann$R2)[1], digits = 3),
+      "\n",
+      "p-value < ", round(unique(permanova_ecosystem_dpann$"Pr(>F)")[1], digits = 4)
+    ),
+    size = unit(3, "points"),
+    family = "Arial"
+  ) +
+  guides(color = guide_legend(
+    override.aes = list(size = 4, shape = 16)
+  )) +
+  annotation_custom(
+    life_style_legend, xmin = 1, xmax = 3.1, ymin = 1, ymax = 2
+  ) +
+  scale_y_continuous(breaks = c(-2, -1, 0, 1, 2)) +
+  scale_x_continuous(breaks = c(-4, -2, 0, 2, 4))
+
+
+
 ############################### Merge plots ####################################
 result_dir <- "results/figures/"
 if (!dir.exists(result_dir)) {
@@ -599,12 +684,18 @@ if (!dir.exists(result_dir)) {
 
 ## Panel 1 (all NMDS)
 
+nmds_muicrogroups <- plot_grid(
+  nmds_bonafide, nmds_cpr, nmds_dpann
+  ncol = 3,
+  rel_widths = c(1, 1, 1)
+)
+
 panel_1 <- plot_grid(
-  nmds_allsamples, 
+  nmds_allsamples, nmds_muicrogroups,
   ncol = 1,
   nrow = 2,
   rel_widths = c(1, 1),
-  rel_heights = c(3, 1)
+  rel_heights = c(2.5, 1)
 )
 
 ## Save panel 1
