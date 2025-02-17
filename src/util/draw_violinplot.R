@@ -30,41 +30,32 @@ draw_violinplot <- function(
   breaks = NULL,
   break_labels = NULL,
   colors,
-  add_boxplot = TRUE,
   add_jitter = TRUE
 ) {
+  # Base violin plot with boxplot always included
   violinplot <- ggplot(data, aes(x = .data[[x_var]], y = .data[[y_var]], fill = .data[[x_var]])) +
-    
-    ## Violin plot
-    geom_violin(trim = TRUE, alpha = 0.7) +
-    
-    ## Optional boxplot
-    if (add_boxplot) geom_boxplot(width = 0.2, outlier.shape = NA, alpha = 0.6) else NULL +
-    
-    ## Optional jittered points
-    if (add_jitter) geom_jitter(shape = 16, position = position_jitter(0.2), alpha = 0.5) else NULL +
-    
-    ## Colors
+    geom_violin(trim = TRUE) +
+    geom_boxplot(width = 0.2, outlier.shape = NA, alpha = 0.6) +  # Boxplot always included
+    stat_summary(fun = mean, geom = "crossbar", width = 0.2, fatten = 2, color = "grey") + 
     scale_fill_manual(values = colors) +
-    
-    ## Theme and legend
     theme_pubr() +
     theme(
-      text = element_text(size = unit(8, "points"), family = "Arial"),
+      text = element_text(size = unit(10, "points"), family = "Arial"),
       legend.position = legend_position,
-      legend.text = element_text(size = unit(8, "points"), family = "Arial"),
-      legend.title = element_text(face = "bold", size = unit(8, "points"), family = "Arial"),
-      axis.title.x = element_text(face = "bold", size = unit(8, "points"), family = "Arial"),
-      axis.title.y = element_text(face = "bold", size = unit(8, "points"), family = "Arial"),
-      plot.title = element_text(size = unit(8, "points"), face = "bold", family = "Arial", hjust = 0.5)
+      legend.text = element_text(size = unit(10, "points"), family = "Arial"),
+      legend.title = element_text(face = "bold", size = unit(10, "points"), family = "Arial"),
+      axis.title.x = element_text(face = "bold", size = unit(12, "points"), family = "Arial"),
+      axis.title.y = element_text(face = "bold", size = unit(12, "points"), family = "Arial"),
+      plot.title = element_text(size = unit(15, "points"), face = "bold", family = "Arial", hjust = 0.5)
     ) +
-    
-    ## Titles
     ggtitle(title) +
     labs(x = title_x, y = title_y, fill = legend_title) +
-    
-    ## Y-axis breaks
     scale_y_continuous(breaks = breaks, labels = break_labels)
+  
+  # Add optional jittered points
+  if (add_jitter) {
+    violinplot <- violinplot + geom_jitter(shape = 16, alpha = 0.5, width = 0.2)
+  }
   
   return(violinplot)
 }

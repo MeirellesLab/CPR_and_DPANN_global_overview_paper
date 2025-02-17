@@ -26,6 +26,13 @@ phyla_abundances_long <- read_csv("data/treated/phyla_abundances_long.csv") %>%
   treatment()
 phyla_abundances_wide <- read_csv("data/treated/phyla_abundances_wide.csv") %>%
   treatment()
+phyla_abundances_wide_bonafide <- read_csv("data/treated/phyla_abundances_wide_bonafide.csv") %>%
+  treatment()
+phyla_abundances_wide_cpr <- read_csv("data/treated/phyla_abundances_wide_cpr.csv") %>%
+  treatment()
+phyla_abundances_wide_dpann <- read_csv("data/treated/phyla_abundances_wide_dpann.csv") %>%
+  treatment()
+
 microgroups_prevalence_persite <- read_csv(
   "data/summaries/microgroups_prevalence_persite.csv"
 ) %>%
@@ -116,181 +123,215 @@ dpann_latitude_plot <- draw_latitude_gam(
 source("src/util/draw_violinplot.R")
 # Life Style -------------------------------------------------------------------
 ## Richness ----------------------------
+
+# Create a column with the richness by sample in each microgroup dataframe.
+# Bonafide
+bonafide_taxa_cols <- 2:(ncol(phyla_abundances_wide_bonafide)-5)
+phyla_abundances_wide_bonafide$richness <- rowSums(phyla_abundances_wide_bonafide[, bonafide_taxa_cols] > 0)
+
+#CPR
+cpr_taxa_cols <- 7:(ncol(phyla_abundances_wide_cpr))
+phyla_abundances_wide_cpr$richness <- rowSums(phyla_abundances_wide_cpr[, cpr_taxa_cols] > 0)
+
+#DPANN
+dpann_taxa_cols <- 7:(ncol(phyla_abundances_wide_dpann))
+phyla_abundances_wide_dpann$richness <- rowSums(phyla_abundances_wide_dpann[, dpann_taxa_cols] > 0)
+
+
 bonafide_barplot_richness_lifestyle <- draw_violinplot(
-  data = subset(lifestyle_microgroups_prevalence, microgroup == "Bonafide"),
+  data = phyla_abundances_wide_bonafide,
   title = "Culturable",
   x_var = "life_style",
-  y_var = "mean_rich_life",
+  y_var = "richness",
   title_y = "Richness",
   title_x = "",
   legend_title = "Life Style",
   legend_position = "none",
   breaks = c(0, 22, 44),
-  break_labels = c("    0", "22", "44"),
+  break_labels = c("0", "22", "44"),
   colors = life_style_colors,
-  add_boxplot = TRUE,
-  add_jitter = TRUE
-)
-cpr_barplot_richness_lifestyle <- draw_barplot_simple(
-  data = subset(lifestyle_microgroups_prevalence, microgroup == "CPR"),
+  add_jitter = FALSE
+) + ylim(0, 45)
+
+cpr_barplot_richness_lifestyle <- draw_violinplot(
+  data = phyla_abundances_wide_cpr,
   title = "CPR",
   x_var = "life_style",
-  y_var = "mean_rich_life",
-  error_var = "se_rich_life",
-  title_y = "",
+  y_var = "richness",
+  title_y = "Richness",
   title_x = "",
   legend_title = "Life Style",
   legend_position = "none",
-  breaks = c(0, 54, 105),
-  break_labels = c("    0", "54", "105"),
-  colors = life_style_colors
-)
-dpann_barplot_richness_lifestyle <- draw_barplot_simple(
-  data = subset(lifestyle_microgroups_prevalence, microgroup == "DPANN"),
+  breaks = c(0, 22, 44),
+  break_labels = c("0", "22", "44"),
+  colors = life_style_colors,
+  add_jitter = FALSE
+) + ylim(0, 125)
+
+dpann_barplot_richness_lifestyle <- draw_violinplot(
+  data = phyla_abundances_wide_dpann,
   title = "DPANN",
   x_var = "life_style",
-  y_var = "mean_rich_life",
-  error_var = "se_rich_life",
-  title_y = "",
+  y_var = "richness",
+  title_y = "Richness",
   title_x = "",
   legend_title = "Life Style",
   legend_position = "none",
-  breaks = c(0, 3.1, 6.4),
-  break_labels = c("    0", "3.1", "6.4"),
-  colors = life_style_colors
-)
+  breaks = c(0, 22, 44),
+  break_labels = c("0", "22", "44"),
+  colors = life_style_colors,
+  add_jitter = FALSE
+) + ylim(0, 12)
 
-# #Abundance ---------------------------
-bonafide_abundance_lifestyle <- draw_barplot_simple(
-  data = subset(lifestyle_microgroups_prevalence, microgroup == "Bonafide"),
-  title = "",
+##Abundance ---------------------------
+
+# Create a column with the total relative abundance of the microgroup in each sample
+
+# Bonafide
+phyla_abundances_wide_bonafide$total_abu <- rowSums(phyla_abundances_wide_bonafide[, bonafide_taxa_cols]) * 100
+# CPR
+phyla_abundances_wide_cpr$total_abu <- rowSums(phyla_abundances_wide_cpr[, cpr_taxa_cols]) * 100
+# DPANN
+phyla_abundances_wide_dpann$total_abu <- rowSums(phyla_abundances_wide_dpann[, dpann_taxa_cols]) * 100
+
+
+bonafide_abundance_lifestyle <- draw_violinplot(
+  data = phyla_abundances_wide_bonafide,
+  title = "Culturable",
   x_var = "life_style",
-  y_var = "mean_abu_life",
-  error_var = "se_abu_life",
-  title_y = "Relative abundance (%)",
+  y_var = "total_abu",
+  title_y = "Relative Abundance (%)",
   title_x = "",
-  legend_title = "Life style",
+  legend_title = "Life Style",
   legend_position = "none",
-  breaks = c(0, 0.50, 1),
-  break_labels = c("    0", "50", "100"),
-  colors = life_style_colors
-)
-cpr_abundance_lifestyle <- draw_barplot_simple(
-  data = subset(lifestyle_microgroups_prevalence, microgroup == "CPR"),
-  title = "",
+  breaks = c(0, 50, 100),
+  break_labels = c("0", "50", "100"),
+  colors = life_style_colors,
+  add_jitter = FALSE
+) + ylim(50, 100)
+
+cpr_abundance_lifestyle <- draw_violinplot(
+  data = phyla_abundances_wide_cpr,
+  title = "CPR",
   x_var = "life_style",
-  y_var = "mean_abu_life",
-  error_var = "se_abu_life",
-  title_y = "",
-  title_x = "Life style",
-  legend_title = "Life style",
-  legend_position = "none",
-  breaks = c(0, 0.007, 0.0133),
-  break_labels = c("    0", "0.7", "1.3"),
-  colors = life_style_colors
-)
-dpann_abundance_lifestyle <- draw_barplot_simple(
-  data = subset(lifestyle_microgroups_prevalence, microgroup == "DPANN"),
-  title = "",
-  x_var = "life_style",
-  y_var = "mean_abu_life",
-  error_var = "se_abu_life",
-  title_y = "",
+  y_var = "total_abu",
+  title_y = "Relative Abundance (%)",
   title_x = "",
-  legend_title = "Life style",
-  legend_position = "top",
-  breaks = c(0, 0.000104, 0.00021),
-  break_labels = c("    0", "0.01", "0.02"),
-  colors = life_style_colors
-)
+  legend_title = "Life Style",
+  legend_position = "none",
+  breaks = c(0, 2, 10),
+  break_labels = c("0", "2", "10"),
+  colors = life_style_colors,
+  add_jitter = FALSE
+) + ylim(0, 5)
+
+dpann_abundance_lifestyle <- draw_violinplot(
+  data = phyla_abundances_wide_dpann,
+  title = "DPANN",
+  x_var = "life_style",
+  y_var = "total_abu",
+  title_y = "Relative Abundance (%)",
+  title_x = "",
+  legend_title = "Life Style",
+  legend_position = "none",
+  breaks = c(0, 0.05, 0.075),
+  break_labels = c("0", "0.05", "0.075"),
+  colors = life_style_colors,
+  add_jitter = FALSE
+) + ylim(0, 0.075)
 
 # Ecossystem ------------------------------------------------------------------
 # Richness -----------------------------
-bonafide_richness_ecosystem <- draw_barplot_simple(
-  data = subset(ecosystem_microgroups_prevalence, microgroup == "Bonafide"),
-  title = "",
+bonafide_richness_ecosystem <- draw_violinplot(
+  data = phyla_abundances_wide_bonafide,
+  title = "Culturable",
   x_var = "ecosystem",
-  y_var = "mean_rich_life",
-  error_var = "se_rich_life",
+  y_var = "richness",
   title_y = "Richness",
   title_x = "",
   legend_title = "Ecosystem",
-  legend_position = "top",
-  breaks = c(0, 22, 44),
-  break_labels = c("    0", "22", "44"),
-  colors = ecosystem_colors
-)
-cpr_richness_ecosystem <- draw_barplot_simple(
-  data = subset(ecosystem_microgroups_prevalence, microgroup == "CPR"),
-  title = "",
-  x_var = "ecosystem",
-  y_var = "mean_rich_life",
-  error_var = "se_rich_life",
-  title_y = "",
-  title_x = "",
-  legend_title = "ecosystem",
   legend_position = "none",
-  breaks = c(0, 55, 110),
-  break_labels = c("    0", "55", "110"),
-  colors = ecosystem_colors
-)
-dpann_richness_ecosystem <- draw_barplot_simple(
-  data = subset(ecosystem_microgroups_prevalence, microgroup == "DPANN"),
-  title = "",
+  breaks = c(0, 50, 100),
+  break_labels = c("0", "50", "100"),
+  colors = ecosystem_colors,
+  add_jitter = FALSE
+) + ylim(0, 50)
+
+cpr_richness_ecosystem <- draw_violinplot(
+  data = phyla_abundances_wide_cpr,
+  title = "CPR",
   x_var = "ecosystem",
-  y_var = "mean_rich_life",
-  error_var = "se_rich_life",
-  title_y = "",
+  y_var = "richness",
+  title_y = "Richness",
   title_x = "",
-  legend_title = "ecosystem",
-  breaks = c(0, 4, 8),
-  break_labels = c("    0", "4", "8"),
-  colors = ecosystem_colors
-)
+  legend_title = "Ecosystem",
+  legend_position = "none",
+  breaks = c(0, 50, 100),
+  break_labels = c("0", "50", "100"),
+  colors = ecosystem_colors,
+  add_jitter = FALSE
+) + ylim(0, 110)
+
+dpann_richness_ecosystem <- draw_violinplot(
+  data = phyla_abundances_wide_dpann,
+  title = "DPANN",
+  x_var = "ecosystem",
+  y_var = "richness",
+  title_y = "Richness",
+  title_x = "",
+  legend_title = "Ecosystem",
+  legend_position = "none",
+  breaks = c(0, 5, 10),
+  break_labels = c("0", "5", "10"),
+  colors = ecosystem_colors,
+  add_jitter = FALSE
+) + ylim(0, 10)
 
 # Abundance ----------------------------
-bonafide_abundance_ecosystem <- draw_barplot_simple(
-  data = subset(ecosystem_microgroups_prevalence, microgroup == "Bonafide"),
-  title = "",
+bonafide_abundance_ecosystem <- draw_violinplot(
+  data = phyla_abundances_wide_bonafide,
+  title = "Culturable",
   x_var = "ecosystem",
-  y_var = "mean_abu_life",
-  error_var = "se_abu_life",
-  title_y = "Relative abundance (%)",
+  y_var = "total_abu",
+  title_y = "Relative Abundance (%)",
   title_x = "",
-  legend_title = "",
+  legend_title = "Ecosystem",
   legend_position = "none",
-  breaks = c(0, 0.5, 1),
-  break_labels = c("    0", "50", "100"),
-  colors = ecosystem_colors
-)
-cpr_abundance_ecosystem <- draw_barplot_simple(
-  data = subset(ecosystem_microgroups_prevalence, microgroup == "CPR"),
-  title = "",
+  breaks = c(0, 50, 100),
+  break_labels = c("0", "50", "100"),
+  colors = ecosystem_colors,
+  add_jitter = FALSE
+) + ylim(50, 100)
+
+cpr_abundance_ecosystem <- draw_violinplot(
+  data = phyla_abundances_wide_cpr,
+  title = "CPR",
   x_var = "ecosystem",
-  y_var = "mean_abu_life",
-  error_var = "se_abu_life",
-  title_y = "",
-  title_x = "Ecosystem",
-  legend_title = "ecosystem",
-  legend_position = "none",
-  breaks = c(0, 0.035, 0.07),
-  break_labels = c("    0", "3.5", "7"),
-  colors = ecosystem_colors
-)
-dpann_abundance_ecosystem <- draw_barplot_simple(
-  data = subset(ecosystem_microgroups_prevalence, microgroup == "DPANN"),
-  title = "",
-  x_var = "ecosystem",
-  y_var = "mean_abu_life",
-  error_var = "se_abu_life",
-  title_y = "",
+  y_var = "total_abu",
+  title_y = "Relative Abundance (%)",
   title_x = "",
-  legend_title = "ecosystem",
+  legend_title = "Ecosystem",
   legend_position = "none",
-  breaks = c(0, 0.00060, 0.00120),
-  break_labels = c("    0", "0.06", "0.12"),
-  colors = ecosystem_colors
-)
+  breaks = c(0, 2, 7),
+  break_labels = c("0", "2", "7"),
+  colors = ecosystem_colors,
+  add_jitter = FALSE
+) + ylim(0, 7)
+
+dpann_abundance_ecosystem <- draw_violinplot(
+  data = phyla_abundances_wide_dpann,
+  title = "DPANN",
+  x_var = "ecosystem",
+  y_var = "total_abu",
+  title_y = "Relative Abundance (%)",
+  title_x = "",
+  legend_title = "Ecosystem",
+  legend_position = "none",
+  breaks = c(0, 0.05, 0.1),
+  break_labels = c("0", "0.05", "0.1"),
+  colors = ecosystem_colors,
+  add_jitter = FALSE
+) + ylim(0, 0.075)
 
 # Get legends ------------------------------------------------------------------
 ecosystem_legend <- cowplot::get_legend(bonafide_richness_ecosystem)
@@ -301,25 +342,25 @@ dpann_abundance_lifestyle <- dpann_abundance_lifestyle +
   theme(legend.position = "none")
 
 # Merge plots ------------------------------------------------------------------
-barplot_abundance_lifestyle <- ggarrange(
+violinplot_abundance_lifestyle <- ggarrange(
   bonafide_abundance_lifestyle,
   cpr_abundance_lifestyle,
   dpann_abundance_lifestyle,
   ncol = 3
 )
-barplot_richness_lifestyle <- ggarrange(
+violinplot_richness_lifestyle <- ggarrange(
   bonafide_barplot_richness_lifestyle,
   cpr_barplot_richness_lifestyle,
   dpann_barplot_richness_lifestyle,
   ncol = 3
 )
-barplot_richness_ecosystem <- ggarrange(
+violinplot_richness_ecosystem <- ggarrange(
   bonafide_richness_ecosystem,
   cpr_richness_ecosystem,
   dpann_richness_ecosystem,
   ncol = 3
 )
-barplot_abundance_ecosystem <- ggarrange(
+violinplot_abundance_ecosystem <- ggarrange(
   bonafide_abundance_ecosystem,
   cpr_abundance_ecosystem,
   dpann_abundance_ecosystem,
