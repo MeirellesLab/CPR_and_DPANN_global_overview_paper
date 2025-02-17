@@ -152,7 +152,7 @@ bonafide_barplot_richness_lifestyle <- draw_violinplot(
   break_labels = c("0", "22", "44"),
   colors = life_style_colors,
   add_jitter = FALSE
-) + ylim(0, 45)
+) + ylim(30, 50)
 
 cpr_barplot_richness_lifestyle <- draw_violinplot(
   data = phyla_abundances_wide_cpr,
@@ -256,7 +256,7 @@ bonafide_richness_ecosystem <- draw_violinplot(
   break_labels = c("0", "50", "100"),
   colors = ecosystem_colors,
   add_jitter = FALSE
-) + ylim(0, 50)
+) + ylim(30, 50)
 
 cpr_richness_ecosystem <- draw_violinplot(
   data = phyla_abundances_wide_cpr,
@@ -348,64 +348,74 @@ bonafide_abundance_ecosystem <- bonafide_abundance_ecosystem +
   theme(axis.text.x = element_blank())
 
 bonafide_richness_ecosystem <- bonafide_richness_ecosystem +
-  theme(axis.text.x = element_blank())
+  theme(axis.text.x = element_blank(),
+        plot.title = element_blank())
 
 bonafide_abundance_lifestyle <- bonafide_abundance_lifestyle +
   theme(axis.text.x = element_blank())
 
 bonafide_barplot_richness_lifestyle <- bonafide_barplot_richness_lifestyle +
-  theme(axis.text.x = element_blank())
+  theme(axis.text.x = element_blank(),
+        plot.title = element_blank())
 
 cpr_abundance_lifestyle <- cpr_abundance_lifestyle +
   theme(axis.title.y = element_blank(),
         axis.text.x = element_blank())
 cpr_barplot_richness_lifestyle <- cpr_barplot_richness_lifestyle +
   theme(axis.title.y = element_blank(),
-        axis.text.x = element_blank())
+        axis.text.x = element_blank(),
+        plot.title = element_blank())
 cpr_abundance_ecosystem <- cpr_abundance_ecosystem +
   theme(axis.title.y = element_blank(),
         axis.text.x = element_blank())
 cpr_richness_ecosystem <- cpr_richness_ecosystem +
   theme(axis.title.y = element_blank(),
-        axis.text.x = element_blank())
+        axis.text.x = element_blank(),
+        plot.title = element_blank())
 
 dpann_abundance_lifestyle <- dpann_abundance_lifestyle +
   theme(axis.title.y = element_blank(),
         axis.text.x = element_blank())
 dpann_barplot_richness_lifestyle <- dpann_barplot_richness_lifestyle +
   theme(axis.title.y = element_blank(),
-        axis.text.x = element_blank())
+        axis.text.x = element_blank(),
+        plot.title = element_blank())
 dpann_abundance_ecosystem <- dpann_abundance_ecosystem +
   theme(axis.title.y = element_blank(),
         axis.text.x = element_blank())
 dpann_richness_ecosystem <- dpann_richness_ecosystem +
   theme(axis.title.y = element_blank(),
-        axis.text.x = element_blank())
+        axis.text.x = element_blank(),
+        plot.title = element_blank())
 
 
 violinplot_abundance_lifestyle <- ggarrange(
   bonafide_abundance_lifestyle,
   cpr_abundance_lifestyle,
   dpann_abundance_lifestyle,
-  ncol = 3
+  ncol = 3,
+  labels = c("A", "B", "C")
 )
 violinplot_richness_lifestyle <- ggarrange(
   bonafide_barplot_richness_lifestyle,
   cpr_barplot_richness_lifestyle,
   dpann_barplot_richness_lifestyle,
-  ncol = 3
+  ncol = 3,
+  labels = c("D", "E", "F")
 )
 violinplot_richness_ecosystem <- ggarrange(
   bonafide_richness_ecosystem,
   cpr_richness_ecosystem,
   dpann_richness_ecosystem,
-  ncol = 3
+  ncol = 3,
+  labels = c("G", "H", "I")
 )
 violinplot_abundance_ecosystem <- ggarrange(
   bonafide_abundance_ecosystem,
   cpr_abundance_ecosystem,
   dpann_abundance_ecosystem,
-  ncol = 3
+  ncol = 3,
+  labels = c("J", "K", "L")
 )
 
 ############# nmds plot #######################################################
@@ -784,12 +794,13 @@ if (!dir.exists(result_dir)) {
 nmds_bonafide <- nmds_bonafide + theme(legend.position = "none")
 nmds_cpr <- nmds_cpr + theme(legend.position = "none")
 nmds_dpann <- nmds_dpann + theme(legend.position = "none")
-nmds_allsamples <- nmds_allsamples + theme(legend.position = "none")
+#nmds_allsamples <- nmds_allsamples + theme(legend.position = "none")
 
 nmds_muicrogroups <- plot_grid(
   nmds_bonafide, nmds_cpr, nmds_dpann,
   ncol = 3,
-  rel_widths = c(1, 1, 1)
+  rel_widths = c(1, 1, 1),
+  labels = c("C", "D", "E")
 )
 
 nmds_panel <- plot_grid(
@@ -797,7 +808,7 @@ nmds_panel <- plot_grid(
   ncol = 1,
   nrow = 2,
   rel_widths = c(1, 1),
-  rel_heights = c(2, 1.2)
+  rel_heights = c(2, 1.5)
 )
 
 # ## Save panel 1
@@ -827,55 +838,79 @@ nmds_panel <- plot_grid(
 #   units = "cm"
 # )
 
+panel_1 <- plot_grid(worldmap, nmds_panel,
+ ncol = 1,
+ rel_heights = c(1.5, 3),
+ labels = c("A", "B"),
+ label_size = 13,
+ label_fontfamily = "Arial"
+)
+
 top_right <- plot_grid(
- violinplot_richness_lifestyle, violinplot_abundance_lifestyle,
+ violinplot_abundance_lifestyle, violinplot_richness_lifestyle, 
  ncol = 1, align = "hv",
  rel_widths = c(1, 1),
- labels = c("d", "e"),
  label_size = 13,
  label_fontfamily = "Arial"
 )
 bottom_right <- plot_grid(
- violinplot_richness_ecosystem, violinplot_abundance_ecosystem,
+ violinplot_abundance_ecosystem, violinplot_richness_ecosystem, 
  ncol = 1, align = "hv",
  rel_heights = c(1, 1),
- labels = c("f", "g"),
  label_fontfamily = "Arial",
  label_size = 13
 )
-right_panel <- plot_grid(
+panel_2 <- plot_grid(
  top_right,
  bottom_right,
  nrow = 2,
  rel_widths = c(1, 1)
 )
-left_panel <- plot_grid(worldmap, nmds_panel,
- ncol = 1,
- rel_heights = c(1.5, 3),
- labels = c("a", "b", "c"),
- label_size = 13,
- label_fontfamily = "Arial"
+
+
+ggsave(
+ paste0(result_dir, "panel_1.svg"),
+ plot = panel_1,
+ width = 20,
+ height = 30,
+ units = "cm"
+)
+ggsave(
+ paste0(result_dir, "panel_1.png"),
+ plot = panel_1,
+ width = 20,
+ height = 30,
+ units = "cm"
 )
 
-panel1 <- plot_grid(left_panel, right_panel, ncol = 2, rel_widths = c(1, 1))
 ggsave(
- paste0(result_dir, "panel1.pdf"),
- plot = panel1,
+ paste0(result_dir, "panel_1.pdf"),
+ plot = panel_1,
+ width = 20,
+ height = 30,
+ units = "cm"
+)
+
+ggsave(
+ paste0(result_dir, "panel_2.svg"),
+ plot = panel_2,
  width = 30,
  height = 27,
  units = "cm"
 )
+
 ggsave(
- paste0(result_dir, "panel1.svg"),
- plot = panel1,
+ paste0(result_dir, "panel_2.png"),
+ plot = panel_2,
  width = 30,
  height = 27,
  units = "cm"
 )
+
 ggsave(
- paste0(result_dir, "panel1.png"),
- plot = panel1,
- width = 30,
- height = 27,
- units = "cm"
+  paste0(result_dir, "panel_2.pdf"),
+  plot = panel_2,
+  width = 25,
+  height = 20,
+  units = "cm"
 )
