@@ -40,7 +40,7 @@ merged_df <- phyla_abundances %>%
   group_by(ecosystem, habitat) %>%
   mutate(total_samples = n()) %>%
   filter(total_samples >= 5) %>%
-  select(-total_samples) %>%
+  dplyr::select(-total_samples) %>%
   ungroup()
 source("src/util/visualization_treatment.R")
 merged_df <- treatment(merged_df)
