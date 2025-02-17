@@ -200,7 +200,7 @@ if (!file.exists(paste0(rdata_dir, "simper_habitats.RData"))) {
  raw_simper_habitats <- simper(
    standarized_abundances_persite,
    group = category,
-   parallel = 1,
+   parallel = 20,
    permutations = 4999
  )
  save(raw_simper_habitats, file = paste0(rdata_dir, "simper_habitats.RData"))
