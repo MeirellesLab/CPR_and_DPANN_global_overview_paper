@@ -113,22 +113,23 @@ dpann_latitude_plot <- draw_latitude_gam(
 )
 
 ##################### barplots for richness and abundance ######################
-source("src/util/draw_barplot_simple.R")
+source("src/util/draw_violinplot.R")
 # Life Style -------------------------------------------------------------------
 ## Richness ----------------------------
-bonafide_barplot_richness_lifestyle <- draw_barplot_simple(
+bonafide_barplot_richness_lifestyle <- draw_violinplot(
   data = subset(lifestyle_microgroups_prevalence, microgroup == "Bonafide"),
-  title = "Bonafide",
+  title = "Culturable",
   x_var = "life_style",
   y_var = "mean_rich_life",
-  error_var = "se_rich_life",
   title_y = "Richness",
   title_x = "",
   legend_title = "Life Style",
   legend_position = "none",
   breaks = c(0, 22, 44),
   break_labels = c("    0", "22", "44"),
-  colors = life_style_colors
+  colors = life_style_colors,
+  add_boxplot = TRUE,
+  add_jitter = TRUE
 )
 cpr_barplot_richness_lifestyle <- draw_barplot_simple(
   data = subset(lifestyle_microgroups_prevalence, microgroup == "CPR"),

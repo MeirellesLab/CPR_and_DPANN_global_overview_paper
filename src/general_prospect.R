@@ -351,6 +351,12 @@ all_unculturable <- c(cpr_groups, dpann_groups)
 merged_df_bonafide <- merged_df %>%
   dplyr::select(setdiff(colnames(merged_df), all_unculturable))
 
+# Sasve the data
+write_csv(merged_df_cpr, paste0(treated_dir, "phyla_abundances_wide_cpr.csv"))
+write_csv(merged_df_dpann, paste0(treated_dir, "phyla_abundances_wide_dpann.csv"))
+write_csv(merged_df_bonafide, paste0(treated_dir, "phyla_abundances_wide_bonafide.csv"))
+
+
 #Chek if there is any row with all zeros in each df 
 print("Checking if there is any row with all zeros in each df...")
 print("CPR")
