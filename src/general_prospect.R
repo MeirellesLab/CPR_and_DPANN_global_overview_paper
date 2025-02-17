@@ -106,7 +106,7 @@ if (!dir.exists(statistics_dir)) {
 # Main MDS ---------------------------------
 print("Running general NMDS...")
 standarized_abundances <- merged_df %>%
-  select(-c(samples, latitude, longitude, ecosystem, life_style, habitat)) %>%
+  dplyr::select(-c(samples, latitude, longitude, ecosystem, life_style, habitat)) %>%
   decostand(method = "hellinger") %>%
   vegdist(method = "jaccard")
 if (!file.exists(paste0(rdata_dir, "nmds.RData"))) {

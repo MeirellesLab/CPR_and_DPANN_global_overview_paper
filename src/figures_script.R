@@ -129,6 +129,7 @@ source("src/util/draw_violinplot.R")
 bonafide_taxa_cols <- 2:(ncol(phyla_abundances_wide_bonafide)-5)
 phyla_abundances_wide_bonafide$richness <- rowSums(phyla_abundances_wide_bonafide[, bonafide_taxa_cols] > 0)
 
+
 #CPR
 cpr_taxa_cols <- 7:(ncol(phyla_abundances_wide_cpr))
 phyla_abundances_wide_cpr$richness <- rowSums(phyla_abundances_wide_cpr[, cpr_taxa_cols] > 0)
@@ -208,7 +209,7 @@ bonafide_abundance_lifestyle <- draw_violinplot(
   break_labels = c("0", "50", "100"),
   colors = life_style_colors,
   add_jitter = FALSE
-) + ylim(50, 100)
+) + ylim(90, 100)
 
 cpr_abundance_lifestyle <- draw_violinplot(
   data = phyla_abundances_wide_cpr,
@@ -301,7 +302,7 @@ bonafide_abundance_ecosystem <- draw_violinplot(
   break_labels = c("0", "50", "100"),
   colors = ecosystem_colors,
   add_jitter = FALSE
-) + ylim(50, 100)
+) + ylim(90, 100)
 
 cpr_abundance_ecosystem <- draw_violinplot(
   data = phyla_abundances_wide_cpr,
@@ -342,6 +343,46 @@ dpann_abundance_lifestyle <- dpann_abundance_lifestyle +
   theme(legend.position = "none")
 
 # Merge plots ------------------------------------------------------------------
+
+bonafide_abundance_ecosystem <- bonafide_abundance_ecosystem +
+  theme(axis.text.x = element_blank())
+
+bonafide_richness_ecosystem <- bonafide_richness_ecosystem +
+  theme(axis.text.x = element_blank())
+
+bonafide_abundance_lifestyle <- bonafide_abundance_lifestyle +
+  theme(axis.text.x = element_blank())
+
+bonafide_barplot_richness_lifestyle <- bonafide_barplot_richness_lifestyle +
+  theme(axis.text.x = element_blank())
+
+cpr_abundance_lifestyle <- cpr_abundance_lifestyle +
+  theme(axis.title.y = element_blank(),
+        axis.text.x = element_blank())
+cpr_barplot_richness_lifestyle <- cpr_barplot_richness_lifestyle +
+  theme(axis.title.y = element_blank(),
+        axis.text.x = element_blank())
+cpr_abundance_ecosystem <- cpr_abundance_ecosystem +
+  theme(axis.title.y = element_blank(),
+        axis.text.x = element_blank())
+cpr_richness_ecosystem <- cpr_richness_ecosystem +
+  theme(axis.title.y = element_blank(),
+        axis.text.x = element_blank())
+
+dpann_abundance_lifestyle <- dpann_abundance_lifestyle +
+  theme(axis.title.y = element_blank(),
+        axis.text.x = element_blank())
+dpann_barplot_richness_lifestyle <- dpann_barplot_richness_lifestyle +
+  theme(axis.title.y = element_blank(),
+        axis.text.x = element_blank())
+dpann_abundance_ecosystem <- dpann_abundance_ecosystem +
+  theme(axis.title.y = element_blank(),
+        axis.text.x = element_blank())
+dpann_richness_ecosystem <- dpann_richness_ecosystem +
+  theme(axis.title.y = element_blank(),
+        axis.text.x = element_blank())
+
+
 violinplot_abundance_lifestyle <- ggarrange(
   bonafide_abundance_lifestyle,
   cpr_abundance_lifestyle,
@@ -449,18 +490,10 @@ nmds_allsamples <-
   scale_y_continuous(breaks = c(-1, -2, 0, 1, 2)) +
   scale_x_continuous(breaks = c(-4, -2, 0, 2, 4))
 
-# Save plot
-ggsave(
-  "results/figures/nmds_allsamples.svg",
-  plot = nmds_allsamples,
-  width = 18,
-  height = 18,
-  units = "cm"
-)
 # NMDS by microgroup ---------------------------------------------------------
 
 microgroups <- phyla_abundances_long %>%
-  select(taxon, microgroup) %>%
+  dplyr::select(taxon, microgroup) %>%
   distinct()
 
 # NMDS bonafide plot ----------------------------------------------------------
@@ -552,14 +585,6 @@ nmds_bonafide <-
   scale_y_continuous(breaks = c(-1, -2, 0, 1, 2)) +
   scale_x_continuous(breaks = c(-4, -2, 0, 2, 4))
 
-# Save plot
-ggsave(
-  "results/figures/nmds_bonafide.svg",
-  plot = nmds_bonafide,
-  width = 18,
-  height = 18,
-  units = "cm"
-)
 
 # NMDS CPR plot --------------------------------------------------------------
 # Create dataframe ---------------------
@@ -649,15 +674,6 @@ nmds_cpr <-
   ) +
   scale_y_continuous(breaks = c(-2, -1, 0, 1, 2)) +
   scale_x_continuous(breaks = c(-4, -2, 0, 2, 4))
-
-# Save plot
-ggsave(
-  "results/figures/nmds_cpr.svg",
-  plot = nmds_cpr,
-  width = 18,
-  height = 18,
-  units = "cm"
-)
 
 # NMDS DPANN plot ------------------------------------------------------------
 # Create dataframe ---------------------
@@ -757,16 +773,6 @@ nmds_dpann <-
   scale_y_continuous(breaks = c(-2, -1, 0, 1, 2)) +
   scale_x_continuous(breaks = c(-4, -2, 0, 2, 4))
 
-# Save plot
-ggsave(
-  "results/figures/nmds_dpann.svg",
-  plot = nmds_dpann,
-  width = 18,
-  height = 18,
-  units = "cm"
-)
-
-
 ############################### Merge plots ####################################
 result_dir <- "results/figures/"
 if (!dir.exists(result_dir)) {
@@ -778,6 +784,7 @@ if (!dir.exists(result_dir)) {
 nmds_bonafide <- nmds_bonafide + theme(legend.position = "none")
 nmds_cpr <- nmds_cpr + theme(legend.position = "none")
 nmds_dpann <- nmds_dpann + theme(legend.position = "none")
+nmds_allsamples <- nmds_allsamples + theme(legend.position = "none")
 
 nmds_muicrogroups <- plot_grid(
   nmds_bonafide, nmds_cpr, nmds_dpann,
@@ -785,87 +792,90 @@ nmds_muicrogroups <- plot_grid(
   rel_widths = c(1, 1, 1)
 )
 
-panel_1 <- plot_grid(
+nmds_panel <- plot_grid(
   nmds_allsamples, nmds_muicrogroups,
   ncol = 1,
   nrow = 2,
   rel_widths = c(1, 1),
-  rel_heights = c(2, 1)
+  rel_heights = c(2, 1.2)
 )
 
-## Save panel 1
+# ## Save panel 1
+# ggsave(
+#   paste0(result_dir, "panel_1.svg"),
+#   plot = panel_1,
+#   width = 23,
+#   height = 26,
+#   units = "cm"
+# )
+
+# ## Panel 2 (latitude plots)
+# plot_latitude <- plot_grid(
+#   bonafide_latitude_plot,
+#   cpr_latitude_plot,
+#   dpann_latitude_plot,
+#   ncol = 3,
+#   rel_widths = c(1, 1, 1)
+# )
+
+# ## Save panel 2
+# ggsave(
+#   paste0(result_dir, "panel_2.svg"),
+#   plot = plot_latitude,
+#   width = 18,
+#   height = 6,
+#   units = "cm"
+# )
+
+top_right <- plot_grid(
+ violinplot_richness_lifestyle, violinplot_abundance_lifestyle,
+ ncol = 1, align = "hv",
+ rel_widths = c(1, 1),
+ labels = c("d", "e"),
+ label_size = 13,
+ label_fontfamily = "Arial"
+)
+bottom_right <- plot_grid(
+ violinplot_richness_ecosystem, violinplot_abundance_ecosystem,
+ ncol = 1, align = "hv",
+ rel_heights = c(1, 1),
+ labels = c("f", "g"),
+ label_fontfamily = "Arial",
+ label_size = 13
+)
+right_panel <- plot_grid(
+ top_right,
+ bottom_right,
+ nrow = 2,
+ rel_widths = c(1, 1)
+)
+left_panel <- plot_grid(worldmap, nmds_panel,
+ ncol = 1,
+ rel_heights = c(1.5, 3),
+ labels = c("a", "b", "c"),
+ label_size = 13,
+ label_fontfamily = "Arial"
+)
+
+panel1 <- plot_grid(left_panel, right_panel, ncol = 2, rel_widths = c(1, 1))
 ggsave(
-  paste0(result_dir, "panel_1.svg"),
-  plot = panel_1,
-  width = 23,
-  height = 26,
-  units = "cm"
+ paste0(result_dir, "panel1.pdf"),
+ plot = panel1,
+ width = 30,
+ height = 27,
+ units = "cm"
 )
-
-## Panel 2 (latitude plots)
-plot_latitude <- plot_grid(
-  bonafide_latitude_plot,
-  cpr_latitude_plot,
-  dpann_latitude_plot,
-  ncol = 3,
-  rel_widths = c(1, 1, 1)
-)
-
-## Save panel 2
 ggsave(
-  paste0(result_dir, "panel_2.svg"),
-  plot = plot_latitude,
-  width = 18,
-  height = 6,
-  units = "cm"
+ paste0(result_dir, "panel1.svg"),
+ plot = panel1,
+ width = 30,
+ height = 27,
+ units = "cm"
 )
-
-#top_right <- plot_grid(
-#  barplot_richness_lifestyle, barplot_abundance_lifestyle,
-#  ncol = 1, align = "hv",
-#  rel_widths = c(1, 1),
-#  labels = c("d", "e"),
-#  label_size = 13,
-#  label_fontfamily = "Arial"
-#)
-#bottom_right <- plot_grid(
-#  barplot_richness_ecosystem, barplot_abundance_ecosystem,
-#  ncol = 1, align = "hv",
-#  rel_heights = c(1, 1),
-#  labels = c("f", "g"),
-#  label_fontfamily = "Arial",
-#  label_size = 13
-#)
-#right_panel <- plot_grid(
-#  top_right,
-#  bottom_right,
-#  nrow = 2,
-#  rel_widths = c(1, 1)
-#)
-#left_panel <- plot_grid(worldmap, nmds_allsamples, plot_latitude,
-#  ncol = 1,
-#  rel_heights = c(1.5, 2, 1),
-#  labels = c("a", "b", "c"),
-#  label_size = 13,
-#  label_fontfamily = "Arial"
-#)
-
-#panel1 <- plot_grid(left_panel, right_panel, ncol = 2, rel_widths = c(1, 1))
-#ggsave(
-#  paste0(result_dir, "panel1.pdf"),
-#  plot = panel1,
-#  width = 11,
-#  height = 8,
-#)
-#ggsave(
-#  paste0(result_dir, "panel1.svg"),
-#  plot = panel1,
-#  width = 11,
-#  height = 8,
-#)
-#ggsave(
-#  paste0(result_dir, "panel1.png"),
-#  plot = panel1,
-#  width = 11,
-#  height = 8,
-#)
+ggsave(
+ paste0(result_dir, "panel1.png"),
+ plot = panel1,
+ width = 30,
+ height = 27,
+ units = "cm"
+)
