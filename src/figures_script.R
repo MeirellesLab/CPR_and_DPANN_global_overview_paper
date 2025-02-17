@@ -41,8 +41,15 @@ ecosystem_microgroups_prevalence <- read_csv(
 load("data/rdata/nmds.RData")
 load("data/rdata/nmds_bonafide.RData")
 load("data/rdata/nmds_cpr.RData")
+load("data/rdata/nmds_dpann.RData")
 load("data/rdata/permanova_lifestyle.RData")
 load("data/rdata/permanova_ecosystem.RData")
+load("data/rdata/permanova_lifestyle_bonafide.RData")
+load("data/rdata/permanova_ecosystem_bonafide.RData")
+load("data/rdata/permanova_lifestyle_cpr.RData")
+load("data/rdata/permanova_ecosystem_cpr.RData")
+load("data/rdata/permanova_lifestyle_dpann.RData")
+load("data/rdata/permanova_ecosystem_dpann.RData")
 
 ############################ World Map of samples ##############################
 grouped_samples <- phyla_abundances_long %>%
@@ -106,10 +113,10 @@ dpann_latitude_plot <- draw_latitude_gam(
 )
 
 ##################### barplots for richness and abundance ######################
-source("src/util/draw_violinplot.R")
+source("src/util/draw_barplot_simple.R")
 # Life Style -------------------------------------------------------------------
 ## Richness ----------------------------
-bonafide_barplot_richness_lifestyle <- draw_violinplot(
+bonafide_barplot_richness_lifestyle <- draw_barplot_simple(
   data = subset(lifestyle_microgroups_prevalence, microgroup == "Bonafide"),
   title = "Bonafide",
   x_var = "life_style",
@@ -336,30 +343,30 @@ nmds_allsamples <-
   ggplot(nmds_df, aes(x = MDS1, y = MDS2, color = ecosystem)) +
   theme_pubr() +
   theme(
-    text = element_text(size = unit(8, "points"), family = "Arial"),
+    text = element_text(size = unit(10, "points"), family = "Arial"),
     plot.title = element_text(
-      hjust = 0.5, family = "Arial", size = unit(8, "points")
+      hjust = 0.5, family = "Arial", size = unit(16, "points"), face = "bold"
     ),
     strip.background = element_blank(),
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
     legend.position = "right",
     legend.title = element_text(
-      face = "bold", family = "Arial", size = unit(8, "points")
+      face = "bold", family = "Arial", size = unit(10, "points")
     ),
     legend.spacing.x = unit(0.1, "points"),
     legend.spacing.y = unit(0.1, "points"),
     axis.title.x = element_text(
-      size = unit(8, "points"), face = "bold", family = "Arial"
+      size = unit(12, "points"), face = "bold", family = "Arial"
     ),
     axis.title.y = element_text(
-      size = unit(8, "points"), face = "bold", family = "Arial"
+      size = unit(12, "points"), face = "bold", family = "Arial"
     ),
-    legend.text = element_text(size = unit(8, "points"), family = "Arial")
+    legend.text = element_text(size = unit(10, "points"), family = "Arial")
   ) +
-  geom_point(size = 1, shape = 20) +
+  geom_point(size = 2, shape = 20) +
   scale_color_manual(values = ecosystem_colors, name = "Ecosystem") +
-  ggtitle("") +
+  ggtitle("Whole community NMDS") +
   labs(
     x = paste0(
       "MDS1 (",
@@ -388,7 +395,7 @@ nmds_allsamples <-
       "\n",
       "p-value <", round(unique(permanova_ecosystem$"Pr(>F)")[1], digits = 4)
     ),
-    size = unit(3, "points"),
+    size = unit(4, "points"),
     family = "Arial"
   ) +
   guides(color = guide_legend(
@@ -397,25 +404,37 @@ nmds_allsamples <-
   annotation_custom(
     life_style_legend, xmin = 1, xmax = 3.1, ymin = 1, ymax = 2
   ) +
-  scale_y_continuous(breaks = c(-1, -0.2, 0.6, 1.4)) +
-  scale_x_continuous(breaks = c(-1, 0, 1, 2))
+  scale_y_continuous(breaks = c(-1, -2, 0, 1, 2)) +
+  scale_x_continuous(breaks = c(-4, -2, 0, 2, 4))
 
 # Save plot
 ggsave(
   "results/figures/nmds_allsamples.svg",
   plot = nmds_allsamples,
-  width = 10,
-  height = 10,
+  width = 18,
+  height = 18,
   units = "cm"
 )
+# NMDS by microgroup ---------------------------------------------------------
+
+microgroups <- phyla_abundances_long %>%
+  select(taxon, microgroup) %>%
+  distinct()
 
 # NMDS bonafide plot ----------------------------------------------------------
 # Create dataframe ---------------------
+bonafide_groups <- microgroups %>%
+  filter(microgroup == "Bonafide")
+
+# Create phyla_abundances_wide_bonafide df 
+phyla_abundances_wide_bonafide <- phyla_abundances_wide %>%
+  dplyr::select(samples, life_style, ecosystem, habitat, latitude, longitude, bonafide_groups$taxon)
+
 nmds_bonafide_df <-
   cbind(
-    phyla_abundances_wide$ecosystem,
+    phyla_abundances_wide_bonafide$ecosystem,
     as.data.frame(nmds_bonafide$points),
-    phyla_abundances_wide$samples
+    phyla_abundances_wide_bonafide$samples
   ) %>%
   mutate(stress = nmds_bonafide$stress)
 colnames(nmds_bonafide_df) <- c("ecosystem", "MDS1", "MDS2", "samples", "stress")
@@ -425,9 +444,9 @@ nmds_bonafide <-
   ggplot(nmds_bonafide_df, aes(x = MDS1, y = MDS2, color = ecosystem)) +
   theme_pubr() +
   theme(
-    text = element_text(size = unit(8, "points"), family = "Arial"),
+    text = element_text(size = unit(10, "points"), family = "Arial"),
     plot.title = element_text(
-      hjust = 0.5, family = "Arial", size = unit(8, "points")
+      hjust = 0.5, family = "Arial", size = unit(13, "points"), face = "bold"
     ),
     strip.background = element_blank(),
     panel.grid.major = element_blank(),
@@ -439,16 +458,16 @@ nmds_bonafide <-
     legend.spacing.x = unit(0.1, "points"),
     legend.spacing.y = unit(0.1, "points"),
     axis.title.x = element_text(
-      size = unit(8, "points"), face = "bold", family = "Arial"
+      size = unit(12, "points"), face = "bold", family = "Arial"
     ),
     axis.title.y = element_text(
-      size = unit(8, "points"), face = "bold", family = "Arial"
+      size = unit(12, "points"), face = "bold", family = "Arial"
     ),
     legend.text = element_text(size = unit(8, "points"), family = "Arial")
   ) +
   geom_point(size = 1, shape = 20) +
   scale_color_manual(values = ecosystem_colors, name = "Ecosystem") +
-  ggtitle("") +
+  ggtitle("Culturable") +
   labs(
     x = paste0(
       "MDS1 (",
@@ -488,25 +507,32 @@ nmds_bonafide <-
   annotation_custom(
     life_style_legend, xmin = 1, xmax = 3.1, ymin = 1, ymax = 2
   ) +
-  scale_y_continuous(breaks = c(-1, -0.2, 0.6, 1.4)) +
-  scale_x_continuous(breaks = c(-1, 0, 1, 2))
+  scale_y_continuous(breaks = c(-1, -2, 0, 1, 2)) +
+  scale_x_continuous(breaks = c(-4, -2, 0, 2, 4))
 
 # Save plot
 ggsave(
   "results/figures/nmds_bonafide.svg",
   plot = nmds_bonafide,
-  width = 10,
-  height = 10,
+  width = 18,
+  height = 18,
   units = "cm"
 )
 
 # NMDS CPR plot --------------------------------------------------------------
 # Create dataframe ---------------------
+cpr_groups <- microgroups %>%
+  filter(microgroup == "CPR")
+
+# Create phyla_abundances_wide_bonafide df 
+phyla_abundances_wide_cpr <- phyla_abundances_wide %>%
+  dplyr::select(samples, life_style, ecosystem, habitat, latitude, longitude, cpr_groups$taxon)
+
 nmds_cpr_df <-
   cbind(
-    phyla_abundances_wide$ecosystem,
+    phyla_abundances_wide_cpr$ecosystem,
     as.data.frame(nmds_cpr$points),
-    phyla_abundances_wide$samples
+    phyla_abundances_wide_cpr$samples
   ) %>%
   mutate(stress = nmds_cpr$stress)
 colnames(nmds_cpr_df) <- c("ecosystem", "MDS1", "MDS2", "samples", "stress")
@@ -516,9 +542,9 @@ nmds_cpr <-
   ggplot(nmds_cpr_df, aes(x = MDS1, y = MDS2, color = ecosystem)) +
   theme_pubr() +
   theme(
-    text = element_text(size = unit(8, "points"), family = "Arial"),
+    text = element_text(size = unit(10, "points"), family = "Arial"),
     plot.title = element_text(
-      hjust = 0.5, family = "Arial", size = unit(8, "points")
+      hjust = 0.5, family = "Arial", size = unit(13, "points"), face = "bold"
     ),
     strip.background = element_blank(),
     panel.grid.major = element_blank(),
@@ -530,16 +556,16 @@ nmds_cpr <-
     legend.spacing.x = unit(0.1, "points"),
     legend.spacing.y = unit(0.1, "points"),
     axis.title.x = element_text(
-      size = unit(8, "points"), face = "bold", family = "Arial"
+      size = unit(12, "points"), face = "bold", family = "Arial"
     ),
     axis.title.y = element_text(
-      size = unit(8, "points"), face = "bold", family = "Arial"
+      size = unit(12, "points"), face = "bold", family = "Arial"
     ),
     legend.text = element_text(size = unit(8, "points"), family = "Arial")
   ) +
   geom_point(size = 1, shape = 20) +
   scale_color_manual(values = ecosystem_colors, name = "Ecosystem") +
-  ggtitle("") +
+  ggtitle("CPR") +
   labs(
     x = paste0(
       "MDS1 (",
@@ -586,18 +612,33 @@ nmds_cpr <-
 ggsave(
   "results/figures/nmds_cpr.svg",
   plot = nmds_cpr,
-  width = 10,
-  height = 10,
+  width = 18,
+  height = 18,
   units = "cm"
 )
 
 # NMDS DPANN plot ------------------------------------------------------------
 # Create dataframe ---------------------
+dpann_groups <- microgroups %>%
+  filter(microgroup == "DPANN")
+
+# Create phyla_abundances_wide_bonafide df 
+phyla_abundances_wide_dpann <- phyla_abundances_wide %>%
+  dplyr::select(samples, life_style, ecosystem, habitat, latitude, longitude, dpann_groups$taxon)
+
+#Chek if there is any row with all zeros in phyla_abundances_persite_long_dpann
+print("Checking if there is any row with all zeros in phyla_abundances_wide_dpann...")
+print(sum(apply(phyla_abundances_wide_dpann[, -c(1, 2, 3, 4, 5, 6)], 1, sum) == 0))
+
+print("Had 39 zeros rows, so we will remove them")
+phyla_abundances_wide_dpann <- phyla_abundances_wide_dpann[apply(phyla_abundances_wide_dpann[, -c(1, 2, 3, 4, 5, 6)], 1, sum) != 0, ]
+
+
 nmds_dpann_df <-
   cbind(
-    phyla_abundances_wide$ecosystem,
+    phyla_abundances_wide_dpann$ecosystem,
     as.data.frame(nmds_dpann$points),
-    phyla_abundances_wide$samples
+    phyla_abundances_wide_dpann$samples
   ) %>%
   mutate(stress = nmds_dpann$stress)
 
@@ -608,9 +649,9 @@ nmds_dpann <-
   ggplot(nmds_dpann_df, aes(x = MDS1, y = MDS2, color = ecosystem)) +
   theme_pubr() +
   theme(
-    text = element_text(size = unit(8, "points"), family = "Arial"),
+    text = element_text(size = unit(10, "points"), family = "Arial"),
     plot.title = element_text(
-      hjust = 0.5, family = "Arial", size = unit(8, "points")
+      hjust = 0.5, family = "Arial", size = unit(13, "points"), face = "bold"
     ),
     strip.background = element_blank(),
     panel.grid.major = element_blank(),
@@ -622,10 +663,10 @@ nmds_dpann <-
     legend.spacing.x = unit(0.1, "points"),
     legend.spacing.y = unit(0.1, "points"),
     axis.title.x = element_text(
-      size = unit(8, "points"), face = "bold", family = "Arial"
+      size = unit(12, "points"), face = "bold", family = "Arial"
     ),
     axis.title.y = element_text(
-      size = unit(8, "points"), face = "bold", family = "Arial"
+      size = unit(12, "points"), face = "bold", family = "Arial"
     ),
     legend.text = element_text(size = unit(8, "points"), family = "Arial")
   ) +
@@ -674,6 +715,14 @@ nmds_dpann <-
   scale_y_continuous(breaks = c(-2, -1, 0, 1, 2)) +
   scale_x_continuous(breaks = c(-4, -2, 0, 2, 4))
 
+# Save plot
+ggsave(
+  "results/figures/nmds_dpann.svg",
+  plot = nmds_dpann,
+  width = 18,
+  height = 18,
+  units = "cm"
+)
 
 
 ############################### Merge plots ####################################
@@ -684,8 +733,12 @@ if (!dir.exists(result_dir)) {
 
 ## Panel 1 (all NMDS)
 
+nmds_bonafide <- nmds_bonafide + theme(legend.position = "none")
+nmds_cpr <- nmds_cpr + theme(legend.position = "none")
+nmds_dpann <- nmds_dpann + theme(legend.position = "none")
+
 nmds_muicrogroups <- plot_grid(
-  nmds_bonafide, nmds_cpr, nmds_dpann
+  nmds_bonafide, nmds_cpr, nmds_dpann,
   ncol = 3,
   rel_widths = c(1, 1, 1)
 )
@@ -695,15 +748,15 @@ panel_1 <- plot_grid(
   ncol = 1,
   nrow = 2,
   rel_widths = c(1, 1),
-  rel_heights = c(2.5, 1)
+  rel_heights = c(2, 1)
 )
 
 ## Save panel 1
 ggsave(
   paste0(result_dir, "panel_1.svg"),
   plot = panel_1,
-  width = 16,
-  height = 18,
+  width = 23,
+  height = 26,
   units = "cm"
 )
 
