@@ -20,11 +20,12 @@ extrafont::loadfonts(device = c("all"))
 ################################## Load data ###################################
 phyla_abundances <-
   read_csv("data/treated/phyla_abundances_long.csv")
-network_scores <-
-  read_csv("data/final_network_scores.csv") %>%
-  rename(habitat = Habitat) %>%
-  rename(ecosystem = Ecosystem) %>%
-  rename(taxon = Taxon)
+
+simper_result <-
+  read_csv("data/statistics/simper_habitats.csv") %>%
+  rename(taxon = OTU) %>%
+  separate(comparison, into = c("comparison_1", "comparison_2"), sep = "_")
+
 radiation <- read_csv("data/taxa_compositions/radiation_phyla.csv")
 
 ###################### Order and treat names of phyla ##########################
@@ -51,7 +52,7 @@ dpann_list <- phyla_abundances %>%
   filter(microgroup == "DPANN") %>%
   pull(taxon) %>%
   as.character()
-network_scores <- network_scores %>%
+simper_result <- simper_result %>%
   mutate(taxon = str_replace(.$taxon, "Candidatus", "Ca.")) %>%
   mutate(taxon = str_replace(.$taxon, "candidate", "Ca.")) %>%
   mutate(microgroup = factor(case_when(
@@ -180,29 +181,28 @@ jitter_bonafide <-
   coord_flip()
 
 ################################### Heatmaps ###################################
+# Create summarized df for heatmap that group by taxon and comparison_1 and create a column mean_contribution that is the mean of contribution~
+simper_result_sum <- simper_result %>%
+  group_by(comparison_1, taxon, microgroup) %>%
+  summarise(mean_contribution = mean(contribution)) %>%
+  ungroup()
 
-heatmap_key_candidate <-
-  ggplot(data = subset(network_scores, microgroup != "Bonafide")) +
-  labs(x = "Ecosystem", y = NULL) +
-  facet_grid(~ecosystem, scales = "free_x", space = "free_x", drop = TRUE) +
+## Candidate --------------------------
+
+heatmap_contribution_candidate <- ggplot(data = subset(simper_result_sum, microgroup != "Bonafide")) +
+  labs(x = "Ecosystem", y = "Taxon", title = "") +
   geom_tile(
     aes(
-      x = habitat, y = taxon, alpha = factor(LIASP_isKeystone), fill = ecosystem
+      x = comparison_1, y = taxon, fill = mean_contribution
     ),
     colour = "gray80"
   ) +
-  scale_fill_manual("Ecosystem", values = ecosystem_colors, guide = FALSE) +
-  scale_alpha_discrete(
-    "Keystones",
-    labels = c(
-      "1" = "It is Keystone", "0" = "It isn't Keystone", "NA" = "Absence"
-    ),
-    guide = FALSE
-  ) +
-  labs(x = "Habitats") +
+  scale_fill_viridis_c(option = "cividis", name = "Contribution") +
+  #scale_x_discrete(expand = c(0, 0)) +  # Decrease spacing between x-axis categories
+  theme_pubr() +
   theme(
     axis.text.x = element_text(
-      hjust = 1,   size = unit(20, "points"), angle = 90,
+      hjust = 1, size = unit(10, "points"), angle = 90,
       vjust = 0.5, family = "Arial"
     ),
     axis.title.x = element_text(
@@ -217,35 +217,78 @@ heatmap_key_candidate <-
     strip.placement = "outside",
     panel.grid.major = element_blank(),
     plot.margin = margin(t = 6, r = 1, b = 0.6, l = 3.8),
-    strip.background = element_rect(colour = "White", fill = "white"),
-    strip.text.x = element_blank(),
     axis.text.y = element_blank(),
+    axis.title.y = element_blank(),
+    # axis.text.y = element_text(
+    #   size = unit(10, "points"), family = "Arial"
+    # ),
     axis.ticks.y = element_blank()
   )
 
-# Bonafide ----------------------------
-heatmap_key_bonafide <-
-  ggplot(data = subset(network_scores, microgroup == "Bonafide")) +
-  labs(x = "Ecosystem", y = NULL) +
-  facet_grid(~ecosystem, scales = "free_x", space = "free_x", drop = TRUE) +
+# ggsave(
+#   heatmap_contribution_candidate,
+#   filename = "results/figures/heatmap_candidate.png",
+#   width = 190, height = 200,
+#   units = "mm", scale = 4, dpi = 500
+# )
+
+# heatmap_key_candidate <-
+#   ggplot(data = subset(simper_result, microgroup != "Bonafide")) +
+#   labs(x = "comparison_1", y = "comparison_2") +
+#   #facet_grid(~ecosystem, scales = "free_x", space = "free_x", drop = TRUE) +
+#   geom_tile(
+#     aes(
+#       x = habitat, y = taxon, alpha = factor(LIASP_isKeystone), fill = ecosystem
+#     ),
+#     colour = "gray80"
+#   ) +
+#   scale_fill_manual("Ecosystem", values = ecosystem_colors, guide = FALSE) +
+#   scale_alpha_discrete(
+#     "Keystones",
+#     labels = c(
+#       "1" = "It is Keystone", "0" = "It isn't Keystone", "NA" = "Absence"
+#     ),
+#     guide = FALSE
+#   ) +
+#   labs(x = "Habitats") +
+#   theme(
+#     axis.text.x = element_text(
+#       hjust = 1,   size = unit(20, "points"), angle = 90,
+#       vjust = 0.5, family = "Arial"
+#     ),
+#     axis.title.x = element_text(
+#       size = unit(20, "points"), face = "bold", family = "Arial"
+#     ),
+#     axis.line = element_blank(),
+#     legend.position = NULL,
+#     legend.key = element_rect(fill = NA, colour = "black"),
+#     legend.background = element_rect(
+#       color = "black", fill = "white", size = 0.3, linetype = "solid"
+#     ),
+#     strip.placement = "outside",
+#     panel.grid.major = element_blank(),
+#     plot.margin = margin(t = 6, r = 1, b = 0.6, l = 3.8),
+#     strip.background = element_rect(colour = "White", fill = "white"),
+#     strip.text.x = element_blank(),
+#     axis.text.y = element_blank(),
+#     axis.ticks.y = element_blank()
+#   )
+
+## Bonafide ----------------------------
+heatmap_contribution_bonafide <- ggplot(data = subset(simper_result_sum, microgroup == "Bonafide")) +
+  labs(x = "Ecosystem", y = "Taxon", title = "") +
   geom_tile(
     aes(
-      x = habitat, y = taxon, alpha = factor(LIASP_isKeystone), fill = ecosystem
+      x = comparison_1, y = taxon, fill = mean_contribution
     ),
     colour = "gray80"
   ) +
-  scale_fill_manual("Ecosystem", values = ecosystem_colors, guide = FALSE) +
-  scale_alpha_discrete(
-    "Keystones",
-    labels = c(
-      "1" = "It is Keystone", "0" = "It isn't Keystone", "NA" = "Absence"
-    ),
-    guide = FALSE
-  ) +
-  labs(x = "Habitats") +
+  scale_fill_viridis_c(option = "cividis", name = "Contribution") +
+  #scale_x_discrete(expand = c(0, 0)) +  # Decrease spacing between x-axis categories
+  theme_pubr() +
   theme(
     axis.text.x = element_text(
-      hjust = 1,   size = unit(20, "points"), angle = 90,
+      hjust = 1, size = unit(10, "points"), angle = 90,
       vjust = 0.5, family = "Arial"
     ),
     axis.title.x = element_text(
@@ -260,11 +303,14 @@ heatmap_key_bonafide <-
     strip.placement = "outside",
     panel.grid.major = element_blank(),
     plot.margin = margin(t = 6, r = 1, b = 0.6, l = 3.8),
-    strip.background = element_rect(colour = "White", fill = "white"),
-    strip.text.x = element_blank(),
     axis.text.y = element_blank(),
+    axis.title.y = element_blank(),
+    # axis.text.y = element_text(
+    #   size = unit(10, "points"), family = "Arial"
+    # ),
     axis.ticks.y = element_blank()
   )
+
 
 ########################## Holobiont VS free-living ############################
 holo_vs_free_candidate <-
@@ -339,8 +385,8 @@ jitter_candidate <- jitter_candidate +
 panel_3 <- plot_grid(
   jitter_candidate,
   holo_vs_free_candidate,
-  heatmap_key_candidate,
-  rel_widths = c(1, 0.15, 1),
+  heatmap_contribution_candidate,
+  rel_widths = c(0.8, 0.5, 0.5),
   ncol = 3, labels = c("a", "b", "c"),
   label_fontfamily = "Arial",
   label_x = c(0, -0.12, -0.017),
