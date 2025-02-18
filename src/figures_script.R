@@ -527,8 +527,6 @@ ecosystem_legend_index <- which(ecosystem_grob_plot$layout$name == "guide-box-to
 # Extract the legend
 ecosystem_legend_grob <- ecosystem_grob_plot$grobs[[ecosystem_legend_index]]
 
-# Display the extracted legend
-grid.draw(ecosystem_legend_grob)  # Check if it looks correct
 
 # Lifestyle legend -------------------------------------------------------------
 # Convert the plot to a grob
@@ -539,18 +537,6 @@ lifestyle_legend_index <- which(lifestyle_grob_plot$layout$name == "guide-box-to
 
 # Extract the legend
 lifestyle_legend_grob <- lifestyle_grob_plot$grobs[[lifestyle_legend_index]]
-
-# Display the extracted legend
-grid.draw(lifestyle_legend_grob)  # Check if it looks correct
-
-# Merge legends
-legends <- cowplot::plot_grid(
-  ecosystem_legend_grob,
-  lifestyle_legend_grob,
-  ncol = 2,
-  rel_widths = c(2, 1),
-  align = "h"
-)
 
 dpann_barplot_abundance_lifestyle <- dpann_barplot_abundance_lifestyle +
   theme(legend.position = "none")
@@ -1046,8 +1032,6 @@ nmds_allsamples_grob_index <- which(nmds_allsamples_grob_plot$layout$name == "gu
 # Extract the legend
 nmds_allsamples_legend_grob <- nmds_allsamples_grob_plot$grobs[[nmds_allsamples_grob_index]]
 
-# Display the extracted legend
-grid.draw(nmds_allsamples_legend_grob)  # Check if it looks correc
 
 nmds_bonafide <- nmds_bonafide + theme(legend.position = "none")
 nmds_cpr <- nmds_cpr + theme(legend.position = "none")
@@ -1067,16 +1051,16 @@ nmds_panel <- plot_grid(
 
 nmds_panel_legend <- plot_grid(
   nmds_panel,
-  ecosystem_legend_grob,
-  ncol = 1,
-  rel_heights = c(1, 0.1)
+  nmds_allsamples_legend_grob,
+  ncol = 2,
+  rel_widths = c(1, 0.2)
 # rel_widths = c(1, 0.1)
 )
 
 
 panel_1 <- plot_grid(worldmap, nmds_panel_legend,
- ncol = 1,
- rel_heights = c(0.6, 1),
+ ncol = 2,
+ rel_widths = c(1, 0.85),
  labels = c("A", ""),
  label_size = 13,
  label_fontfamily = "Arial"
@@ -1086,23 +1070,23 @@ panel_1 <- plot_grid(worldmap, nmds_panel_legend,
 ggsave(
  paste0(result_dir, "panel_1.svg"),
  plot = panel_1,
- width = 20,
- height = 40,
+ width = 60,
+ height = 20,
  units = "cm"
 )
 ggsave(
  paste0(result_dir, "panel_1.png"),
  plot = panel_1,
- width = 20,
- height = 40,
+ width = 60,
+ height = 20,
  units = "cm"
 )
 
 ggsave(
  paste0(result_dir, "panel_1.pdf"),
  plot = panel_1,
- width = 20,
- height = 40,
+ width = 60,
+ height = 20,
  units = "cm"
 )
 
