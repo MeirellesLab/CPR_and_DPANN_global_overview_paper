@@ -14,7 +14,8 @@ install_and_load(libs = c(
   "rnaturalearth" = "0.1.0",
   "cowplot" = "1.0.0",
   "extrafont" = "0.19",
-  "svglite" = "2.1.1"
+  "svglite" = "2.1.1",
+  "grid" = "4.1.0"
 ))
 font_import(pattern = "Arial", prompt = FALSE)
 extrafont::loadfonts(device = c("all"))
@@ -167,7 +168,7 @@ dpann_barplot_richness_lifestyle <- draw_barplot_simple(
 )
 
 # #Abundance ---------------------------
-bonafide_abundance_lifestyle <- draw_barplot_simple(
+bonafide_barplot_abundance_lifestyle <- draw_barplot_simple(
   data = subset(lifestyle_microgroups_prevalence, microgroup == "Bonafide"),
   title = "",
   x_var = "life_style",
@@ -181,7 +182,7 @@ bonafide_abundance_lifestyle <- draw_barplot_simple(
   break_labels = c("    0", "50", "100"),
   colors = life_style_colors
 )
-cpr_abundance_lifestyle <- draw_barplot_simple(
+cpr_barplot_abundance_lifestyle <- draw_barplot_simple(
   data = subset(lifestyle_microgroups_prevalence, microgroup == "CPR"),
   title = "",
   x_var = "life_style",
@@ -195,7 +196,7 @@ cpr_abundance_lifestyle <- draw_barplot_simple(
   break_labels = c("    0", "0.7", "1.3"),
   colors = life_style_colors
 )
-dpann_abundance_lifestyle <- draw_barplot_simple(
+dpann_barplot_abundance_lifestyle <- draw_barplot_simple(
   data = subset(lifestyle_microgroups_prevalence, microgroup == "DPANN"),
   title = "",
   x_var = "life_style",
@@ -212,7 +213,7 @@ dpann_abundance_lifestyle <- draw_barplot_simple(
 
 # Ecossystem ------------------------------------------------------------------
 # Richness -----------------------------
-bonafide_richness_ecosystem <- draw_barplot_simple(
+bonafide_barplot_richness_ecosystem <- draw_barplot_simple(
   data = subset(ecosystem_microgroups_prevalence, microgroup == "Bonafide"),
   title = "",
   x_var = "ecosystem",
@@ -226,7 +227,7 @@ bonafide_richness_ecosystem <- draw_barplot_simple(
   break_labels = c("    0", "22", "44"),
   colors = ecosystem_colors
 )
-cpr_richness_ecosystem <- draw_barplot_simple(
+cpr_barplot_richness_ecosystem <- draw_barplot_simple(
   data = subset(ecosystem_microgroups_prevalence, microgroup == "CPR"),
   title = "",
   x_var = "ecosystem",
@@ -240,7 +241,7 @@ cpr_richness_ecosystem <- draw_barplot_simple(
   break_labels = c("    0", "55", "110"),
   colors = ecosystem_colors
 )
-dpann_richness_ecosystem <- draw_barplot_simple(
+dpann_barplot_richness_ecosystem <- draw_barplot_simple(
   data = subset(ecosystem_microgroups_prevalence, microgroup == "DPANN"),
   title = "",
   x_var = "ecosystem",
@@ -255,7 +256,7 @@ dpann_richness_ecosystem <- draw_barplot_simple(
 )
 
 # Abundance ----------------------------
-bonafide_abundance_ecosystem <- draw_barplot_simple(
+bonafide_barplot_abundance_ecosystem <- draw_barplot_simple(
   data = subset(ecosystem_microgroups_prevalence, microgroup == "Bonafide"),
   title = "",
   x_var = "ecosystem",
@@ -269,7 +270,7 @@ bonafide_abundance_ecosystem <- draw_barplot_simple(
   break_labels = c("    0", "50", "100"),
   colors = ecosystem_colors
 )
-cpr_abundance_ecosystem <- draw_barplot_simple(
+cpr_barplot_abundance_ecosystem <- draw_barplot_simple(
   data = subset(ecosystem_microgroups_prevalence, microgroup == "CPR"),
   title = "",
   x_var = "ecosystem",
@@ -283,7 +284,7 @@ cpr_abundance_ecosystem <- draw_barplot_simple(
   break_labels = c("    0", "3.5", "7"),
   colors = ecosystem_colors
 )
-dpann_abundance_ecosystem <- draw_barplot_simple(
+dpann_barplot_abundance_ecosystem <- draw_barplot_simple(
   data = subset(ecosystem_microgroups_prevalence, microgroup == "DPANN"),
   title = "",
   x_var = "ecosystem",
@@ -300,279 +301,314 @@ dpann_abundance_ecosystem <- draw_barplot_simple(
 
 
 # ##################### violinplots for richness and abundance ######################
-# source("src/util/draw_violinplot.R")
-# # Life Style -------------------------------------------------------------------
-# ## Richness ----------------------------
+source("src/util/draw_violinplot.R")
+# Life Style -------------------------------------------------------------------
+## Richness ----------------------------
 
-# # Create a column with the richness by sample in each microgroup dataframe.
-# # Bonafide
-# bonafide_taxa_cols <- 2:(ncol(phyla_abundances_wide_bonafide)-5)
-# phyla_abundances_wide_bonafide$richness <- rowSums(phyla_abundances_wide_bonafide[, bonafide_taxa_cols] > 0)
-
-
-# #CPR
-# cpr_taxa_cols <- 7:(ncol(phyla_abundances_wide_cpr))
-# phyla_abundances_wide_cpr$richness <- rowSums(phyla_abundances_wide_cpr[, cpr_taxa_cols] > 0)
-
-# #DPANN
-# dpann_taxa_cols <- 7:(ncol(phyla_abundances_wide_dpann))
-# phyla_abundances_wide_dpann$richness <- rowSums(phyla_abundances_wide_dpann[, dpann_taxa_cols] > 0)
+# Create a column with the richness by sample in each microgroup dataframe.
+# Bonafide
+bonafide_taxa_cols <- 2:(ncol(phyla_abundances_wide_bonafide)-5)
+phyla_abundances_wide_bonafide$richness <- rowSums(phyla_abundances_wide_bonafide[, bonafide_taxa_cols] > 0)
 
 
-# bonafide_barplot_richness_lifestyle <- draw_violinplot(
-#   data = phyla_abundances_wide_bonafide,
-#   title = "Culturable",
-#   x_var = "life_style",
-#   y_var = "richness",
-#   title_y = "Richness",
-#   title_x = "",
-#   legend_title = "Life Style",
-#   legend_position = "none",
-#   breaks = c(0, 22, 44),
-#   break_labels = c("0", "22", "44"),
-#   colors = life_style_colors,
-#   add_jitter = FALSE
-# ) + ylim(30, 50)
+#CPR
+cpr_taxa_cols <- 7:(ncol(phyla_abundances_wide_cpr))
+phyla_abundances_wide_cpr$richness <- rowSums(phyla_abundances_wide_cpr[, cpr_taxa_cols] > 0)
 
-# cpr_barplot_richness_lifestyle <- draw_violinplot(
-#   data = phyla_abundances_wide_cpr,
-#   title = "CPR",
-#   x_var = "life_style",
-#   y_var = "richness",
-#   title_y = "Richness",
-#   title_x = "",
-#   legend_title = "Life Style",
-#   legend_position = "none",
-#   breaks = c(0, 22, 44),
-#   break_labels = c("0", "22", "44"),
-#   colors = life_style_colors,
-#   add_jitter = FALSE
-# ) + ylim(0, 125)
-
-# dpann_barplot_richness_lifestyle <- draw_violinplot(
-#   data = phyla_abundances_wide_dpann,
-#   title = "DPANN",
-#   x_var = "life_style",
-#   y_var = "richness",
-#   title_y = "Richness",
-#   title_x = "",
-#   legend_title = "Life Style",
-#   legend_position = "none",
-#   breaks = c(0, 22, 44),
-#   break_labels = c("0", "22", "44"),
-#   colors = life_style_colors,
-#   add_jitter = FALSE
-# ) + ylim(0, 12)
-
-# ##Abundance ---------------------------
-
-# # Create a column with the total relative abundance of the microgroup in each sample
-
-# # Bonafide
-# phyla_abundances_wide_bonafide$total_abu <- rowSums(phyla_abundances_wide_bonafide[, bonafide_taxa_cols]) * 100
-# # CPR
-# phyla_abundances_wide_cpr$total_abu <- rowSums(phyla_abundances_wide_cpr[, cpr_taxa_cols]) * 100
-# # DPANN
-# phyla_abundances_wide_dpann$total_abu <- rowSums(phyla_abundances_wide_dpann[, dpann_taxa_cols]) * 100
+#DPANN
+dpann_taxa_cols <- 7:(ncol(phyla_abundances_wide_dpann))
+phyla_abundances_wide_dpann$richness <- rowSums(phyla_abundances_wide_dpann[, dpann_taxa_cols] > 0)
 
 
-# bonafide_abundance_lifestyle <- draw_violinplot(
-#   data = phyla_abundances_wide_bonafide,
-#   title = "Culturable",
-#   x_var = "life_style",
-#   y_var = "total_abu",
-#   title_y = "Relative Abundance (%)",
-#   title_x = "",
-#   legend_title = "Life Style",
-#   legend_position = "none",
-#   breaks = c(0, 50, 100),
-#   break_labels = c("0", "50", "100"),
-#   colors = life_style_colors,
-#   add_jitter = FALSE
-# ) + ylim(90, 100)
+bonafide_violinplot_richness_lifestyle <- draw_violinplot(
+  data = phyla_abundances_wide_bonafide,
+  title = "Culturable",
+  x_var = "life_style",
+  y_var = "richness",
+  title_y = "Richness",
+  title_x = "",
+  legend_title = "Life Style",
+  legend_position = "none",
+  breaks = c(0, 22, 44),
+  break_labels = c("0", "22", "44"),
+  colors = life_style_colors,
+  add_jitter = FALSE
+) + ylim(30, 50)
 
-# cpr_abundance_lifestyle <- draw_violinplot(
-#   data = phyla_abundances_wide_cpr,
-#   title = "CPR",
-#   x_var = "life_style",
-#   y_var = "total_abu",
-#   title_y = "Relative Abundance (%)",
-#   title_x = "",
-#   legend_title = "Life Style",
-#   legend_position = "none",
-#   breaks = c(0, 2, 10),
-#   break_labels = c("0", "2", "10"),
-#   colors = life_style_colors,
-#   add_jitter = FALSE
-# ) + ylim(0, 5)
+cpr_violinplot_richness_lifestyle <- draw_violinplot(
+  data = phyla_abundances_wide_cpr,
+  title = "CPR",
+  x_var = "life_style",
+  y_var = "richness",
+  title_y = "Richness",
+  title_x = "",
+  legend_title = "Life Style",
+  legend_position = "none",
+  breaks = c(0, 22, 44),
+  break_labels = c("0", "22", "44"),
+  colors = life_style_colors,
+  add_jitter = FALSE
+) + ylim(0, 125)
 
-# dpann_abundance_lifestyle <- draw_violinplot(
-#   data = phyla_abundances_wide_dpann,
-#   title = "DPANN",
-#   x_var = "life_style",
-#   y_var = "total_abu",
-#   title_y = "Relative Abundance (%)",
-#   title_x = "",
-#   legend_title = "Life Style",
-#   legend_position = "none",
-#   breaks = c(0, 0.05, 0.075),
-#   break_labels = c("0", "0.05", "0.075"),
-#   colors = life_style_colors,
-#   add_jitter = FALSE
-# ) + ylim(0, 0.075)
+dpann_violinplot_richness_lifestyle <- draw_violinplot(
+  data = phyla_abundances_wide_dpann,
+  title = "DPANN",
+  x_var = "life_style",
+  y_var = "richness",
+  title_y = "Richness",
+  title_x = "",
+  legend_title = "Life Style",
+  legend_position = "none",
+  breaks = c(0, 22, 44),
+  break_labels = c("0", "22", "44"),
+  colors = life_style_colors,
+  add_jitter = FALSE
+) + ylim(0, 12)
 
-# # Ecossystem ------------------------------------------------------------------
-# # Richness -----------------------------
-# bonafide_richness_ecosystem <- draw_violinplot(
-#   data = phyla_abundances_wide_bonafide,
-#   title = "Culturable",
-#   x_var = "ecosystem",
-#   y_var = "richness",
-#   title_y = "Richness",
-#   title_x = "",
-#   legend_title = "Ecosystem",
-#   legend_position = "none",
-#   breaks = c(0, 50, 100),
-#   break_labels = c("0", "50", "100"),
-#   colors = ecosystem_colors,
-#   add_jitter = FALSE
-# ) + ylim(30, 50)
+##Abundance ---------------------------
 
-# cpr_richness_ecosystem <- draw_violinplot(
-#   data = phyla_abundances_wide_cpr,
-#   title = "CPR",
-#   x_var = "ecosystem",
-#   y_var = "richness",
-#   title_y = "Richness",
-#   title_x = "",
-#   legend_title = "Ecosystem",
-#   legend_position = "none",
-#   breaks = c(0, 50, 100),
-#   break_labels = c("0", "50", "100"),
-#   colors = ecosystem_colors,
-#   add_jitter = FALSE
-# ) + ylim(0, 110)
+# Create a column with the total relative abundance of the microgroup in each sample
 
-# dpann_richness_ecosystem <- draw_violinplot(
-#   data = phyla_abundances_wide_dpann,
-#   title = "DPANN",
-#   x_var = "ecosystem",
-#   y_var = "richness",
-#   title_y = "Richness",
-#   title_x = "",
-#   legend_title = "Ecosystem",
-#   legend_position = "none",
-#   breaks = c(0, 5, 10),
-#   break_labels = c("0", "5", "10"),
-#   colors = ecosystem_colors,
-#   add_jitter = FALSE
-# ) + ylim(0, 10)
+# Bonafide
+phyla_abundances_wide_bonafide$total_abu <- rowSums(phyla_abundances_wide_bonafide[, bonafide_taxa_cols]) * 100
+# CPR
+phyla_abundances_wide_cpr$total_abu <- rowSums(phyla_abundances_wide_cpr[, cpr_taxa_cols]) * 100
+# DPANN
+phyla_abundances_wide_dpann$total_abu <- rowSums(phyla_abundances_wide_dpann[, dpann_taxa_cols]) * 100
 
-# # Abundance ----------------------------
-# bonafide_abundance_ecosystem <- draw_violinplot(
-#   data = phyla_abundances_wide_bonafide,
-#   title = "Culturable",
-#   x_var = "ecosystem",
-#   y_var = "total_abu",
-#   title_y = "Relative Abundance (%)",
-#   title_x = "",
-#   legend_title = "Ecosystem",
-#   legend_position = "none",
-#   breaks = c(0, 50, 100),
-#   break_labels = c("0", "50", "100"),
-#   colors = ecosystem_colors,
-#   add_jitter = FALSE
-# ) + ylim(90, 100)
 
-# cpr_abundance_ecosystem <- draw_violinplot(
-#   data = phyla_abundances_wide_cpr,
-#   title = "CPR",
-#   x_var = "ecosystem",
-#   y_var = "total_abu",
-#   title_y = "Relative Abundance (%)",
-#   title_x = "",
-#   legend_title = "Ecosystem",
-#   legend_position = "none",
-#   breaks = c(0, 2, 7),
-#   break_labels = c("0", "2", "7"),
-#   colors = ecosystem_colors,
-#   add_jitter = FALSE
-# ) + ylim(0, 7)
+bonafide_violinplot_abundance_lifestyle <- draw_violinplot(
+  data = phyla_abundances_wide_bonafide,
+  title = "Culturable",
+  x_var = "life_style",
+  y_var = "total_abu",
+  title_y = "Relative Abundance (%)",
+  title_x = "",
+  legend_title = "Life Style",
+  legend_position = "none",
+  breaks = c(0, 50, 100),
+  break_labels = c("0", "50", "100"),
+  colors = life_style_colors,
+  add_jitter = FALSE
+) + ylim(90, 100)
 
-# dpann_abundance_ecosystem <- draw_violinplot(
-#   data = phyla_abundances_wide_dpann,
-#   title = "DPANN",
-#   x_var = "ecosystem",
-#   y_var = "total_abu",
-#   title_y = "Relative Abundance (%)",
-#   title_x = "",
-#   legend_title = "Ecosystem",
-#   legend_position = "none",
-#   breaks = c(0, 0.05, 0.1),
-#   break_labels = c("0", "0.05", "0.1"),
-#   colors = ecosystem_colors,
-#   add_jitter = FALSE
-# ) + ylim(0, 0.075)
+cpr_violinplot_abundance_lifestyle <- draw_violinplot(
+  data = phyla_abundances_wide_cpr,
+  title = "CPR",
+  x_var = "life_style",
+  y_var = "total_abu",
+  title_y = "Relative Abundance (%)",
+  title_x = "",
+  legend_title = "Life Style",
+  legend_position = "none",
+  breaks = c(0, 2, 10),
+  break_labels = c("0", "2", "10"),
+  colors = life_style_colors,
+  add_jitter = FALSE
+) + ylim(0, 5)
+
+dpann_violinplot_abundance_lifestyle <- draw_violinplot(
+  data = phyla_abundances_wide_dpann,
+  title = "DPANN",
+  x_var = "life_style",
+  y_var = "total_abu",
+  title_y = "Relative Abundance (%)",
+  title_x = "",
+  legend_title = "Life Style",
+  legend_position = "none",
+  breaks = c(0, 0.05, 0.075),
+  break_labels = c("0", "0.05", "0.075"),
+  colors = life_style_colors,
+  add_jitter = FALSE
+) + ylim(0, 0.075)
+
+# Ecossystem ------------------------------------------------------------------
+# Richness -----------------------------
+bonafide_violinplot_richness_ecosystem <- draw_violinplot(
+  data = phyla_abundances_wide_bonafide,
+  title = "Culturable",
+  x_var = "ecosystem",
+  y_var = "richness",
+  title_y = "Richness",
+  title_x = "",
+  legend_title = "Ecosystem",
+  legend_position = "none",
+  breaks = c(0, 50, 100),
+  break_labels = c("0", "50", "100"),
+  colors = ecosystem_colors,
+  add_jitter = FALSE
+) + ylim(30, 50)
+
+cpr_violinplot_richness_ecosystem <- draw_violinplot(
+  data = phyla_abundances_wide_cpr,
+  title = "CPR",
+  x_var = "ecosystem",
+  y_var = "richness",
+  title_y = "Richness",
+  title_x = "",
+  legend_title = "Ecosystem",
+  legend_position = "none",
+  breaks = c(0, 50, 100),
+  break_labels = c("0", "50", "100"),
+  colors = ecosystem_colors,
+  add_jitter = FALSE
+) + ylim(0, 110)
+
+dpann_violinplot_richness_ecosystem <- draw_violinplot(
+  data = phyla_abundances_wide_dpann,
+  title = "DPANN",
+  x_var = "ecosystem",
+  y_var = "richness",
+  title_y = "Richness",
+  title_x = "",
+  legend_title = "Ecosystem",
+  legend_position = "none",
+  breaks = c(0, 5, 10),
+  break_labels = c("0", "5", "10"),
+  colors = ecosystem_colors,
+  add_jitter = FALSE
+) + ylim(0, 10)
+
+# Abundance ----------------------------
+bonafide_violinplot_abundance_ecosystem <- draw_violinplot(
+  data = phyla_abundances_wide_bonafide,
+  title = "Culturable",
+  x_var = "ecosystem",
+  y_var = "total_abu",
+  title_y = "Relative Abundance (%)",
+  title_x = "",
+  legend_title = "Ecosystem",
+  legend_position = "none",
+  breaks = c(0, 50, 100),
+  break_labels = c("0", "50", "100"),
+  colors = ecosystem_colors,
+  add_jitter = FALSE
+) + ylim(90, 100)
+
+cpr_violinplot_abundance_ecosystem <- draw_violinplot(
+  data = phyla_abundances_wide_cpr,
+  title = "CPR",
+  x_var = "ecosystem",
+  y_var = "total_abu",
+  title_y = "Relative Abundance (%)",
+  title_x = "",
+  legend_title = "Ecosystem",
+  legend_position = "none",
+  breaks = c(0, 2, 7),
+  break_labels = c("0", "2", "7"),
+  colors = ecosystem_colors,
+  add_jitter = FALSE
+) + ylim(0, 7)
+
+dpann_violinplot_abundance_ecosystem <- draw_violinplot(
+  data = phyla_abundances_wide_dpann,
+  title = "DPANN",
+  x_var = "ecosystem",
+  y_var = "total_abu",
+  title_y = "Relative Abundance (%)",
+  title_x = "",
+  legend_title = "Ecosystem",
+  legend_position = "none",
+  breaks = c(0, 0.05, 0.1),
+  break_labels = c("0", "0.05", "0.1"),
+  colors = ecosystem_colors,
+  add_jitter = FALSE
+) + ylim(0, 0.075)
 
 # Get legends ------------------------------------------------------------------
-ecosystem_legend <- cowplot::get_legend(bonafide_richness_ecosystem)
-bonafide_richness_ecosystem <- bonafide_richness_ecosystem +
+
+# Ecosystem legend -------------------------------------------------------------
+# Convert the plot to a grob
+ecosystem_grob_plot <- ggplotGrob(bonafide_barplot_richness_ecosystem)
+
+# Find which part of the grob layout contains the legend
+ecosystem_legend_index <- which(ecosystem_grob_plot$layout$name == "guide-box-top")
+
+# Extract the legend
+ecosystem_legend_grob <- ecosystem_grob_plot$grobs[[ecosystem_legend_index]]
+
+# Display the extracted legend
+grid.draw(ecosystem_legend_grob)  # Check if it looks correct
+
+# Lifestyle legend -------------------------------------------------------------
+# Convert the plot to a grob
+lifestyle_grob_plot <- ggplotGrob(dpann_barplot_abundance_lifestyle)
+
+# Find which part of the grob layout contains the legend
+lifestyle_legend_index <- which(lifestyle_grob_plot$layout$name == "guide-box-top")
+
+# Extract the legend
+lifestyle_legend_grob <- lifestyle_grob_plot$grobs[[lifestyle_legend_index]]
+
+# Display the extracted legend
+grid.draw(lifestyle_legend_grob)  # Check if it looks correct
+
+# Merge legends
+legends <- cowplot::plot_grid(
+  ecosystem_legend_grob,
+  lifestyle_legend_grob,
+  ncol = 2,
+  rel_widths = c(2, 1),
+  align = "h"
+)
+
+dpann_barplot_abundance_lifestyle <- dpann_barplot_abundance_lifestyle +
   theme(legend.position = "none")
-life_style_legend <- cowplot::get_legend(dpann_abundance_lifestyle)
-dpann_abundance_lifestyle <- dpann_abundance_lifestyle +
+bonafide_barplot_richness_ecosystem <- bonafide_barplot_richness_ecosystem +
   theme(legend.position = "none")
 
 # Merge plots ------------------------------------------------------------------
 
-bonafide_abundance_ecosystem <- bonafide_abundance_ecosystem +
+# Barplots ---------------------------------------------------------------------
+bonafide_barplot_abundance_ecosystem <- bonafide_barplot_abundance_ecosystem +
   theme(axis.text.x = element_blank())
   
-bonafide_richness_ecosystem <- bonafide_richness_ecosystem +
+bonafide_barplot_richness_ecosystem <- bonafide_barplot_richness_ecosystem +
   theme(axis.text.x = element_blank(),
         plot.title = element_blank())
 
-bonafide_abundance_lifestyle <- bonafide_abundance_lifestyle +
+bonafide_barplot_abundance_lifestyle <- bonafide_barplot_abundance_lifestyle +
   theme(axis.text.x = element_blank())
 
 bonafide_barplot_richness_lifestyle <- bonafide_barplot_richness_lifestyle +
   theme(axis.text.x = element_blank(),
         plot.title = element_blank())
 
-cpr_abundance_lifestyle <- cpr_abundance_lifestyle +
+cpr_barplot_abundance_lifestyle <- cpr_barplot_abundance_lifestyle +
   theme(axis.title.y = element_blank(),
         axis.text.x = element_blank())
 cpr_barplot_richness_lifestyle <- cpr_barplot_richness_lifestyle +
   theme(axis.title.y = element_blank(),
         axis.text.x = element_blank(),
         plot.title = element_blank())
-cpr_abundance_ecosystem <- cpr_abundance_ecosystem +
+cpr_barplot_abundance_ecosystem <- cpr_barplot_abundance_ecosystem +
   theme(axis.title.y = element_blank(),
         axis.text.x = element_blank())
-cpr_richness_ecosystem <- cpr_richness_ecosystem +
+cpr_barplot_richness_ecosystem <- cpr_barplot_richness_ecosystem +
   theme(axis.title.y = element_blank(),
         axis.text.x = element_blank(),
         plot.title = element_blank())
 
-dpann_abundance_lifestyle <- dpann_abundance_lifestyle +
+dpann_barplot_abundance_lifestyle <- dpann_barplot_abundance_lifestyle +
   theme(axis.title.y = element_blank(),
         axis.text.x = element_blank())
 dpann_barplot_richness_lifestyle <- dpann_barplot_richness_lifestyle +
   theme(axis.title.y = element_blank(),
         axis.text.x = element_blank(),
         plot.title = element_blank())
-dpann_abundance_ecosystem <- dpann_abundance_ecosystem +
+dpann_barplot_abundance_ecosystem <- dpann_barplot_abundance_ecosystem +
   theme(axis.title.y = element_blank(),
         axis.text.x = element_blank())
-dpann_richness_ecosystem <- dpann_richness_ecosystem +
+dpann_barplot_richness_ecosystem <- dpann_barplot_richness_ecosystem +
   theme(axis.title.y = element_blank(),
         axis.text.x = element_blank(),
         plot.title = element_blank())
 
 
 barplot_abundance_lifestyle <- ggarrange(
-  bonafide_abundance_lifestyle,
-  cpr_abundance_lifestyle,
-  dpann_abundance_lifestyle,
+  bonafide_barplot_abundance_lifestyle,
+  cpr_barplot_abundance_lifestyle,
+  dpann_barplot_abundance_lifestyle,
   ncol = 3,
   labels = c("A", "B", "C")
 )
@@ -584,48 +620,93 @@ barplot_richness_lifestyle <- ggarrange(
   labels = c("D", "E", "F")
 )
 barplot_richness_ecosystem <- ggarrange(
-  bonafide_richness_ecosystem,
-  cpr_richness_ecosystem,
-  dpann_richness_ecosystem,
-  ncol = 3,
-  labels = c("G", "H", "I")
-)
-barplot_abundance_ecosystem <- ggarrange(
-  bonafide_abundance_ecosystem,
-  cpr_abundance_ecosystem,
-  dpann_abundance_ecosystem,
+  bonafide_barplot_richness_ecosystem,
+  cpr_barplot_richness_ecosystem,
+  dpann_barplot_richness_ecosystem,
   ncol = 3,
   labels = c("J", "K", "L")
 )
+barplot_abundance_ecosystem <- ggarrange(
+  bonafide_barplot_abundance_ecosystem,
+  cpr_barplot_abundance_ecosystem,
+  dpann_barplot_abundance_ecosystem,
+  ncol = 3,
+  labels = c("G", "H", "I")
+)
 
-# violinplot_abundance_lifestyle <- ggarrange(
-#   bonafide_abundance_lifestyle,
-#   cpr_abundance_lifestyle,
-#   dpann_abundance_lifestyle,
-#   ncol = 3,
-#   labels = c("A", "B", "C")
-# )
-# violinplot_richness_lifestyle <- ggarrange(
-#   bonafide_barplot_richness_lifestyle,
-#   cpr_barplot_richness_lifestyle,
-#   dpann_barplot_richness_lifestyle,
-#   ncol = 3,
-#   labels = c("D", "E", "F")
-# )
-# violinplot_richness_ecosystem <- ggarrange(
-#   bonafide_richness_ecosystem,
-#   cpr_richness_ecosystem,
-#   dpann_richness_ecosystem,
-#   ncol = 3,
-#   labels = c("G", "H", "I")
-# )
-# violinplot_abundance_ecosystem <- ggarrange(
-#   bonafide_abundance_ecosystem,
-#   cpr_abundance_ecosystem,
-#   dpann_abundance_ecosystem,
-#   ncol = 3,
-#   labels = c("J", "K", "L")
-# )
+# Violinplots ------------------------------------------------------------------
+bonafide_violinplot_abundance_ecosystem <- bonafide_violinplot_abundance_ecosystem +
+  theme(axis.text.x = element_blank())
+  
+bonafide_violinplot_richness_ecosystem <- bonafide_violinplot_richness_ecosystem +
+  theme(axis.text.x = element_blank(),
+        plot.title = element_blank())
+
+bonafide_violinplot_abundance_lifestyle <- bonafide_violinplot_abundance_lifestyle +
+  theme(axis.text.x = element_blank())
+
+bonafide_violinplot_richness_lifestyle <- bonafide_violinplot_richness_lifestyle +
+  theme(axis.text.x = element_blank(),
+        plot.title = element_blank())
+
+cpr_violinplot_abundance_lifestyle <- cpr_violinplot_abundance_lifestyle +
+  theme(axis.title.y = element_blank(),
+        axis.text.x = element_blank())
+cpr_violinplot_richness_lifestyle <- cpr_violinplot_richness_lifestyle +
+  theme(axis.title.y = element_blank(),
+        axis.text.x = element_blank(),
+        plot.title = element_blank())
+cpr_violinplot_abundance_ecosystem <- cpr_violinplot_abundance_ecosystem +
+  theme(axis.title.y = element_blank(),
+        axis.text.x = element_blank())
+cpr_violinplot_richness_ecosystem <- cpr_violinplot_richness_ecosystem +
+  theme(axis.title.y = element_blank(),
+        axis.text.x = element_blank(),
+        plot.title = element_blank())
+
+dpann_violinplot_abundance_lifestyle <- dpann_violinplot_abundance_lifestyle +
+  theme(axis.title.y = element_blank(),
+        axis.text.x = element_blank())
+dpann_violinplot_richness_lifestyle <- dpann_violinplot_richness_lifestyle +
+  theme(axis.title.y = element_blank(),
+        axis.text.x = element_blank(),
+        plot.title = element_blank())
+dpann_violinplot_abundance_ecosystem <- dpann_violinplot_abundance_ecosystem +
+  theme(axis.title.y = element_blank(),
+        axis.text.x = element_blank())
+dpann_violinplot_richness_ecosystem <- dpann_violinplot_richness_ecosystem +
+  theme(axis.title.y = element_blank(),
+        axis.text.x = element_blank(),
+        plot.title = element_blank())
+
+violinplot_abundance_lifestyle <- ggarrange(
+  bonafide_violinplot_abundance_lifestyle,
+  cpr_violinplot_abundance_lifestyle,
+  dpann_violinplot_abundance_lifestyle,
+  ncol = 3,
+  labels = c("A", "B", "C")
+)
+violinplot_richness_lifestyle <- ggarrange(
+  bonafide_violinplot_richness_lifestyle,
+  cpr_violinplot_richness_lifestyle,
+  dpann_violinplot_richness_lifestyle,
+  ncol = 3,
+  labels = c("D", "E", "F")
+)
+violinplot_richness_ecosystem <- ggarrange(
+  bonafide_violinplot_richness_ecosystem,
+  cpr_violinplot_richness_ecosystem,
+  dpann_violinplot_richness_ecosystem,
+  ncol = 3,
+  labels = c("J", "K", "L")
+)
+violinplot_abundance_ecosystem <- ggarrange(
+  bonafide_violinplot_abundance_ecosystem,
+  cpr_violinplot_abundance_ecosystem,
+  dpann_violinplot_abundance_ecosystem,
+  ncol = 3,
+  labels = c("G", "H", "I")
+)
 
 ############# nmds plot #######################################################
 
@@ -1020,33 +1101,6 @@ nmds_panel <- plot_grid(
   rel_heights = c(2, 1.5)
 )
 
-# ## Save panel 1
-# ggsave(
-#   paste0(result_dir, "panel_1.svg"),
-#   plot = panel_1,
-#   width = 23,
-#   height = 26,
-#   units = "cm"
-# )
-
-# ## Panel 2 (latitude plots)
-# plot_latitude <- plot_grid(
-#   bonafide_latitude_plot,
-#   cpr_latitude_plot,
-#   dpann_latitude_plot,
-#   ncol = 3,
-#   rel_widths = c(1, 1, 1)
-# )
-
-# ## Save panel 2
-# ggsave(
-#   paste0(result_dir, "panel_2.svg"),
-#   plot = plot_latitude,
-#   width = 18,
-#   height = 6,
-#   units = "cm"
-# )
-
 panel_1 <- plot_grid(worldmap, nmds_panel,
  ncol = 1,
  rel_heights = c(1.5, 3),
@@ -1055,29 +1109,7 @@ panel_1 <- plot_grid(worldmap, nmds_panel,
  label_fontfamily = "Arial"
 )
 
-top_right <- plot_grid(
- barplot_abundance_lifestyle, barplot_richness_lifestyle, 
- ncol = 1, align = "hv",
- rel_widths = c(1, 1),
- label_size = 13,
- label_fontfamily = "Arial"
-)
-bottom_right <- plot_grid(
- barplot_abundance_ecosystem, barplot_richness_ecosystem, 
- ncol = 1, align = "hv",
- rel_heights = c(1, 1),
- label_fontfamily = "Arial",
- label_size = 13
-)
-panel_2 <- plot_grid(
- top_right,
- bottom_right,
- nrow = 2,
- rel_widths = c(1, 1),
- rel_heights = c(1, 1)
-) 
-
-
+# Saving panel 1
 ggsave(
  paste0(result_dir, "panel_1.svg"),
  plot = panel_1,
@@ -1101,26 +1133,129 @@ ggsave(
  units = "cm"
 )
 
+# Panel 2 (Richnes and abundance graphs)
+
+# With barplot
+top_right_barplot <- plot_grid(
+ barplot_abundance_lifestyle, barplot_richness_lifestyle, 
+ ncol = 1, align = "hv",
+ rel_widths = c(1, 1),
+ label_size = 13,
+ label_fontfamily = "Arial"
+)
+bottom_right_barplot <- plot_grid(
+ barplot_abundance_ecosystem, barplot_richness_ecosystem, 
+ ncol = 1, align = "hv",
+ rel_heights = c(1, 1),
+ label_fontfamily = "Arial",
+ label_size = 13
+)
+
+bottom_right_barplot_legend <- cowplot::plot_grid(
+  legends,
+  bottom_right_barplot,
+  ncol = 1,
+  rel_heights = c(0.1, 1),
+  rel_widths = c(0.1, 1),
+  align = "h"
+)
+
+panel_2_barplot <- plot_grid(
+ top_right_barplot,
+ bottom_right_barplot_legend,
+ nrow = 2,
+ rel_widths = c(1, 1),
+ rel_heights = c(1, 1.2)
+) 
+
+
+
 ggsave(
- paste0(result_dir, "panel_2.svg"),
- plot = panel_2,
- width = 30,
- height = 27,
- units = "cm"
+  paste0(result_dir, "panel_2_barplot.svg"),
+  plot = panel_2_barplot,
+  width = 20,
+  height = 26,
+  units = "cm"
 )
 
 ggsave(
- paste0(result_dir, "panel_2.png"),
- plot = panel_2,
- width = 30,
- height = 27,
- units = "cm"
+  paste0(result_dir, "panel_2_barplot.png"),
+  plot = panel_2_barplot,
+  width = 20,
+  height = 26,
+  units = "cm"
 )
 
 ggsave(
-  paste0(result_dir, "panel_2.pdf"),
-  plot = panel_2,
-  width = 15,
-  height = 25,
+  paste0(result_dir, "panel_2_barplot.pdf"),
+  plot = panel_2_barplot,
+  width = 20,
+  height = 26,
+  units = "cm"
+)
+
+# With violinplot
+top_right_violinplot <- plot_grid(
+ violinplot_abundance_lifestyle, violinplot_richness_lifestyle, 
+ ncol = 1, align = "hv",
+ rel_widths = c(1, 1),
+ label_size = 13,
+ label_fontfamily = "Arial"
+)
+bottom_right_violinplot <- plot_grid(
+ violinplot_abundance_ecosystem, violinplot_richness_ecosystem, 
+ ncol = 1, align = "hv",
+ rel_heights = c(1, 1),
+ label_fontfamily = "Arial",
+ label_size = 13
+)
+
+bottom_right_violinplot_legend <- cowplot::plot_grid(
+  legends,
+  bottom_right_violinplot,
+  ncol = 1,
+  rel_heights = c(0.1, 1),
+  rel_widths = c(0.1, 1),
+  align = "h"
+)
+
+panel_2_violinplot <- plot_grid(
+ top_right_violinplot,
+ bottom_right_violinplot_legend,
+ nrow = 2,
+ rel_widths = c(1, 1),
+ rel_heights = c(1, 1)
+) 
+
+
+ggsave(
+  paste0(result_dir, "panel_2_violinplot.svg"),
+  plot = panel_2_violinplot,
+  width = 20,
+  height = 26,
+  units = "cm"
+)
+
+ggsave(
+  paste0(result_dir, "panel_2_violinplot.png"),
+  plot = panel_2_violinplot,
+  width = 20,
+  height = 26,
+  units = "cm"
+)
+
+ggsave(
+  paste0(result_dir, "panel_2_violinplot.pdf"),
+  plot = panel_2_violinplot,
+  width = 20,
+  height = 26,
+  units = "cm"
+)
+
+ggsave(
+  paste0(result_dir, "panel_2_violinplot_wide.pdf"),
+  plot = panel_2_violinplot,
+  width = 30,
+  height = 26,
   units = "cm"
 )
