@@ -386,7 +386,7 @@ panel_3 <- plot_grid(
   jitter_candidate,
   holo_vs_free_candidate,
   heatmap_contribution_candidate,
-  rel_widths = c(0.8, 0.5, 0.5),
+  rel_widths = c(0.8, 0.4, 0.5),
   ncol = 3, labels = c("a", "b", "c"),
   label_fontfamily = "Arial",
   label_x = c(0, -0.12, -0.017),
