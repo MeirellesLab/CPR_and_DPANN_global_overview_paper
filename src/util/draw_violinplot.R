@@ -34,8 +34,8 @@ draw_violinplot <- function(
 ) {
   # Base violin plot with boxplot always included
   violinplot <- ggplot(data, aes(x = .data[[x_var]], y = .data[[y_var]], fill = .data[[x_var]])) +
-    geom_violin(trim = TRUE) +
-    geom_boxplot(width = 0.2, outlier.shape = NA, alpha = 0.6) +  # Boxplot always included
+    geom_violin(trim = TRUE, scale = "area") +
+    geom_boxplot(width = 0.2, outlier.shape = NA, alpha = 0.8) +  # Boxplot always included
     stat_summary(fun = mean, geom = "crossbar", width = 0.2, fatten = 2, color = "grey") + 
     scale_fill_manual(values = colors) +
     theme_pubr() +
