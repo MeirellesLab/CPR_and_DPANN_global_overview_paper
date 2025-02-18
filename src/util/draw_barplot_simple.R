@@ -36,25 +36,25 @@ draw_barplot_simple <- function(
       ## Theme and legend
       theme_pubr() +
       theme(
-        text = element_text(size = unit(8, "points"), family = "Arial"),
+        text = element_text(size = unit(12, "points"), family = "Arial"),
         strip.background = element_blank(),
         legend.position = legend_position,
-        legend.text = element_text(size = unit(8, "points"), family = "Arial"),
+        legend.text = element_text(size = unit(12, "points"), family = "Arial"),
         legend.title = element_text(
-          face = "bold", size = unit(8, "points"), family = "Arial"
+          face = "bold", size = unit(15, "points"), family = "Arial"
         ),
         axis.text.x = element_blank(),
         axis.ticks.x = element_blank(),
         axis.ticks.y = element_blank(),
         axis.title.x = element_text(
-          face = "bold", size = unit(8, "points"), family = "Arial"
+          face = "bold", size = unit(15, "points"), family = "Arial"
         ),
         axis.title.y = element_text(
-          face = "bold", , size = unit(8, "points"), family = "Arial"
+          face = "bold", , size = unit(15, "points"), family = "Arial"
         )
       ) +
       guides(fill = guide_legend(
-          title = legend_title, size = unit(8, "points"), shape = 16, nrow = 2
+          title = legend_title, size = unit(15, "points"), shape = 16, nrow = 2
       )) +
 
       ## Error bars
@@ -90,7 +90,7 @@ draw_barplot_simple <- function(
       ggtitle(title) +
       theme(
         plot.title = element_text(
-          size = unit(8, "points"),
+          size = unit(15, "points"),
           face = "bold",
           family = "Arial",
           hjust = 0.5)) +

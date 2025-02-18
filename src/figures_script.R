@@ -300,220 +300,220 @@ dpann_barplot_abundance_ecosystem <- draw_barplot_simple(
 )
 
 
-# ##################### violinplots for richness and abundance ######################
-source("src/util/draw_violinplot.R")
-# Life Style -------------------------------------------------------------------
-## Richness ----------------------------
+# # ##################### violinplots for richness and abundance ######################
+# source("src/util/draw_violinplot.R")
+# # Life Style -------------------------------------------------------------------
+# ## Richness ----------------------------
 
-# Create a column with the richness by sample in each microgroup dataframe.
-# Bonafide
-bonafide_taxa_cols <- 2:(ncol(phyla_abundances_wide_bonafide)-5)
-phyla_abundances_wide_bonafide$richness <- rowSums(phyla_abundances_wide_bonafide[, bonafide_taxa_cols] > 0)
-
-
-#CPR
-cpr_taxa_cols <- 7:(ncol(phyla_abundances_wide_cpr))
-phyla_abundances_wide_cpr$richness <- rowSums(phyla_abundances_wide_cpr[, cpr_taxa_cols] > 0)
-
-#DPANN
-dpann_taxa_cols <- 7:(ncol(phyla_abundances_wide_dpann))
-phyla_abundances_wide_dpann$richness <- rowSums(phyla_abundances_wide_dpann[, dpann_taxa_cols] > 0)
+# # Create a column with the richness by sample in each microgroup dataframe.
+# # Bonafide
+# bonafide_taxa_cols <- 2:(ncol(phyla_abundances_wide_bonafide)-5)
+# phyla_abundances_wide_bonafide$richness <- rowSums(phyla_abundances_wide_bonafide[, bonafide_taxa_cols] > 0)
 
 
-bonafide_violinplot_richness_lifestyle <- draw_violinplot(
-  data = phyla_abundances_wide_bonafide,
-  title = "Culturable",
-  x_var = "life_style",
-  y_var = "richness",
-  title_y = "Richness",
-  title_x = "",
-  legend_title = "Life Style",
-  legend_position = "none",
-  breaks = c(0, 22, 44),
-  break_labels = c("0", "22", "44"),
-  colors = life_style_colors,
-  add_jitter = FALSE
-) + ylim(30, 50)
+# #CPR
+# cpr_taxa_cols <- 7:(ncol(phyla_abundances_wide_cpr))
+# phyla_abundances_wide_cpr$richness <- rowSums(phyla_abundances_wide_cpr[, cpr_taxa_cols] > 0)
 
-cpr_violinplot_richness_lifestyle <- draw_violinplot(
-  data = phyla_abundances_wide_cpr,
-  title = "CPR",
-  x_var = "life_style",
-  y_var = "richness",
-  title_y = "Richness",
-  title_x = "",
-  legend_title = "Life Style",
-  legend_position = "none",
-  breaks = c(0, 22, 44),
-  break_labels = c("0", "22", "44"),
-  colors = life_style_colors,
-  add_jitter = FALSE
-) + ylim(0, 125)
-
-dpann_violinplot_richness_lifestyle <- draw_violinplot(
-  data = phyla_abundances_wide_dpann,
-  title = "DPANN",
-  x_var = "life_style",
-  y_var = "richness",
-  title_y = "Richness",
-  title_x = "",
-  legend_title = "Life Style",
-  legend_position = "none",
-  breaks = c(0, 22, 44),
-  break_labels = c("0", "22", "44"),
-  colors = life_style_colors,
-  add_jitter = FALSE
-) + ylim(0, 12)
-
-##Abundance ---------------------------
-
-# Create a column with the total relative abundance of the microgroup in each sample
-
-# Bonafide
-phyla_abundances_wide_bonafide$total_abu <- rowSums(phyla_abundances_wide_bonafide[, bonafide_taxa_cols]) * 100
-# CPR
-phyla_abundances_wide_cpr$total_abu <- rowSums(phyla_abundances_wide_cpr[, cpr_taxa_cols]) * 100
-# DPANN
-phyla_abundances_wide_dpann$total_abu <- rowSums(phyla_abundances_wide_dpann[, dpann_taxa_cols]) * 100
+# #DPANN
+# dpann_taxa_cols <- 7:(ncol(phyla_abundances_wide_dpann))
+# phyla_abundances_wide_dpann$richness <- rowSums(phyla_abundances_wide_dpann[, dpann_taxa_cols] > 0)
 
 
-bonafide_violinplot_abundance_lifestyle <- draw_violinplot(
-  data = phyla_abundances_wide_bonafide,
-  title = "Culturable",
-  x_var = "life_style",
-  y_var = "total_abu",
-  title_y = "Relative Abundance (%)",
-  title_x = "",
-  legend_title = "Life Style",
-  legend_position = "none",
-  breaks = c(0, 50, 100),
-  break_labels = c("0", "50", "100"),
-  colors = life_style_colors,
-  add_jitter = FALSE
-) + ylim(90, 100)
+# bonafide_violinplot_richness_lifestyle <- draw_violinplot(
+#   data = phyla_abundances_wide_bonafide,
+#   title = "Culturable",
+#   x_var = "life_style",
+#   y_var = "richness",
+#   title_y = "Richness",
+#   title_x = "",
+#   legend_title = "Life Style",
+#   legend_position = "none",
+#   breaks = c(0, 22, 44),
+#   break_labels = c("0", "22", "44"),
+#   colors = life_style_colors,
+#   add_jitter = FALSE
+# ) + ylim(30, 50)
 
-cpr_violinplot_abundance_lifestyle <- draw_violinplot(
-  data = phyla_abundances_wide_cpr,
-  title = "CPR",
-  x_var = "life_style",
-  y_var = "total_abu",
-  title_y = "Relative Abundance (%)",
-  title_x = "",
-  legend_title = "Life Style",
-  legend_position = "none",
-  breaks = c(0, 2, 10),
-  break_labels = c("0", "2", "10"),
-  colors = life_style_colors,
-  add_jitter = FALSE
-) + ylim(0, 5)
+# cpr_violinplot_richness_lifestyle <- draw_violinplot(
+#   data = phyla_abundances_wide_cpr,
+#   title = "CPR",
+#   x_var = "life_style",
+#   y_var = "richness",
+#   title_y = "Richness",
+#   title_x = "",
+#   legend_title = "Life Style",
+#   legend_position = "none",
+#   breaks = c(0, 22, 44),
+#   break_labels = c("0", "22", "44"),
+#   colors = life_style_colors,
+#   add_jitter = FALSE
+# ) + ylim(0, 125)
 
-dpann_violinplot_abundance_lifestyle <- draw_violinplot(
-  data = phyla_abundances_wide_dpann,
-  title = "DPANN",
-  x_var = "life_style",
-  y_var = "total_abu",
-  title_y = "Relative Abundance (%)",
-  title_x = "",
-  legend_title = "Life Style",
-  legend_position = "none",
-  breaks = c(0, 0.05, 0.075),
-  break_labels = c("0", "0.05", "0.075"),
-  colors = life_style_colors,
-  add_jitter = FALSE
-) + ylim(0, 0.075)
+# dpann_violinplot_richness_lifestyle <- draw_violinplot(
+#   data = phyla_abundances_wide_dpann,
+#   title = "DPANN",
+#   x_var = "life_style",
+#   y_var = "richness",
+#   title_y = "Richness",
+#   title_x = "",
+#   legend_title = "Life Style",
+#   legend_position = "none",
+#   breaks = c(0, 22, 44),
+#   break_labels = c("0", "22", "44"),
+#   colors = life_style_colors,
+#   add_jitter = FALSE
+# ) + ylim(0, 12)
 
-# Ecossystem ------------------------------------------------------------------
-# Richness -----------------------------
-bonafide_violinplot_richness_ecosystem <- draw_violinplot(
-  data = phyla_abundances_wide_bonafide,
-  title = "Culturable",
-  x_var = "ecosystem",
-  y_var = "richness",
-  title_y = "Richness",
-  title_x = "",
-  legend_title = "Ecosystem",
-  legend_position = "none",
-  breaks = c(0, 50, 100),
-  break_labels = c("0", "50", "100"),
-  colors = ecosystem_colors,
-  add_jitter = FALSE
-) + ylim(30, 50)
+# ##Abundance ---------------------------
 
-cpr_violinplot_richness_ecosystem <- draw_violinplot(
-  data = phyla_abundances_wide_cpr,
-  title = "CPR",
-  x_var = "ecosystem",
-  y_var = "richness",
-  title_y = "Richness",
-  title_x = "",
-  legend_title = "Ecosystem",
-  legend_position = "none",
-  breaks = c(0, 50, 100),
-  break_labels = c("0", "50", "100"),
-  colors = ecosystem_colors,
-  add_jitter = FALSE
-) + ylim(0, 110)
+# # Create a column with the total relative abundance of the microgroup in each sample
 
-dpann_violinplot_richness_ecosystem <- draw_violinplot(
-  data = phyla_abundances_wide_dpann,
-  title = "DPANN",
-  x_var = "ecosystem",
-  y_var = "richness",
-  title_y = "Richness",
-  title_x = "",
-  legend_title = "Ecosystem",
-  legend_position = "none",
-  breaks = c(0, 5, 10),
-  break_labels = c("0", "5", "10"),
-  colors = ecosystem_colors,
-  add_jitter = FALSE
-) + ylim(0, 10)
+# # Bonafide
+# phyla_abundances_wide_bonafide$total_abu <- rowSums(phyla_abundances_wide_bonafide[, bonafide_taxa_cols]) * 100
+# # CPR
+# phyla_abundances_wide_cpr$total_abu <- rowSums(phyla_abundances_wide_cpr[, cpr_taxa_cols]) * 100
+# # DPANN
+# phyla_abundances_wide_dpann$total_abu <- rowSums(phyla_abundances_wide_dpann[, dpann_taxa_cols]) * 100
 
-# Abundance ----------------------------
-bonafide_violinplot_abundance_ecosystem <- draw_violinplot(
-  data = phyla_abundances_wide_bonafide,
-  title = "Culturable",
-  x_var = "ecosystem",
-  y_var = "total_abu",
-  title_y = "Relative Abundance (%)",
-  title_x = "",
-  legend_title = "Ecosystem",
-  legend_position = "none",
-  breaks = c(0, 50, 100),
-  break_labels = c("0", "50", "100"),
-  colors = ecosystem_colors,
-  add_jitter = FALSE
-) + ylim(90, 100)
 
-cpr_violinplot_abundance_ecosystem <- draw_violinplot(
-  data = phyla_abundances_wide_cpr,
-  title = "CPR",
-  x_var = "ecosystem",
-  y_var = "total_abu",
-  title_y = "Relative Abundance (%)",
-  title_x = "",
-  legend_title = "Ecosystem",
-  legend_position = "none",
-  breaks = c(0, 2, 7),
-  break_labels = c("0", "2", "7"),
-  colors = ecosystem_colors,
-  add_jitter = FALSE
-) + ylim(0, 7)
+# bonafide_violinplot_abundance_lifestyle <- draw_violinplot(
+#   data = phyla_abundances_wide_bonafide,
+#   title = "Culturable",
+#   x_var = "life_style",
+#   y_var = "total_abu",
+#   title_y = "Relative Abundance (%)",
+#   title_x = "",
+#   legend_title = "Life Style",
+#   legend_position = "none",
+#   breaks = c(0, 50, 100),
+#   break_labels = c("0", "50", "100"),
+#   colors = life_style_colors,
+#   add_jitter = FALSE
+# ) + ylim(90, 100)
 
-dpann_violinplot_abundance_ecosystem <- draw_violinplot(
-  data = phyla_abundances_wide_dpann,
-  title = "DPANN",
-  x_var = "ecosystem",
-  y_var = "total_abu",
-  title_y = "Relative Abundance (%)",
-  title_x = "",
-  legend_title = "Ecosystem",
-  legend_position = "none",
-  breaks = c(0, 0.05, 0.1),
-  break_labels = c("0", "0.05", "0.1"),
-  colors = ecosystem_colors,
-  add_jitter = FALSE
-) + ylim(0, 0.075)
+# cpr_violinplot_abundance_lifestyle <- draw_violinplot(
+#   data = phyla_abundances_wide_cpr,
+#   title = "CPR",
+#   x_var = "life_style",
+#   y_var = "total_abu",
+#   title_y = "Relative Abundance (%)",
+#   title_x = "",
+#   legend_title = "Life Style",
+#   legend_position = "none",
+#   breaks = c(0, 2, 10),
+#   break_labels = c("0", "2", "10"),
+#   colors = life_style_colors,
+#   add_jitter = FALSE
+# ) + ylim(0, 5)
+
+# dpann_violinplot_abundance_lifestyle <- draw_violinplot(
+#   data = phyla_abundances_wide_dpann,
+#   title = "DPANN",
+#   x_var = "life_style",
+#   y_var = "total_abu",
+#   title_y = "Relative Abundance (%)",
+#   title_x = "",
+#   legend_title = "Life Style",
+#   legend_position = "none",
+#   breaks = c(0, 0.05, 0.075),
+#   break_labels = c("0", "0.05", "0.075"),
+#   colors = life_style_colors,
+#   add_jitter = FALSE
+# ) + ylim(0, 0.075)
+
+# # Ecossystem ------------------------------------------------------------------
+# # Richness -----------------------------
+# bonafide_violinplot_richness_ecosystem <- draw_violinplot(
+#   data = phyla_abundances_wide_bonafide,
+#   title = "Culturable",
+#   x_var = "ecosystem",
+#   y_var = "richness",
+#   title_y = "Richness",
+#   title_x = "",
+#   legend_title = "Ecosystem",
+#   legend_position = "none",
+#   breaks = c(0, 50, 100),
+#   break_labels = c("0", "50", "100"),
+#   colors = ecosystem_colors,
+#   add_jitter = FALSE
+# ) + ylim(30, 50)
+
+# cpr_violinplot_richness_ecosystem <- draw_violinplot(
+#   data = phyla_abundances_wide_cpr,
+#   title = "CPR",
+#   x_var = "ecosystem",
+#   y_var = "richness",
+#   title_y = "Richness",
+#   title_x = "",
+#   legend_title = "Ecosystem",
+#   legend_position = "none",
+#   breaks = c(0, 50, 100),
+#   break_labels = c("0", "50", "100"),
+#   colors = ecosystem_colors,
+#   add_jitter = FALSE
+# ) + ylim(0, 110)
+
+# dpann_violinplot_richness_ecosystem <- draw_violinplot(
+#   data = phyla_abundances_wide_dpann,
+#   title = "DPANN",
+#   x_var = "ecosystem",
+#   y_var = "richness",
+#   title_y = "Richness",
+#   title_x = "",
+#   legend_title = "Ecosystem",
+#   legend_position = "none",
+#   breaks = c(0, 5, 10),
+#   break_labels = c("0", "5", "10"),
+#   colors = ecosystem_colors,
+#   add_jitter = FALSE
+# ) + ylim(0, 10)
+
+# # Abundance ----------------------------
+# bonafide_violinplot_abundance_ecosystem <- draw_violinplot(
+#   data = phyla_abundances_wide_bonafide,
+#   title = "Culturable",
+#   x_var = "ecosystem",
+#   y_var = "total_abu",
+#   title_y = "Relative Abundance (%)",
+#   title_x = "",
+#   legend_title = "Ecosystem",
+#   legend_position = "none",
+#   breaks = c(0, 50, 100),
+#   break_labels = c("0", "50", "100"),
+#   colors = ecosystem_colors,
+#   add_jitter = FALSE
+# ) + ylim(90, 100)
+
+# cpr_violinplot_abundance_ecosystem <- draw_violinplot(
+#   data = phyla_abundances_wide_cpr,
+#   title = "CPR",
+#   x_var = "ecosystem",
+#   y_var = "total_abu",
+#   title_y = "Relative Abundance (%)",
+#   title_x = "",
+#   legend_title = "Ecosystem",
+#   legend_position = "none",
+#   breaks = c(0, 2, 7),
+#   break_labels = c("0", "2", "7"),
+#   colors = ecosystem_colors,
+#   add_jitter = FALSE
+# ) + ylim(0, 7)
+
+# dpann_violinplot_abundance_ecosystem <- draw_violinplot(
+#   data = phyla_abundances_wide_dpann,
+#   title = "DPANN",
+#   x_var = "ecosystem",
+#   y_var = "total_abu",
+#   title_y = "Relative Abundance (%)",
+#   title_x = "",
+#   legend_title = "Ecosystem",
+#   legend_position = "none",
+#   breaks = c(0, 0.05, 0.1),
+#   break_labels = c("0", "0.05", "0.1"),
+#   colors = ecosystem_colors,
+#   add_jitter = FALSE
+# ) + ylim(0, 0.075)
 
 # Get legends ------------------------------------------------------------------
 
@@ -634,79 +634,79 @@ barplot_abundance_ecosystem <- ggarrange(
   labels = c("G", "H", "I")
 )
 
-# Violinplots ------------------------------------------------------------------
-bonafide_violinplot_abundance_ecosystem <- bonafide_violinplot_abundance_ecosystem +
-  theme(axis.text.x = element_blank())
+# # Violinplots ------------------------------------------------------------------
+# bonafide_violinplot_abundance_ecosystem <- bonafide_violinplot_abundance_ecosystem +
+#   theme(axis.text.x = element_blank())
   
-bonafide_violinplot_richness_ecosystem <- bonafide_violinplot_richness_ecosystem +
-  theme(axis.text.x = element_blank(),
-        plot.title = element_blank())
+# bonafide_violinplot_richness_ecosystem <- bonafide_violinplot_richness_ecosystem +
+#   theme(axis.text.x = element_blank(),
+#         plot.title = element_blank())
 
-bonafide_violinplot_abundance_lifestyle <- bonafide_violinplot_abundance_lifestyle +
-  theme(axis.text.x = element_blank())
+# bonafide_violinplot_abundance_lifestyle <- bonafide_violinplot_abundance_lifestyle +
+#   theme(axis.text.x = element_blank())
 
-bonafide_violinplot_richness_lifestyle <- bonafide_violinplot_richness_lifestyle +
-  theme(axis.text.x = element_blank(),
-        plot.title = element_blank())
+# bonafide_violinplot_richness_lifestyle <- bonafide_violinplot_richness_lifestyle +
+#   theme(axis.text.x = element_blank(),
+#         plot.title = element_blank())
 
-cpr_violinplot_abundance_lifestyle <- cpr_violinplot_abundance_lifestyle +
-  theme(axis.title.y = element_blank(),
-        axis.text.x = element_blank())
-cpr_violinplot_richness_lifestyle <- cpr_violinplot_richness_lifestyle +
-  theme(axis.title.y = element_blank(),
-        axis.text.x = element_blank(),
-        plot.title = element_blank())
-cpr_violinplot_abundance_ecosystem <- cpr_violinplot_abundance_ecosystem +
-  theme(axis.title.y = element_blank(),
-        axis.text.x = element_blank())
-cpr_violinplot_richness_ecosystem <- cpr_violinplot_richness_ecosystem +
-  theme(axis.title.y = element_blank(),
-        axis.text.x = element_blank(),
-        plot.title = element_blank())
+# cpr_violinplot_abundance_lifestyle <- cpr_violinplot_abundance_lifestyle +
+#   theme(axis.title.y = element_blank(),
+#         axis.text.x = element_blank())
+# cpr_violinplot_richness_lifestyle <- cpr_violinplot_richness_lifestyle +
+#   theme(axis.title.y = element_blank(),
+#         axis.text.x = element_blank(),
+#         plot.title = element_blank())
+# cpr_violinplot_abundance_ecosystem <- cpr_violinplot_abundance_ecosystem +
+#   theme(axis.title.y = element_blank(),
+#         axis.text.x = element_blank())
+# cpr_violinplot_richness_ecosystem <- cpr_violinplot_richness_ecosystem +
+#   theme(axis.title.y = element_blank(),
+#         axis.text.x = element_blank(),
+#         plot.title = element_blank())
 
-dpann_violinplot_abundance_lifestyle <- dpann_violinplot_abundance_lifestyle +
-  theme(axis.title.y = element_blank(),
-        axis.text.x = element_blank())
-dpann_violinplot_richness_lifestyle <- dpann_violinplot_richness_lifestyle +
-  theme(axis.title.y = element_blank(),
-        axis.text.x = element_blank(),
-        plot.title = element_blank())
-dpann_violinplot_abundance_ecosystem <- dpann_violinplot_abundance_ecosystem +
-  theme(axis.title.y = element_blank(),
-        axis.text.x = element_blank())
-dpann_violinplot_richness_ecosystem <- dpann_violinplot_richness_ecosystem +
-  theme(axis.title.y = element_blank(),
-        axis.text.x = element_blank(),
-        plot.title = element_blank())
+# dpann_violinplot_abundance_lifestyle <- dpann_violinplot_abundance_lifestyle +
+#   theme(axis.title.y = element_blank(),
+#         axis.text.x = element_blank())
+# dpann_violinplot_richness_lifestyle <- dpann_violinplot_richness_lifestyle +
+#   theme(axis.title.y = element_blank(),
+#         axis.text.x = element_blank(),
+#         plot.title = element_blank())
+# dpann_violinplot_abundance_ecosystem <- dpann_violinplot_abundance_ecosystem +
+#   theme(axis.title.y = element_blank(),
+#         axis.text.x = element_blank())
+# dpann_violinplot_richness_ecosystem <- dpann_violinplot_richness_ecosystem +
+#   theme(axis.title.y = element_blank(),
+#         axis.text.x = element_blank(),
+#         plot.title = element_blank())
 
-violinplot_abundance_lifestyle <- ggarrange(
-  bonafide_violinplot_abundance_lifestyle,
-  cpr_violinplot_abundance_lifestyle,
-  dpann_violinplot_abundance_lifestyle,
-  ncol = 3,
-  labels = c("A", "B", "C")
-)
-violinplot_richness_lifestyle <- ggarrange(
-  bonafide_violinplot_richness_lifestyle,
-  cpr_violinplot_richness_lifestyle,
-  dpann_violinplot_richness_lifestyle,
-  ncol = 3,
-  labels = c("D", "E", "F")
-)
-violinplot_richness_ecosystem <- ggarrange(
-  bonafide_violinplot_richness_ecosystem,
-  cpr_violinplot_richness_ecosystem,
-  dpann_violinplot_richness_ecosystem,
-  ncol = 3,
-  labels = c("J", "K", "L")
-)
-violinplot_abundance_ecosystem <- ggarrange(
-  bonafide_violinplot_abundance_ecosystem,
-  cpr_violinplot_abundance_ecosystem,
-  dpann_violinplot_abundance_ecosystem,
-  ncol = 3,
-  labels = c("G", "H", "I")
-)
+# violinplot_abundance_lifestyle <- ggarrange(
+#   bonafide_violinplot_abundance_lifestyle,
+#   cpr_violinplot_abundance_lifestyle,
+#   dpann_violinplot_abundance_lifestyle,
+#   ncol = 3,
+#   labels = c("A", "B", "C")
+# )
+# violinplot_richness_lifestyle <- ggarrange(
+#   bonafide_violinplot_richness_lifestyle,
+#   cpr_violinplot_richness_lifestyle,
+#   dpann_violinplot_richness_lifestyle,
+#   ncol = 3,
+#   labels = c("D", "E", "F")
+# )
+# violinplot_richness_ecosystem <- ggarrange(
+#   bonafide_violinplot_richness_ecosystem,
+#   cpr_violinplot_richness_ecosystem,
+#   dpann_violinplot_richness_ecosystem,
+#   ncol = 3,
+#   labels = c("J", "K", "L")
+# )
+# violinplot_abundance_ecosystem <- ggarrange(
+#   bonafide_violinplot_abundance_ecosystem,
+#   cpr_violinplot_abundance_ecosystem,
+#   dpann_violinplot_abundance_ecosystem,
+#   ncol = 3,
+#   labels = c("G", "H", "I")
+# )
 
 ############# nmds plot #######################################################
 
@@ -726,42 +726,34 @@ nmds_allsamples <-
   ggplot(nmds_df, aes(x = MDS1, y = MDS2, color = ecosystem)) +
   theme_pubr() +
   theme(
-    text = element_text(size = unit(10, "points"), family = "Arial"),
+    text = element_text(size = unit(12, "points"), family = "Arial"),
     plot.title = element_text(
-      hjust = 0.5, family = "Arial", size = unit(16, "points"), face = "bold"
+      hjust = 0.5, family = "Arial", size = unit(18, "points"), face = "bold"
     ),
     strip.background = element_blank(),
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
     legend.position = "right",
     legend.title = element_text(
-      face = "bold", family = "Arial", size = unit(10, "points")
+      face = "bold", family = "Arial", size = unit(15, "points")
     ),
     legend.spacing.x = unit(0.1, "points"),
     legend.spacing.y = unit(0.1, "points"),
     axis.title.x = element_text(
-      size = unit(12, "points"), face = "bold", family = "Arial"
+      size = unit(15, "points"), face = "bold", family = "Arial"
     ),
     axis.title.y = element_text(
-      size = unit(12, "points"), face = "bold", family = "Arial"
+      size = unit(15, "points"), face = "bold", family = "Arial"
     ),
-    legend.text = element_text(size = unit(10, "points"), family = "Arial")
+    legend.text = element_text(size = unit(12, "points"), family = "Arial")
   ) +
   geom_point(size = 2, shape = 20) +
   scale_color_manual(values = ecosystem_colors, name = "Ecosystem") +
-  ggtitle("Whole community NMDS") +
+  ggtitle("Whole community") +
   labs(
-    x = paste0(
-      "MDS1 (",
-      round(attr(nmds$species, "shrinkage")[1] * 100, digits = 2),
-      "%)"
-    ),
-    y = paste0(
-      "MDS2 (",
-      round(attr(nmds$species, "shrinkage")[2] * 100, digits = 2),
-      "%)"
-    )
-  ) +
+    x = "MDS1",
+    y = "MDS2"
+    ) +
   annotate(
     "text",
     x = min(nmds_df$MDS1) + 2,
@@ -784,9 +776,6 @@ nmds_allsamples <-
   guides(color = guide_legend(
     override.aes = list(size = 4, shape = 16)
   )) +
-  annotation_custom(
-    life_style_legend, xmin = 1, xmax = 3.1, ymin = 1, ymax = 2
-  ) +
   scale_y_continuous(breaks = c(-1, -2, 0, 1, 2)) +
   scale_x_continuous(breaks = c(-4, -2, 0, 2, 4))
 
@@ -819,41 +808,33 @@ nmds_bonafide <-
   ggplot(nmds_bonafide_df, aes(x = MDS1, y = MDS2, color = ecosystem)) +
   theme_pubr() +
   theme(
-    text = element_text(size = unit(10, "points"), family = "Arial"),
+    text = element_text(size = unit(12, "points"), family = "Arial"),
     plot.title = element_text(
-      hjust = 0.5, family = "Arial", size = unit(13, "points"), face = "bold"
+      hjust = 0.5, family = "Arial", size = unit(18, "points"), face = "bold"
     ),
     strip.background = element_blank(),
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
     legend.position = "right",
     legend.title = element_text(
-      face = "bold", family = "Arial", size = unit(8, "points")
+      face = "bold", family = "Arial", size = unit(15, "points")
     ),
     legend.spacing.x = unit(0.1, "points"),
     legend.spacing.y = unit(0.1, "points"),
     axis.title.x = element_text(
-      size = unit(12, "points"), face = "bold", family = "Arial"
+      size = unit(15, "points"), face = "bold", family = "Arial"
     ),
     axis.title.y = element_text(
-      size = unit(12, "points"), face = "bold", family = "Arial"
+      size = unit(15, "points"), face = "bold", family = "Arial"
     ),
-    legend.text = element_text(size = unit(8, "points"), family = "Arial")
+    legend.text = element_text(size = unit(12, "points"), family = "Arial")
   ) +
-  geom_point(size = 1, shape = 20) +
+  geom_point(size = 2, shape = 20) +
   scale_color_manual(values = ecosystem_colors, name = "Ecosystem") +
   ggtitle("Culturable") +
   labs(
-    x = paste0(
-      "MDS1 (",
-      round(attr(nmds_bonafide$species, "shrinkage")[1] * 100, digits = 2),
-      "%)"
-    ),
-    y = paste0(
-      "MDS2 (",
-      round(attr(nmds_bonafide$species, "shrinkage")[2] * 100, digits = 2),
-      "%)"
-    )
+    x = "MDS1",
+    y = "MDS2"
   ) +
   annotate(
     "text",
@@ -873,15 +854,12 @@ nmds_bonafide <-
       "\n",
       "p-value < ", round(unique(permanova_ecosystem_bonafide$"Pr(>F)")[1], digits = 4)
     ),
-    size = unit(3, "points"),
+    size = unit(4, "points"),
     family = "Arial"
   ) +
   guides(color = guide_legend(
     override.aes = list(size = 4, shape = 16)
   )) +
-  annotation_custom(
-    life_style_legend, xmin = 1, xmax = 3.1, ymin = 1, ymax = 2
-  ) +
   scale_y_continuous(breaks = c(-1, -2, 0, 1, 2)) +
   scale_x_continuous(breaks = c(-4, -2, 0, 2, 4))
 
@@ -909,9 +887,9 @@ nmds_cpr <-
   ggplot(nmds_cpr_df, aes(x = MDS1, y = MDS2, color = ecosystem)) +
   theme_pubr() +
   theme(
-    text = element_text(size = unit(10, "points"), family = "Arial"),
+    text = element_text(size = unit(12, "points"), family = "Arial"),
     plot.title = element_text(
-      hjust = 0.5, family = "Arial", size = unit(13, "points"), face = "bold"
+      hjust = 0.5, family = "Arial", size = unit(18, "points"), face = "bold"
     ),
     strip.background = element_blank(),
     panel.grid.major = element_blank(),
@@ -923,27 +901,19 @@ nmds_cpr <-
     legend.spacing.x = unit(0.1, "points"),
     legend.spacing.y = unit(0.1, "points"),
     axis.title.x = element_text(
-      size = unit(12, "points"), face = "bold", family = "Arial"
+      size = unit(15, "points"), face = "bold", family = "Arial"
     ),
     axis.title.y = element_text(
-      size = unit(12, "points"), face = "bold", family = "Arial"
+      size = unit(15, "points"), face = "bold", family = "Arial"
     ),
-    legend.text = element_text(size = unit(8, "points"), family = "Arial")
+    legend.text = element_text(size = unit(12, "points"), family = "Arial")
   ) +
-  geom_point(size = 1, shape = 20) +
+  geom_point(size = 2, shape = 20) +
   scale_color_manual(values = ecosystem_colors, name = "Ecosystem") +
   ggtitle("CPR") +
   labs(
-    x = paste0(
-      "MDS1 (",
-      round(attr(nmds_cpr$species, "shrinkage")[1] * 100, digits = 2),
-      "%)"
-    ),
-    y = paste0(
-      "MDS2 (",
-      round(attr(nmds_cpr$species, "shrinkage")[2] * 100, digits = 2),
-      "%)"
-    )
+    x = "MDS1",
+    y = "MDS2"
   ) +
   annotate(
     "text",
@@ -963,15 +933,12 @@ nmds_cpr <-
       "\n",
       "p-value < ", round(unique(permanova_ecosystem_cpr$"Pr(>F)")[1], digits = 4)
     ),
-    size = unit(3, "points"),
+    size = unit(4, "points"),
     family = "Arial"
   ) +
   guides(color = guide_legend(
     override.aes = list(size = 4, shape = 16)
   )) +
-  annotation_custom(
-    life_style_legend, xmin = 1, xmax = 3.1, ymin = 1, ymax = 2
-  ) +
   scale_y_continuous(breaks = c(-2, -1, 0, 1, 2)) +
   scale_x_continuous(breaks = c(-4, -2, 0, 2, 4))
 
@@ -1007,41 +974,33 @@ nmds_dpann <-
   ggplot(nmds_dpann_df, aes(x = MDS1, y = MDS2, color = ecosystem)) +
   theme_pubr() +
   theme(
-    text = element_text(size = unit(10, "points"), family = "Arial"),
+    text = element_text(size = unit(12, "points"), family = "Arial"),
     plot.title = element_text(
-      hjust = 0.5, family = "Arial", size = unit(13, "points"), face = "bold"
+      hjust = 0.5, family = "Arial", size = unit(18, "points"), face = "bold"
     ),
     strip.background = element_blank(),
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
     legend.position = "right",
     legend.title = element_text(
-      face = "bold", family = "Arial", size = unit(8, "points")
+      face = "bold", family = "Arial", size = unit(15, "points")
     ),
     legend.spacing.x = unit(0.1, "points"),
     legend.spacing.y = unit(0.1, "points"),
     axis.title.x = element_text(
-      size = unit(12, "points"), face = "bold", family = "Arial"
+      size = unit(15, "points"), face = "bold", family = "Arial"
     ),
     axis.title.y = element_text(
-      size = unit(12, "points"), face = "bold", family = "Arial"
+      size = unit(15, "points"), face = "bold", family = "Arial"
     ),
-    legend.text = element_text(size = unit(8, "points"), family = "Arial")
+    legend.text = element_text(size = unit(12, "points"), family = "Arial")
   ) +
-  geom_point(size = 1, shape = 20) +
+  geom_point(size = 2, shape = 20) +
   scale_color_manual(values = ecosystem_colors, name = "Ecosystem") +
   ggtitle("DPANN") +
   labs(
-    x = paste0(
-      "MDS1 (",
-      round(attr(nmds_dpann$species, "shrinkage")[1] * 100, digits = 2),
-      "%)"
-    ),
-    y = paste0(
-      "MDS2 (",
-      round(attr(nmds_dpann$species, "shrinkage")[2] * 100, digits = 2),
-      "%)"
-    )
+    x = "MDS1",
+    y = "MDS2"
   ) +
   annotate(
     "text",
@@ -1061,15 +1020,12 @@ nmds_dpann <-
       "\n",
       "p-value < ", round(unique(permanova_ecosystem_dpann$"Pr(>F)")[1], digits = 4)
     ),
-    size = unit(3, "points"),
+    size = unit(4, "points"),
     family = "Arial"
   ) +
   guides(color = guide_legend(
     override.aes = list(size = 4, shape = 16)
   )) +
-  annotation_custom(
-    life_style_legend, xmin = 1, xmax = 3.1, ymin = 1, ymax = 2
-  ) +
   scale_y_continuous(breaks = c(-2, -1, 0, 1, 2)) +
   scale_x_continuous(breaks = c(-4, -2, 0, 2, 4))
 
@@ -1081,30 +1037,47 @@ if (!dir.exists(result_dir)) {
 
 ## Panel 1 (all NMDS)
 
+## extract nmds allsamples legend
+nmds_allsamples_grob_plot <- ggplotGrob(nmds_allsamples)
+
+# Find which part of the grob layout contains the legend
+nmds_allsamples_grob_index <- which(nmds_allsamples_grob_plot$layout$name == "guide-box-right")
+
+# Extract the legend
+nmds_allsamples_legend_grob <- nmds_allsamples_grob_plot$grobs[[nmds_allsamples_grob_index]]
+
+# Display the extracted legend
+grid.draw(nmds_allsamples_legend_grob)  # Check if it looks correc
+
 nmds_bonafide <- nmds_bonafide + theme(legend.position = "none")
 nmds_cpr <- nmds_cpr + theme(legend.position = "none")
 nmds_dpann <- nmds_dpann + theme(legend.position = "none")
-#nmds_allsamples <- nmds_allsamples + theme(legend.position = "none")
-
-nmds_muicrogroups <- plot_grid(
-  nmds_bonafide, nmds_cpr, nmds_dpann,
-  ncol = 3,
-  rel_widths = c(1, 1, 1),
-  labels = c("C", "D", "E")
-)
+nmds_allsamples <- nmds_allsamples + theme(legend.position = "none")
 
 nmds_panel <- plot_grid(
-  nmds_allsamples, nmds_muicrogroups,
-  ncol = 1,
+  nmds_allsamples, nmds_bonafide, nmds_cpr, nmds_dpann,
+  ncol = 2,
   nrow = 2,
   rel_widths = c(1, 1),
-  rel_heights = c(2, 1.5)
+  rel_heights = c(1, 1),
+  labels = c("B", "C", "D", "E"),
+  label_size = 13,
+  label_fontfamily = "Arial"
 )
 
-panel_1 <- plot_grid(worldmap, nmds_panel,
+nmds_panel_legend <- plot_grid(
+  nmds_panel,
+  ecosystem_legend_grob,
+  ncol = 1,
+  rel_heights = c(1, 0.1)
+# rel_widths = c(1, 0.1)
+)
+
+
+panel_1 <- plot_grid(worldmap, nmds_panel_legend,
  ncol = 1,
- rel_heights = c(1.5, 3),
- labels = c("A", "B"),
+ rel_heights = c(0.6, 1),
+ labels = c("A", ""),
  label_size = 13,
  label_fontfamily = "Arial"
 )
@@ -1114,14 +1087,14 @@ ggsave(
  paste0(result_dir, "panel_1.svg"),
  plot = panel_1,
  width = 20,
- height = 30,
+ height = 40,
  units = "cm"
 )
 ggsave(
  paste0(result_dir, "panel_1.png"),
  plot = panel_1,
  width = 20,
- height = 30,
+ height = 40,
  units = "cm"
 )
 
@@ -1129,7 +1102,7 @@ ggsave(
  paste0(result_dir, "panel_1.pdf"),
  plot = panel_1,
  width = 20,
- height = 30,
+ height = 40,
  units = "cm"
 )
 
@@ -1173,89 +1146,124 @@ panel_2_barplot <- plot_grid(
 ggsave(
   paste0(result_dir, "panel_2_barplot.svg"),
   plot = panel_2_barplot,
-  width = 20,
-  height = 26,
+  width = 26,
+  height = 40,
   units = "cm"
 )
 
 ggsave(
   paste0(result_dir, "panel_2_barplot.png"),
   plot = panel_2_barplot,
-  width = 20,
-  height = 26,
+  width = 26,
+  height = 40,,
   units = "cm"
 )
 
 ggsave(
   paste0(result_dir, "panel_2_barplot.pdf"),
   plot = panel_2_barplot,
-  width = 20,
-  height = 26,
+  width = 26,
+  height = 40,
   units = "cm"
 )
 
-# With violinplot
-top_right_violinplot <- plot_grid(
- violinplot_abundance_lifestyle, violinplot_richness_lifestyle, 
- ncol = 1, align = "hv",
- rel_widths = c(1, 1),
- label_size = 13,
- label_fontfamily = "Arial"
-)
-bottom_right_violinplot <- plot_grid(
- violinplot_abundance_ecosystem, violinplot_richness_ecosystem, 
- ncol = 1, align = "hv",
- rel_heights = c(1, 1),
- label_fontfamily = "Arial",
- label_size = 13
-)
+# # With violinplot
+# top_right_violinplot <- plot_grid(
+#  violinplot_abundance_lifestyle, violinplot_richness_lifestyle, 
+#  ncol = 1, align = "hv",
+#  rel_widths = c(1, 1),
+#  label_size = 13,
+#  label_fontfamily = "Arial"
+# )
+# bottom_right_violinplot <- plot_grid(
+#  violinplot_abundance_ecosystem, violinplot_richness_ecosystem, 
+#  ncol = 1, align = "hv",
+#  rel_heights = c(1, 1),
+#  label_fontfamily = "Arial",
+#  label_size = 13
+# )
 
-bottom_right_violinplot_legend <- cowplot::plot_grid(
-  legends,
-  bottom_right_violinplot,
-  ncol = 1,
-  rel_heights = c(0.1, 1),
-  rel_widths = c(0.1, 1),
-  align = "h"
+# bottom_right_violinplot_legend <- cowplot::plot_grid(
+#   legends,
+#   bottom_right_violinplot,
+#   ncol = 1,
+#   rel_heights = c(0.1, 1),
+#   rel_widths = c(0.1, 1),
+#   align = "h"
+# )
+
+# panel_2_violinplot <- plot_grid(
+#  top_right_violinplot,
+#  bottom_right_violinplot_legend,
+#  nrow = 2,
+#  rel_widths = c(1, 1),
+#  rel_heights = c(1, 1)
+# ) 
+
+
+# ggsave(
+#   paste0(result_dir, "panel_2_violinplot.svg"),
+#   plot = panel_2_violinplot,
+#   width = 20,
+#   height = 26,
+#   units = "cm"
+# )
+
+# ggsave(
+#   paste0(result_dir, "panel_2_violinplot.png"),
+#   plot = panel_2_violinplot,
+#   width = 20,
+#   height = 26,
+#   units = "cm"
+# )
+
+# ggsave(
+#   paste0(result_dir, "panel_2_violinplot.pdf"),
+#   plot = panel_2_violinplot,
+#   width = 20,
+#   height = 26,
+#   units = "cm"
+# )
+
+# ggsave(
+#   paste0(result_dir, "panel_2_violinplot_wide.pdf"),
+#   plot = panel_2_violinplot,
+#   width = 30,
+#   height = 26,
+#   units = "cm"
+# )
+
+# Panel 4 (GAM plots)
+panel_4 <- plot_grid(
+  bonafide_latitude_plot, cpr_latitude_plot, dpann_latitude_plot,
+  ncol = 3,
+  rel_widths = c(1, 1, 1),
+  labels = c("A", "B", "C"),
+  label_size = 13,
+  label_fontfamily = "Arial"
 )
-
-panel_2_violinplot <- plot_grid(
- top_right_violinplot,
- bottom_right_violinplot_legend,
- nrow = 2,
- rel_widths = c(1, 1),
- rel_heights = c(1, 1)
-) 
-
 
 ggsave(
-  paste0(result_dir, "panel_2_violinplot.svg"),
-  plot = panel_2_violinplot,
-  width = 20,
-  height = 26,
+  paste0(result_dir, "panel_4.svg"),
+  plot = panel_4,
+  width = 18,
+  height = 6,
   units = "cm"
 )
 
 ggsave(
-  paste0(result_dir, "panel_2_violinplot.png"),
-  plot = panel_2_violinplot,
-  width = 20,
-  height = 26,
+  paste0(result_dir, "panel_4.png"),
+  plot = panel_4,
+  width = 18,
+  height = 6,
   units = "cm"
 )
 
 ggsave(
-  paste0(result_dir, "panel_2_violinplot.pdf"),
-  plot = panel_2_violinplot,
-  width = 20,
-  height = 26,
+  paste0(result_dir, "panel_4.pdf"),
+  plot = panel_4,
+  width = 18,
+  height = 6,
   units = "cm"
 )
 
-ggsave(
-  paste0(result_dir, "panel_2_violinplot_wide.pdf"),
-  plot = panel_2_violinplot,
-  width = 30,
-  height = 26,
-  units = "cm"
-)

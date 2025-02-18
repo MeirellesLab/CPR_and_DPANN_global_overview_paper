@@ -22,7 +22,7 @@ phyla_abundances <-
   read_csv("data/treated/phyla_abundances_long.csv")
 
 simper_result <-
-  read_csv("data/statistics/simper_habitats.csv") %>%
+  read_csv("data/statistics/simper_ecosystem.csv") %>%
   rename(taxon = OTU) %>%
   separate(comparison, into = c("comparison_1", "comparison_2"), sep = "_")
 
