@@ -106,6 +106,7 @@ jitter_candidate <-
     ),
     legend.key.size = unit(1.3, "points"),
     legend.direction = "horizontal",
+    legend.position = "none",
     strip.background = element_blank(),
     strip.text.x = element_text(
       size = unit(20, "points"), face = "bold", family = "Arial"
@@ -153,14 +154,24 @@ jitter_bonafide <-
     breaks = trans_breaks("log10", function(x) 10^x),
     labels = trans_format("log10", math_format(10^.x))
   ) +
+  guides(colour = guide_legend(
+    override.aes = list(shape = 16, nrow = 1, alpha = 1, size = 6),
+    nrow = 3,
+    title.position = "left",
+    title.hjust = 1,
+  )) +
   theme(
     text = element_text(size = unit(20, "points"), family = "Arial"),
     axis.text.x = element_text(
       size = unit(20, "points"),  hjust = 1, family = "Arial"
     ),
+    legend.key = element_rect(fill = "transparent"),
     axis.text.y = element_text(
       size = unit(20, "points"),  hjust = 1, family = "Arial"
     ),
+    legend.key.size = unit(1.3, "points"),
+    legend.direction = "horizontal",
+    legend.position = "none",
     strip.background = element_blank(),
     strip.text.x = element_text(
       size = unit(20, "points"), face = "bold", family = "Arial"
@@ -171,10 +182,13 @@ jitter_bonafide <-
     axis.line = element_line(colour = "black"),
     axis.ticks = element_line(colour = "black"),
     axis.title = element_text(
-      size = unit(20, "points"), face = "bold", family = "Arial"
+      face = "bold", family = "Arial", size = unit(32, "points")
     ),
     panel.spacing = unit(0.1, "lines"),
-    legend.position = "none"
+    legend.title = element_text(
+      face = "bold", family = "Arial", size = unit(20, "points")
+    ),
+    plot.margin = margin(t = 6, r = 0, b = 2, l = 0)
   ) +
   scale_color_manual(name = "Ecosystem", values = ecosystem_colors) +
   scale_fill_manual(name = "Ecosystem", values = ecosystem_colors) +
@@ -277,33 +291,34 @@ heatmap_contribution_candidate <- ggplot(data = subset(simper_result_sum, microg
 
 ## Bonafide ----------------------------
 heatmap_contribution_bonafide <- ggplot(data = subset(simper_result_sum, microgroup == "Bonafide")) +
-  labs(x = "Ecosystem", y = "Taxon", title = "") +
+  labs(x = "Ecosystem", y = "", title = "") +
   geom_tile(
     aes(
       x = comparison_1, y = taxon, fill = mean_contribution
     ),
     colour = "gray80"
   ) +
-  scale_fill_viridis_c(option = "cividis", name = "Contribution") +
+  scale_fill_gradient(low = "lightblue", high = "darkblue", na.value = "gray", name = "Contribution") +  # Change gradient here
   #scale_x_discrete(expand = c(0, 0)) +  # Decrease spacing between x-axis categories
   theme_pubr() +
   theme(
     axis.text.x = element_text(
-      hjust = 1, size = unit(10, "points"), angle = 90,
+      hjust = 1, size = unit(24, "points"), angle = 90,
       vjust = 0.5, family = "Arial"
     ),
     axis.title.x = element_text(
-      size = unit(20, "points"), face = "bold", family = "Arial"
+      size = unit(25, "points"), face = "bold", family = "Arial"
     ),
     axis.line = element_blank(),
-    legend.position = NULL,
-    legend.key = element_rect(fill = NA, colour = "black"),
-    legend.background = element_rect(
-      color = "black", fill = "white", size = 0.3, linetype = "solid"
+    legend.position = "none",
+    legend.text = element_text(size = unit(25, "points"), family = "Arial"),
+    # legend.key.size = unit(1, "points"),
+    legend.title = element_text(
+      size = unit(30, "points"), face = "bold", family = "Arial"
     ),
     strip.placement = "outside",
     panel.grid.major = element_blank(),
-    plot.margin = margin(t = 6, r = 1, b = 0.6, l = 3.8),
+    plot.margin = margin(t = 6, r = 50, b = 2, l = 0),
     axis.text.y = element_blank(),
     axis.title.y = element_blank(),
     # axis.text.y = element_text(
@@ -353,8 +368,7 @@ holo_vs_free_bonafide <-
   geom_hline(yintercept =  0.5) +
   coord_flip() +
   scale_y_continuous(
-    breaks = c(0.1, 0.5, 0.9),
-    labels = c("0%", "50%", "100%")
+    breaks = c(0.1, 0.5, 0.9), labels = c("0%", "50%", "100%")
   ) +
   labs(y = NULL, x = NULL, fill = NULL) +
   scale_fill_manual(values = life_style_colors) +
@@ -363,10 +377,16 @@ holo_vs_free_bonafide <-
     axis.title = element_text(
       size = unit(20, "points"), face = "bold", family = "Arial"
     ),
-    axis.text.x = element_text(size = unit(19, "points"), family = "Arial"),
+    axis.text.x = element_text(size = unit(25, "points"), family = "Arial"),
     legend.position = "none",
-    plot.margin = margin(5, 3.5, 1, 1)
-  )
+    legend.title = element_text(
+      size = unit(20, "points"), face = "bold", family = "Arial"
+    ),
+    legend.key.size = unit(20, "points"),
+    legend.text = element_text(size = unit(20, "points"), family = "Arial"),
+    plot.margin = margin(t = 6, r = 0, b = 2, l = 6)
+  ) +
+  labs(fill = "Life Style")
 
 ################################# Final plots ##################################
 supplementary_dir <- "results/figures/"
@@ -420,25 +440,25 @@ for(format in formats){
 supplementary <- plot_grid(
   jitter_bonafide,
   holo_vs_free_bonafide,
-  heatmap_key_bonafide,
-  rel_widths = c(1, 0.15, 1),
-  ncol = 3, labels = c("a", "b", "c"),
+  heatmap_contribution_bonafide,
+  rel_widths = c(0.7, 0.1, 0.3),
+  ncol = 3, labels = c("A", "B", "C"),
   label_size = 26,
   label_fontfamily = "Arial",
   align = "h",
-  axis = "bt",
+  axis = "l",
   label_x = c(0, -.12, -.017)
 ) + theme(plot.background = element_rect(fill = "white", colour = NA))
 
 supplementary <- ggdraw() +
   draw_plot(supplementary) +
   draw_plot(ecosystem_legend, x = .24, y = - .46, width = .004) +
-  draw_plot(life_style_legend, x = .50, y = - .46, width = .004)
+  draw_plot(lifestyle_legend, x = .50, y = - .46, width = .004)
 
 for (format in formats){
   ggsave(
     supplementary,
-    filename = paste0(supplementary_dir, "bonafides.", format),
+    filename = paste0(supplementary_dir, "bonafides_sup_panel.", format),
     width = 190, height = 110,
     units = "mm", scale = 4
   )
