@@ -14,3 +14,6 @@ data/summaries/
 # Ignoring log files
 *_log.txt
 *.log
+
+# Misc
+libicu66_66.1-2ubuntu2_amd64.deb
