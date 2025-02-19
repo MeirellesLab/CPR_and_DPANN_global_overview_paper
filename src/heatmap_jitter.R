@@ -116,13 +116,13 @@ jitter_candidate <-
     axis.line = element_line(colour = "black"),
     axis.ticks = element_line(colour = "black"),
     axis.title = element_text(
-      face = "bold", family = "Arial", size = unit(20, "points")
+      face = "bold", family = "Arial", size = unit(32, "points")
     ),
     panel.spacing = unit(0.1, "lines"),
     legend.title = element_text(
       face = "bold", family = "Arial", size = unit(20, "points")
     ),
-    plot.margin = margin(t = 3, r = 0, b = 0, l = 0)
+    plot.margin = margin(t = 6, r = 0, b = 2, l = 0)
   ) +
   scale_color_manual(name = "Ecosystem", values = ecosystem_colors) +
   scale_fill_manual(name = "Ecosystem", values = ecosystem_colors) +
@@ -190,33 +190,34 @@ simper_result_sum <- simper_result %>%
 ## Candidate --------------------------
 
 heatmap_contribution_candidate <- ggplot(data = subset(simper_result_sum, microgroup != "Bonafide")) +
-  labs(x = "Ecosystem", y = "Taxon", title = "") +
+  labs(x = "Ecosystem", y = "", title = "") +
   geom_tile(
     aes(
       x = comparison_1, y = taxon, fill = mean_contribution
     ),
     colour = "gray80"
   ) +
-  scale_fill_viridis_c(option = "cividis", name = "Contribution") +
+  scale_fill_gradient(low = "lightblue", high = "darkblue", na.value = "gray", name = "Contribution") +  # Change gradient here
   #scale_x_discrete(expand = c(0, 0)) +  # Decrease spacing between x-axis categories
   theme_pubr() +
   theme(
     axis.text.x = element_text(
-      hjust = 1, size = unit(10, "points"), angle = 90,
+      hjust = 1, size = unit(24, "points"), angle = 90,
       vjust = 0.5, family = "Arial"
     ),
     axis.title.x = element_text(
-      size = unit(20, "points"), face = "bold", family = "Arial"
+      size = unit(25, "points"), face = "bold", family = "Arial"
     ),
     axis.line = element_blank(),
-    legend.position = NULL,
-    legend.key = element_rect(fill = NA, colour = "black"),
-    legend.background = element_rect(
-      color = "black", fill = "white", size = 0.3, linetype = "solid"
+    legend.position = "right",
+    legend.text = element_text(size = unit(25, "points"), family = "Arial"),
+    # legend.key.size = unit(1, "points"),
+    legend.title = element_text(
+      size = unit(30, "points"), face = "bold", family = "Arial"
     ),
     strip.placement = "outside",
     panel.grid.major = element_blank(),
-    plot.margin = margin(t = 0, r = 2, b = 0, l = 0),
+    plot.margin = margin(t = 6, r = 50, b = 2, l = 0),
     axis.text.y = element_blank(),
     axis.title.y = element_blank(),
     # axis.text.y = element_text(
@@ -331,14 +332,14 @@ holo_vs_free_candidate <-
     axis.title = element_text(
       size = unit(20, "points"), face = "bold", family = "Arial"
     ),
-    axis.text.x = element_text(size = unit(18, "points"), family = "Arial"),
-    legend.position = "top",
+    axis.text.x = element_text(size = unit(25, "points"), family = "Arial"),
+    legend.position = "bottom",
     legend.title = element_text(
       size = unit(20, "points"), face = "bold", family = "Arial"
     ),
     legend.key.size = unit(20, "points"),
     legend.text = element_text(size = unit(20, "points"), family = "Arial"),
-    plot.margin = margin(t = 0, r = 0, b = 0, l = 0)
+    plot.margin = margin(t = 6, r = 0, b = 2, l = 6)
   ) +
   labs(fill = "Life Style")
 
@@ -374,9 +375,15 @@ if (!dir.exists(supplementary_dir)) {
 }
 
 # Get legends --------------------------
-life_style_legend <- get_legend(holo_vs_free_candidate)
+
+lifestyle_grob_plot <- ggplotGrob(holo_vs_free_candidate)
+# Find which part of the grob layout contains the legend
+lifestyle_legend_index <- which(lifestyle_grob_plot$layout$name == "guide-box-bottom")
+# Extract the legend
+lifestyle_legend <- lifestyle_grob_plot$grobs[[lifestyle_legend_index]]
 holo_vs_free_candidate <- holo_vs_free_candidate +
   theme(legend.position = "none")
+
 ecosystem_legend <- get_legend(jitter_candidate)
 jitter_candidate <- jitter_candidate +
   theme(legend.position = "none")
@@ -386,24 +393,24 @@ panel_3 <- plot_grid(
   jitter_candidate,
   holo_vs_free_candidate,
   heatmap_contribution_candidate,
-  rel_widths = c(0.8, 0.4, 0.5),
-  ncol = 3, labels = c("a", "b", "c"),
+  rel_widths = c(0.7, 0.1, 0.3),
+  ncol = 3, labels = c("A", "B", "C"),
   label_fontfamily = "Arial",
   label_x = c(0, -0.12, -0.017),
   label_size = 26,
-  align = "hv",
-  axis = "bt"
+  align = "h",
+  axis = "l"
 ) + theme(plot.background = element_rect(fill = "white", colour = NA))
 
 panel_3 <- ggdraw() +
   draw_plot(panel_3) +
   draw_plot(ecosystem_legend, x = .24, y = - .46, width = .004) +
-  draw_plot(life_style_legend, x = .50, y = - .46, width = .004)
+  draw_plot(lifestyle_legend, x = .50, y = - .46, width = .004)
 
-formats <- c("pdf", "png", "svg")
+formats <- c("pdf", "svg")
 for(format in formats){
   ggsave(
-    panel_3, filename = paste0(supplementary_dir, "candidates.", format),
+    panel_3, filename = paste0(supplementary_dir, "panel_3.", format),
     width = 190, height = 200,
     units = "mm", scale = 4, dpi = 500
   )
