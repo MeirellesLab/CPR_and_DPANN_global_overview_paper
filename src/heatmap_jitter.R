@@ -216,7 +216,7 @@ heatmap_contribution_candidate <- ggplot(data = subset(simper_result_sum, microg
     ),
     strip.placement = "outside",
     panel.grid.major = element_blank(),
-    plot.margin = margin(t = 3, r = 1, b = 0.6, l = 1),
+    plot.margin = margin(t = 0, r = 2, b = 0, l = 0),
     axis.text.y = element_blank(),
     axis.title.y = element_blank(),
     # axis.text.y = element_text(
