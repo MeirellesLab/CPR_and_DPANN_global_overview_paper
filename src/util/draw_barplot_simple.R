@@ -16,88 +16,80 @@
 #' @date 2023
 library(ggplot2)
 library(ggpubr)
+
 draw_barplot_simple <- function(
   data,
-  title = "",
   x_var,
   y_var,
   error_var = NULL,
-  title_y = "",
+  title = "",
   title_x = "",
+  title_y = "",
   legend_title = "",
   legend_position = "none",
   breaks = NULL,
   break_labels = NULL,
   colors) {
-
-
+  
   barplot <- ggplot(data) +
-
-      ## Theme and legend
-      theme_pubr() +
-      theme(
-        text = element_text(size = unit(12, "points"), family = "Arial"),
-        strip.background = element_blank(),
-        legend.position = legend_position,
-        legend.text = element_text(size = unit(12, "points"), family = "Arial"),
-        legend.title = element_text(
-          face = "bold", size = unit(15, "points"), family = "Arial"
-        ),
-        axis.text.x = element_blank(),
-        axis.ticks.x = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.title.x = element_text(
-          face = "bold", size = unit(15, "points"), family = "Arial"
-        ),
-        axis.title.y = element_text(
-          face = "bold", , size = unit(15, "points"), family = "Arial"
-        )
-      ) +
-      guides(fill = guide_legend(
-          title = legend_title, size = unit(15, "points"), shape = 16, nrow = 2
-      )) +
-
-      ## Error bars
-      geom_errorbar(
-        aes(
-          x = .data[[x_var]],
-          ymin = .data[[y_var]] - .data[[error_var]],
-          ymax = .data[[y_var]] + .data[[error_var]]
-          ),
-        width = 0.3,
-        colour = "black",
-        alpha = 0.5,
-        linewidth = 0.5) +
-
-      ## Bars
-      geom_bar(
-        aes(x = .data[[x_var]], y = .data[[y_var]], fill = .data[[x_var]]),
-        stat = "identity",
-        width = .5) +
-
-      ## legend
-      scale_fill_manual(values = colors) +
-      theme(
-        legend.title = element_text(
-          family = "Arial",
-          angle = 0,
-          size = unit(8, "points"),
-          face = "bold"),
+    
+    ## Bars
+    geom_bar(
+      aes(x = .data[[x_var]], y = .data[[y_var]], fill = .data[[x_var]]),
+      stat = "identity",
+      width = .5) +
+    
+    ## Error bars
+    geom_errorbar(
+      aes(
+        x = .data[[x_var]],
+        ymin = .data[[y_var]] - .data[[error_var]],
+        ymax = .data[[y_var]] + .data[[error_var]]
+      ),
+      width = 0.3,
+      colour = "black",
+      alpha = 0.5,
+      linewidth = 0.5) +
+    
+    ## Titles
+    ggtitle(title) +
+    labs(x = title_x, y = gsub(" ", "\n", title_y)) +
+    
+    ## Theme and legend
+    theme_pubr() +
+    theme(
+      text = element_text(size = unit(12, "points"), family = "Arial"),
+      plot.title = element_text(
+        size = unit(15, "points"),
+        face = "bold",
+        family = "Arial",
+        hjust = 0.5),
+      strip.background = element_blank(),
+      legend.position = legend_position,
+      legend.text = element_text(size = unit(12, "points"), family = "Arial"),
+      legend.title = element_text(
+        face = "bold", size = unit(15, "points"), family = "Arial"
+      ),
+      axis.text.x = element_blank(),
+      axis.ticks.x = element_blank(),
+      axis.ticks.y = element_blank(),
+      axis.title.x = element_text(
+        face = "bold", size = unit(15, "points"), family = "Arial"
+      ),
+      axis.title.y = element_text(
+        face = "bold", size = unit(15, "points"), family = "Arial"
+      ),
       legend.spacing.x = unit(0.1, "points"),
       legend.spacing.y = unit(0.1, "points")) +
-      
-      ## Titles
-      ggtitle(title) +
-      theme(
-        plot.title = element_text(
-          size = unit(15, "points"),
-          face = "bold",
-          family = "Arial",
-          hjust = 0.5)) +
-      labs(x = title_x, y = title_y) +
-
-      ##Breaks
-      scale_y_continuous(breaks = breaks, labels = break_labels)
-
-return(barplot)
+    
+    ## Legend
+    scale_fill_manual(values = colors) +
+    guides(fill = guide_legend(
+      title = legend_title, size = unit(15, "points"), shape = 16, nrow = 2
+    )) +
+    
+    ## Breaks
+    scale_y_continuous(breaks = breaks, labels = break_labels)
+  
+  return(barplot)
 }

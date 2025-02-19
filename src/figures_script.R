@@ -126,7 +126,7 @@ source("src/util/draw_barplot_simple.R")
 ## Richness ----------------------------
 bonafide_barplot_richness_lifestyle <- draw_barplot_simple(
   data = subset(lifestyle_microgroups_prevalence, microgroup == "Bonafide"),
-  title = "Bonafide",
+  title = "",
   x_var = "life_style",
   y_var = "mean_rich_life",
   error_var = "se_rich_life",
@@ -140,12 +140,12 @@ bonafide_barplot_richness_lifestyle <- draw_barplot_simple(
 )
 cpr_barplot_richness_lifestyle <- draw_barplot_simple(
   data = subset(lifestyle_microgroups_prevalence, microgroup == "CPR"),
-  title = "CPR",
+  title = "",
   x_var = "life_style",
   y_var = "mean_rich_life",
   error_var = "se_rich_life",
   title_y = "",
-  title_x = "",
+  title_x = "Life Style",
   legend_title = "Life Style",
   legend_position = "none",
   breaks = c(0, 54, 105),
@@ -154,7 +154,7 @@ cpr_barplot_richness_lifestyle <- draw_barplot_simple(
 )
 dpann_barplot_richness_lifestyle <- draw_barplot_simple(
   data = subset(lifestyle_microgroups_prevalence, microgroup == "DPANN"),
-  title = "DPANN",
+  title = "",
   x_var = "life_style",
   y_var = "mean_rich_life",
   error_var = "se_rich_life",
@@ -170,11 +170,11 @@ dpann_barplot_richness_lifestyle <- draw_barplot_simple(
 # #Abundance ---------------------------
 bonafide_barplot_abundance_lifestyle <- draw_barplot_simple(
   data = subset(lifestyle_microgroups_prevalence, microgroup == "Bonafide"),
-  title = "",
+  title = "Bonafide",
   x_var = "life_style",
   y_var = "mean_abu_life",
   error_var = "se_abu_life",
-  title_y = "Relative abundance (%)",
+  title_y = "Relative abundance",
   title_x = "",
   legend_title = "Life style",
   legend_position = "none",
@@ -184,12 +184,12 @@ bonafide_barplot_abundance_lifestyle <- draw_barplot_simple(
 )
 cpr_barplot_abundance_lifestyle <- draw_barplot_simple(
   data = subset(lifestyle_microgroups_prevalence, microgroup == "CPR"),
-  title = "",
+  title = "CPR",
   x_var = "life_style",
   y_var = "mean_abu_life",
   error_var = "se_abu_life",
   title_y = "",
-  title_x = "Life style",
+  title_x = "",
   legend_title = "Life style",
   legend_position = "none",
   breaks = c(0, 0.007, 0.0133),
@@ -198,7 +198,7 @@ cpr_barplot_abundance_lifestyle <- draw_barplot_simple(
 )
 dpann_barplot_abundance_lifestyle <- draw_barplot_simple(
   data = subset(lifestyle_microgroups_prevalence, microgroup == "DPANN"),
-  title = "",
+  title = "DPANN",
   x_var = "life_style",
   y_var = "mean_abu_life",
   error_var = "se_abu_life",
@@ -234,7 +234,7 @@ cpr_barplot_richness_ecosystem <- draw_barplot_simple(
   y_var = "mean_rich_life",
   error_var = "se_rich_life",
   title_y = "",
-  title_x = "",
+  title_x = "Ecosystem",
   legend_title = "ecosystem",
   legend_position = "none",
   breaks = c(0, 55, 110),
@@ -262,7 +262,7 @@ bonafide_barplot_abundance_ecosystem <- draw_barplot_simple(
   x_var = "ecosystem",
   y_var = "mean_abu_life",
   error_var = "se_abu_life",
-  title_y = "Relative abundance (%)",
+  title_y = "Relative abundance",
   title_x = "",
   legend_title = "",
   legend_position = "none",
@@ -277,7 +277,7 @@ cpr_barplot_abundance_ecosystem <- draw_barplot_simple(
   y_var = "mean_abu_life",
   error_var = "se_abu_life",
   title_y = "",
-  title_x = "Ecosystem",
+  title_x = "",
   legend_title = "ecosystem",
   legend_position = "none",
   breaks = c(0, 0.035, 0.07),
@@ -557,8 +557,7 @@ bonafide_barplot_abundance_lifestyle <- bonafide_barplot_abundance_lifestyle +
   theme(axis.text.x = element_blank())
 
 bonafide_barplot_richness_lifestyle <- bonafide_barplot_richness_lifestyle +
-  theme(axis.text.x = element_blank(),
-        plot.title = element_blank())
+  theme(axis.text.x = element_blank())
 
 cpr_barplot_abundance_lifestyle <- cpr_barplot_abundance_lifestyle +
   theme(axis.title.y = element_blank(),
@@ -817,7 +816,7 @@ nmds_bonafide <-
   ) +
   geom_point(size = 2, shape = 20) +
   scale_color_manual(values = ecosystem_colors, name = "Ecosystem") +
-  ggtitle("Culturable") +
+  ggtitle("Bonafide") +
   labs(
     x = "MDS1",
     y = "MDS2"
@@ -1093,36 +1092,43 @@ ggsave(
 # Panel 2 (Richnes and abundance graphs)
 
 # With barplot
-top_right_barplot <- plot_grid(
+ls_barplot <- plot_grid(
  barplot_abundance_lifestyle, barplot_richness_lifestyle, 
- ncol = 1, align = "hv",
+ ncol = 1,
  rel_widths = c(1, 1),
  label_size = 13,
  label_fontfamily = "Arial"
 )
-bottom_right_barplot <- plot_grid(
+
+ls_barplot_legend <- cowplot::plot_grid(
+  ls_barplot,
+  lifestyle_legend_grob,
+  ncol = 1,
+  rel_heights = c(1, 0.3)
+)
+
+eco_barplot <- plot_grid(
  barplot_abundance_ecosystem, barplot_richness_ecosystem, 
- ncol = 1, align = "hv",
+ ncol = 1, 
  rel_heights = c(1, 1),
  label_fontfamily = "Arial",
  label_size = 13
 )
 
-bottom_right_barplot_legend <- cowplot::plot_grid(
-  legends,
-  bottom_right_barplot,
+eco_barplot_legend <- cowplot::plot_grid(
+  eco_barplot,
+  ecosystem_legend_grob,
   ncol = 1,
-  rel_heights = c(0.1, 1),
-  rel_widths = c(0.1, 1),
-  align = "h"
+  rel_heights = c(1, 0.3)
 )
 
+
 panel_2_barplot <- plot_grid(
- top_right_barplot,
- bottom_right_barplot_legend,
+ ls_barplot_legend,
+ eco_barplot_legend,
  nrow = 2,
  rel_widths = c(1, 1),
- rel_heights = c(1, 1.2)
+ rel_heights = c(1, 1)
 ) 
 
 
@@ -1130,24 +1136,24 @@ panel_2_barplot <- plot_grid(
 ggsave(
   paste0(result_dir, "panel_2_barplot.svg"),
   plot = panel_2_barplot,
-  width = 26,
-  height = 40,
+  width = 27.6,
+  height = 23,
   units = "cm"
 )
 
 ggsave(
   paste0(result_dir, "panel_2_barplot.png"),
   plot = panel_2_barplot,
-  width = 26,
-  height = 40,,
+  width = 27.6,
+  height = 23,
   units = "cm"
 )
 
 ggsave(
   paste0(result_dir, "panel_2_barplot.pdf"),
   plot = panel_2_barplot,
-  width = 26,
-  height = 40,
+  width = 27.6,
+  height = 23,
   units = "cm"
 )
 
