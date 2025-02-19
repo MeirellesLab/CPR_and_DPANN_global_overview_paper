@@ -122,7 +122,7 @@ jitter_candidate <-
     legend.title = element_text(
       face = "bold", family = "Arial", size = unit(20, "points")
     ),
-    plot.margin = margin(5, 0, 0, 0)
+    plot.margin = margin(t = 3, r = 0, b = 0, l = 0)
   ) +
   scale_color_manual(name = "Ecosystem", values = ecosystem_colors) +
   scale_fill_manual(name = "Ecosystem", values = ecosystem_colors) +
@@ -216,7 +216,7 @@ heatmap_contribution_candidate <- ggplot(data = subset(simper_result_sum, microg
     ),
     strip.placement = "outside",
     panel.grid.major = element_blank(),
-    plot.margin = margin(t = 6, r = 1, b = 0.6, l = 3.8),
+    plot.margin = margin(t = 3, r = 1, b = 0.6, l = 1),
     axis.text.y = element_blank(),
     axis.title.y = element_blank(),
     # axis.text.y = element_text(
@@ -338,7 +338,7 @@ holo_vs_free_candidate <-
     ),
     legend.key.size = unit(20, "points"),
     legend.text = element_text(size = unit(20, "points"), family = "Arial"),
-    plot.margin = margin(5, 3.5, 1, 1)
+    plot.margin = margin(t = 0, r = 0, b = 0, l = 0)
   ) +
   labs(fill = "Life Style")
 
