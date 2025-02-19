@@ -25,12 +25,12 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="pt"
-     inkscape:zoom="0.48219491"
-     inkscape:cx="403.36386"
-     inkscape:cy="341.14836"
-     inkscape:window-width="1920"
-     inkscape:window-height="1009"
-     inkscape:window-x="-8"
+     inkscape:zoom="0.34096329"
+     inkscape:cx="152.50909"
+     inkscape:cy="714.15313"
+     inkscape:window-width="1080"
+     inkscape:window-height="1849"
+     inkscape:window-x="1912"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg385" />
@@ -172,111 +172,117 @@
   </defs>
   <g
      clip-path="url(#cpNjQuNDV8MjU0LjgxfDI1Ljg1fDk5LjUz)"
-     id="g18">
+     id="g18"
+     transform="matrix(1.0980492,0,0,1.0980492,-24.983924,-2.5345727)">
     <rect
-       x="64.45"
+       x="64.449997"
        y="25.85"
        width="190.36"
        height="73.68"
-       style="stroke-width: 1.16; stroke: none; fill: #FFFFFF;"
+       style="fill:#ffffff;stroke:none;stroke-width:1.16"
        id="rect11" />
     <rect
-       x="94.74"
-       y="29.29"
-       width="43.26"
-       height="66.89"
-       style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #FCD4A3;"
+       x="94.739998"
+       y="29.290001"
+       width="43.259998"
+       height="66.889999"
+       style="fill:#fcd4a3;stroke:none;stroke-width:1.07;stroke-linecap:butt;stroke-linejoin:miter"
        id="rect12" />
     <rect
-       x="181.26"
-       y="29.55"
-       width="43.26"
-       height="66.63"
-       style="stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #6CA9C5;"
+       x="181.25999"
+       y="29.549999"
+       width="43.259998"
+       height="66.629997"
+       style="fill:#6ca9c5;stroke:none;stroke-width:1.07;stroke-linecap:butt;stroke-linejoin:miter"
        id="rect13" />
     <polyline
        points="103.39,29.20 129.35,29.20 "
-       style="stroke-width: 1.07; stroke: #000000; stroke-opacity: 0.50; stroke-linecap: butt;"
+       style="stroke:#000000;stroke-width:1.07;stroke-linecap:butt;stroke-opacity:0.5"
        id="polyline13" />
     <polyline
        points="116.37,29.20 116.37,29.39 "
-       style="stroke-width: 1.07; stroke: #000000; stroke-opacity: 0.50; stroke-linecap: butt;"
+       style="stroke:#000000;stroke-width:1.07;stroke-linecap:butt;stroke-opacity:0.5"
        id="polyline14" />
     <polyline
        points="103.39,29.39 129.35,29.39 "
-       style="stroke-width: 1.07; stroke: #000000; stroke-opacity: 0.50; stroke-linecap: butt;"
+       style="stroke:#000000;stroke-width:1.07;stroke-linecap:butt;stroke-opacity:0.5"
        id="polyline15" />
     <polyline
        points="189.92,29.50 215.87,29.50 "
-       style="stroke-width: 1.07; stroke: #000000; stroke-opacity: 0.50; stroke-linecap: butt;"
+       style="stroke:#000000;stroke-width:1.07;stroke-linecap:butt;stroke-opacity:0.5"
        id="polyline16" />
     <polyline
        points="202.89,29.50 202.89,29.60 "
-       style="stroke-width: 1.07; stroke: #000000; stroke-opacity: 0.50; stroke-linecap: butt;"
+       style="stroke:#000000;stroke-width:1.07;stroke-linecap:butt;stroke-opacity:0.5"
        id="polyline17" />
     <polyline
        points="189.92,29.60 215.87,29.60 "
-       style="stroke-width: 1.07; stroke: #000000; stroke-opacity: 0.50; stroke-linecap: butt;"
+       style="stroke:#000000;stroke-width:1.07;stroke-linecap:butt;stroke-opacity:0.5"
        id="polyline18" />
   </g>
   <text
      xml:space="preserve"
      style="font-size:12px;white-space:pre;fill:#000000;fill-opacity:1;stroke-width:0.75"
-     x="153.58858"
+     x="148.14471"
      y="27.543234"
      id="text386-0-87"><tspan
        sodipodi:role="line"
        id="tspan385-6-8"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12px;font-family:Arial;-inkscape-font-specification:'Arial Bold';fill:#000000;fill-opacity:1;stroke-width:0.75"
-       x="153.58858"
+       x="148.14471"
        y="27.543234">**</tspan></text>
   <g
      clip-path="url(#cpMC4wMHw3ODIuMzZ8MC4wMHw2NTEuOTc=)"
      id="g25">
     <polyline
        points="64.45,99.53 64.45,25.85 "
-       style="stroke-width: 1.07; stroke-linecap: butt;"
-       id="polyline19" />
+       style="stroke-width:1.07;stroke-linecap:butt"
+       id="polyline19"
+       transform="matrix(1.0855526,0,0,1.0855526,-21.799667,-2.2115356)" />
     <text
        x="59.07"
        y="100.48"
        text-anchor="end"
-       style="font-size: 12.00px; font-family: &quot;Arial&quot;;"
-       textLength="20.01px"
+       style="font-size:12px;font-family:Arial"
+       textLength="20.01"
        lengthAdjust="spacingAndGlyphs"
-       id="text19">    0</text>
+       id="text19"
+       transform="translate(-13.998489)">    0</text>
     <text
        x="59.07"
        y="66.75"
        text-anchor="end"
-       style="font-size: 12.00px; font-family: &quot;Arial&quot;;"
-       textLength="13.35px"
+       style="font-size:12px;font-family:Arial"
+       textLength="13.35"
        lengthAdjust="spacingAndGlyphs"
-       id="text20">50</text>
+       id="text20"
+       transform="translate(-13.998489)">50</text>
     <text
        x="59.07"
-       y="33.01"
+       y="33.009998"
        text-anchor="end"
-       style="font-size: 12.00px; font-family: &quot;Arial&quot;;"
-       textLength="20.02px"
+       style="font-size:12px;font-family:Arial"
+       textLength="20.02"
        lengthAdjust="spacingAndGlyphs"
-       id="text21">100</text>
+       id="text21"
+       transform="translate(-13.998489)">100</text>
     <polyline
        points="64.45,99.53 254.81,99.53 "
-       style="stroke-width: 1.07; stroke-linecap: butt;"
-       id="polyline21" />
+       style="stroke-width:1.07;stroke-linecap:butt"
+       id="polyline21"
+       transform="matrix(1.0855526,0,0,1.0855526,-21.799667,-2.2115356)" />
     <text
-       transform="translate(16.72,62.69) rotate(-90)"
+       transform="rotate(-90,37.371918,25.318082)"
        text-anchor="middle"
-       style="font-size: 15.00px; font-weight: bold; font-family: &quot;Arial&quot;;"
-       textLength="57.51px"
+       style="font-weight:bold;font-size:15px;font-family:Arial"
+       textLength="57.509998"
        lengthAdjust="spacingAndGlyphs"
        id="text22">Relative</text>
     <text
-       transform="translate(32.92,62.69) rotate(-90)"
+       transform="rotate(-90,43.91653,18.77347)"
        text-anchor="middle"
-       style="font-size: 15.00px; font-weight: bold; font-family: &quot;Arial&quot;;"
-       textLength="79.14px"
+       style="font-weight:bold;font-size:15px;font-family:Arial"
+       textLength="79.139999"
        lengthAdjust="spacingAndGlyphs"
        id="text23">abundance</text>
     <text
@@ -861,17 +867,6 @@
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12px;font-family:Arial;-inkscape-font-specification:'Arial Bold';fill:#000000;fill-opacity:1;stroke-width:0.75"
        x="397.83682"
        y="128.04192">*</tspan></text>
-  <text
-     xml:space="preserve"
-     style="font-size:12px;white-space:pre;fill:#000000;fill-opacity:1;stroke-width:0.75"
-     x="407.08594"
-     y="138.48634"
-     id="text386-0-0-3"><tspan
-       sodipodi:role="line"
-       id="tspan385-6-5-9"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12px;font-family:Arial;-inkscape-font-specification:'Arial Bold';fill:#000000;fill-opacity:1;stroke-width:0.75"
-       x="407.08594"
-       y="138.48634">*</tspan></text>
   <g
      clip-path="url(#cpMC4wMHw3ODIuMzZ8MC4wMHw2NTEuOTc=)"
      id="g87">
