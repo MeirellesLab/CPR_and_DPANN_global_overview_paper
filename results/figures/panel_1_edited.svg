@@ -6,11 +6,11 @@
    viewBox="0 0 1700.79 566.93"
    version="1.1"
    id="svg13683"
-   sodipodi:docname="panel_1.svg"
+   sodipodi:docname="panel_1_edited.svg"
    inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
-   inkscape:export-filename="C:\Users\diogo\Git-Hub\panel_1_globaloverview.tiff"
-   inkscape:export-xdpi="96"
-   inkscape:export-ydpi="96"
+   inkscape:export-filename="panel_1_edited.png"
+   inkscape:export-xdpi="500"
+   inkscape:export-ydpi="500"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -25,15 +25,15 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="pt"
-     inkscape:zoom="0.44152859"
-     inkscape:cx="1355.5181"
-     inkscape:cy="98.521366"
+     inkscape:zoom="0.31220786"
+     inkscape:cx="853.59798"
+     inkscape:cy="318.69793"
      inkscape:window-width="1920"
      inkscape:window-height="1009"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg13683" />
+     inkscape:current-layer="g10805" />
   <defs
      id="defs1">
     <style
@@ -27254,25 +27254,27 @@
        x="1100.12"
        y="274.34"
        text-anchor="middle"
-       style="font-size: 15.00px; font-weight: bold; font-family: &quot;Arial&quot;;"
-       textLength="41.66px"
+       style="font-weight:bold;font-size:15px;font-family:Arial"
+       textLength="41.66"
        lengthAdjust="spacingAndGlyphs"
-       id="text5059">MDS1</text>
+       id="text5059"
+       transform="matrix(1.1573787,0,0,1.1573787,-168.82324,-42.657762)">MDS1</text>
     <text
-       transform="translate(936.06,136.37) rotate(-90)"
+       transform="matrix(0,-1.2110182,1.2110182,0,938.36441,132.19851)"
        text-anchor="middle"
-       style="font-size: 15.00px; font-weight: bold; font-family: &quot;Arial&quot;;"
-       textLength="41.66px"
+       style="font-weight:bold;font-size:15px;font-family:Arial"
+       textLength="41.66"
        lengthAdjust="spacingAndGlyphs"
        id="text5060">MDS2</text>
     <text
        x="1100.12"
-       y="18.87"
+       y="18.870001"
        text-anchor="middle"
-       style="font-size: 18.00px; font-weight: bold; font-family: &quot;Arial&quot;;"
-       textLength="155.01px"
+       style="font-weight:bold;font-size:18px;font-family:Arial"
+       textLength="155.00999"
        lengthAdjust="spacingAndGlyphs"
-       id="text5061">Whole community</text>
+       id="text5061"
+       transform="matrix(1.0931955,0,0,1.0931955,-95.308881,-0.55779713)">Whole community</text>
     <text
        x="924.03998"
        y="13.96"
@@ -44499,7 +44501,7 @@
      textLength="70.519997"
      lengthAdjust="spacingAndGlyphs"
      id="text5045"
-     transform="matrix(1.1049193,0,0,1.0865733,-154.83276,-18.056916)">Stress = 0.15 </text>
+     transform="matrix(1.197246,0,0,1.1773669,-258.31633,-21.877972)">Stress = 0.15 </text>
   <text
      x="1154.01"
      y="66.760002"
@@ -44508,7 +44510,7 @@
      textLength="107.83"
      lengthAdjust="spacingAndGlyphs"
      id="text5046"
-     transform="matrix(1.1049193,0,0,1.0865733,-72.161131,-12.743732)"> Life style R² = 0.078 </text>
+     transform="matrix(1.197246,0,0,1.1773669,-168.7367,-16.120821)"> Life style R² = 0.078 </text>
   <text
      x="1154.01"
      y="83.139999"
@@ -44517,7 +44519,7 @@
      textLength="88.870003"
      lengthAdjust="spacingAndGlyphs"
      id="text5047"
-     transform="matrix(1.1049193,0,0,1.0865733,-81.45114,-17.964166)"><tspan
+     transform="matrix(1.197246,0,0,1.1773669,-178.80297,-21.777472)"><tspan
        sodipodi:role="line"
        id="tspan13684"
        x="1155.6019"
@@ -44530,7 +44532,7 @@
      textLength="124.25"
      lengthAdjust="spacingAndGlyphs"
      id="text5048"
-     transform="matrix(1.1049193,0,0,1.0865733,-93.784148,116.36921)"> Ecossystem R² = 0.364 </text>
+     transform="matrix(1.197246,0,0,1.1773669,-186.16091,96.154924)"> Ecossystem R² = 0.364 </text>
   <text
      x="1154.01"
      y="115.92"
@@ -44539,7 +44541,7 @@
      textLength="82.550003"
      lengthAdjust="spacingAndGlyphs"
      id="text5049"
-     transform="matrix(1.1049193,0,0,1.0865733,-111.03701,112.45389)"> p-value &lt; 0.005</text>
+     transform="matrix(1.197246,0,0,1.1773669,-204.85542,91.912444)"> p-value &lt; 0.005</text>
   <text
      x="1474.38"
      y="50.16"
@@ -44648,25 +44650,27 @@
        x="1425.72"
        y="274.34"
        text-anchor="middle"
-       style="font-size: 15.00px; font-weight: bold; font-family: &quot;Arial&quot;;"
-       textLength="41.66px"
+       style="font-weight:bold;font-size:15px;font-family:Arial"
+       textLength="41.66"
        lengthAdjust="spacingAndGlyphs"
-       id="text7936">MDS1</text>
+       id="text7936"
+       transform="matrix(1.1888545,0,0,1.1888545,-265.52025,-52.150213)">MDS1</text>
     <text
-       transform="translate(1261.67,136.37) rotate(-90)"
+       transform="matrix(0,-1.1507273,1.1507273,0,1263.316,133.39037)"
        text-anchor="middle"
-       style="font-size: 15.00px; font-weight: bold; font-family: &quot;Arial&quot;;"
-       textLength="41.66px"
+       style="font-weight:bold;font-size:15px;font-family:Arial"
+       textLength="41.66"
        lengthAdjust="spacingAndGlyphs"
        id="text7937">MDS2</text>
     <text
        x="1425.72"
-       y="18.87"
+       y="18.870001"
        text-anchor="middle"
-       style="font-size: 18.00px; font-weight: bold; font-family: &quot;Arial&quot;;"
-       textLength="77.00px"
+       style="font-weight:bold;font-size:18px;font-family:Arial"
+       textLength="77"
        lengthAdjust="spacingAndGlyphs"
-       id="text7938">Bonafide</text>
+       id="text7938"
+       transform="matrix(1.1281827,0,0,1.1281827,-177.98661,-0.7390387)">Bonafide</text>
     <text
        x="1249.64"
        y="13.96"
@@ -61892,7 +61896,7 @@
        textLength="76"
        lengthAdjust="spacingAndGlyphs"
        id="text10801"
-       transform="matrix(1.0841684,0,0,1.0841684,-120.15188,-12.407153)">Stress = 0.113 </text>
+       transform="matrix(1.2060063,0,0,1.2060063,-242.61842,-55.017346)">Stress = 0.113 </text>
     <text
        x="1049.85"
        y="334.97"
@@ -61901,7 +61905,7 @@
        textLength="107.83"
        lengthAdjust="spacingAndGlyphs"
        id="text10802"
-       transform="matrix(1.0841684,0,0,1.0841684,-111.86461,31.79164)"> Life style R² = 0.016 </text>
+       transform="matrix(1.2060063,0,0,1.2060063,-233.39983,-5.8515307)"> Life style R² = 0.016 </text>
     <text
        x="1049.85"
        y="351.35999"
@@ -61910,7 +61914,7 @@
        textLength="88.870003"
        lengthAdjust="spacingAndGlyphs"
        id="text10803"
-       transform="matrix(1.0841684,0,0,1.0841684,-121.9935,30.410428)"> p-value &lt;  0.005 </text>
+       transform="matrix(1.2060063,0,0,1.2060063,-244.667,-7.387962)"> p-value &lt;  0.005 </text>
     <text
        x="1049.85"
        y="367.75"
@@ -61919,7 +61923,7 @@
        textLength="124.25"
        lengthAdjust="spacingAndGlyphs"
        id="text10804"
-       transform="matrix(1.0841684,0,0,1.0841684,-70.842689,101.61051)"> Ecossystem R² = 0.309 </text>
+       transform="matrix(1.2060063,0,0,1.2060063,-199.17858,57.400051)"> Ecossystem R² = 0.309 </text>
     <text
        x="1049.85"
        y="384.14001"
@@ -61928,7 +61932,7 @@
        textLength="85.709999"
        lengthAdjust="spacingAndGlyphs"
        id="text10805"
-       transform="matrix(1.0841684,0,0,1.0841684,-87.877639,97.466877)"> p-value &lt;  0.005</text>
+       transform="matrix(1.2060063,0,0,1.2060063,-218.12789,52.79076)"> p-value &lt;  0.005</text>
   </g>
   <g
      clip-path="url(#cpMC4wMHwxNzAwLjc5fDAuMDB8NTY2Ljkz)"
@@ -62051,27 +62055,29 @@
        id="text10822">2</text>
     <text
        x="1100.12"
-       y="557.80"
+       y="557.79999"
        text-anchor="middle"
-       style="font-size: 15.00px; font-weight: bold; font-family: &quot;Arial&quot;;"
-       textLength="41.66px"
+       style="font-weight:bold;font-size:15px;font-family:Arial"
+       textLength="41.66"
        lengthAdjust="spacingAndGlyphs"
-       id="text10823">MDS1</text>
+       id="text10823"
+       transform="matrix(1.1888545,0,0,1.1888545,-204.02924,-103.28065)">MDS1</text>
     <text
-       transform="translate(936.06,419.83) rotate(-90)"
+       transform="matrix(0,-1.2110182,1.2110182,0,938.36441,415.65851)"
        text-anchor="middle"
-       style="font-size: 15.00px; font-weight: bold; font-family: &quot;Arial&quot;;"
-       textLength="41.66px"
+       style="font-weight:bold;font-size:15px;font-family:Arial"
+       textLength="41.66"
        lengthAdjust="spacingAndGlyphs"
        id="text10824">MDS2</text>
     <text
        x="1100.12"
-       y="302.33"
+       y="302.32999"
        text-anchor="middle"
-       style="font-size: 18.00px; font-weight: bold; font-family: &quot;Arial&quot;;"
-       textLength="37.99px"
+       style="font-weight:bold;font-size:18px;font-family:Arial"
+       textLength="37.990002"
        lengthAdjust="spacingAndGlyphs"
-       id="text10825">CPR</text>
+       id="text10825"
+       transform="matrix(1.1297069,0,0,1.1297069,-140.33995,-37.514552)">CPR</text>
     <text
        x="924.03998"
        y="297.42999"
@@ -79065,7 +79071,7 @@
      textLength="76.849998"
      lengthAdjust="spacingAndGlyphs"
      id="text13649"
-     transform="matrix(1.1090695,0,0,1.1090695,-304.41458,-21.280593)">Stress = 0.181 </text>
+     transform="matrix(1.1839332,0,0,1.1839332,-412.50776,-44.631701)">Stress = 0.181 </text>
   <text
      x="1480.2"
      y="336.59"
@@ -79074,7 +79080,7 @@
      textLength="101.5"
      lengthAdjust="spacingAndGlyphs"
      id="text13650"
-     transform="matrix(1.1090695,0,0,1.1090695,-115.29765,-20.16897)"> Life style R² = 0.01 </text>
+     transform="matrix(1.1839332,0,0,1.1839332,-241.85437,-45.847288)"> Life style R² = 0.01 </text>
   <text
      x="1480.2"
      y="352.98001"
@@ -79083,7 +79089,7 @@
      textLength="88.870003"
      lengthAdjust="spacingAndGlyphs"
      id="text13651"
-     transform="matrix(1.1090695,0,0,1.1090695,-121.89135,-25.820714)"> p-value &lt;  0.005 </text>
+     transform="matrix(1.1839332,0,0,1.1839332,-248.89315,-51.880533)"> p-value &lt;  0.005 </text>
   <text
      x="1480.2"
      y="369.35999"
@@ -79092,7 +79098,7 @@
      textLength="124.25"
      lengthAdjust="spacingAndGlyphs"
      id="text13652"
-     transform="matrix(1.1090695,0,0,1.1090695,-109.35966,82.967604)"> Ecossystem R² = 0.221 </text>
+     transform="matrix(1.1839332,0,0,1.1839332,-204.28637,66.653389)"> Ecossystem R² = 0.221 </text>
   <text
      x="1480.2"
      y="385.75"
@@ -79101,7 +79107,7 @@
      textLength="85.709999"
      lengthAdjust="spacingAndGlyphs"
      id="text13653"
-     transform="matrix(1.1090695,0,0,1.1090695,-128.34895,77.274736)"> p-value &lt;  0.005</text>
+     transform="matrix(1.1839332,0,0,1.1839332,-224.55746,60.576244)"> p-value &lt;  0.005</text>
   <g
      clip-path="url(#cpMC4wMHwxNzAwLjc5fDAuMDB8NTY2Ljkz)"
      id="g13683">
@@ -79175,27 +79181,29 @@
        id="text13662">0</text>
     <text
        x="1425.72"
-       y="557.80"
+       y="557.79999"
        text-anchor="middle"
-       style="font-size: 15.00px; font-weight: bold; font-family: &quot;Arial&quot;;"
-       textLength="41.66px"
+       style="font-weight:bold;font-size:15px;font-family:Arial"
+       textLength="41.66"
        lengthAdjust="spacingAndGlyphs"
-       id="text13663">MDS1</text>
+       id="text13663"
+       transform="matrix(1.2203302,0,0,1.2203302,-309.77363,-120.4941)">MDS1</text>
     <text
-       transform="translate(1261.67,419.83) rotate(-90)"
+       transform="matrix(0,-1.2234963,1.2234963,0,1264.1107,411.10453)"
        text-anchor="middle"
-       style="font-size: 15.00px; font-weight: bold; font-family: &quot;Arial&quot;;"
-       textLength="41.66px"
+       style="font-weight:bold;font-size:15px;font-family:Arial"
+       textLength="41.66"
        lengthAdjust="spacingAndGlyphs"
        id="text13664">MDS2</text>
     <text
        x="1425.72"
-       y="302.33"
+       y="302.32999"
        text-anchor="middle"
-       style="font-size: 18.00px; font-weight: bold; font-family: &quot;Arial&quot;;"
-       textLength="62.65px"
+       style="font-weight:bold;font-size:18px;font-family:Arial"
+       textLength="62.650002"
        lengthAdjust="spacingAndGlyphs"
-       id="text13665">DPANN</text>
+       id="text13665"
+       transform="matrix(1.140345,0,0,1.140345,-195.87887,-40.62219)">DPANN</text>
     <text
        x="1249.28"
        y="297.42999"
@@ -79214,126 +79222,136 @@
     <text
        x="1589.35"
        y="208.09"
-       style="font-size: 15.00px; font-weight: bold; font-family: &quot;Arial&quot;;"
-       textLength="79.18px"
+       style="font-weight:bold;font-size:15px;font-family:Arial"
+       textLength="79.18"
        lengthAdjust="spacingAndGlyphs"
-       id="text13667">Ecosystem</text>
+       id="text13667"
+       transform="matrix(1.2422854,0,0,1.2422854,-392.54732,-52.620165)">Ecosystem</text>
     <circle
-       cx="1597.99"
-       cy="224.28"
-       r="4.62"
-       style="stroke-width: 0.71; stroke: none; fill: #DA70D6;"
+       cx="1592.6123"
+       cy="225.9996"
+       r="5.7393584"
+       style="fill:#da70d6;stroke:none;stroke-width:0.882023"
        id="circle13667" />
     <circle
-       cx="1597.99"
-       cy="241.56"
-       r="4.62"
-       style="stroke-width: 0.71; stroke: none; fill: #FFD700;"
+       cx="1592.6123"
+       cy="247.46629"
+       r="5.7393584"
+       style="fill:#ffd700;stroke:none;stroke-width:0.882023"
        id="circle13668" />
     <circle
-       cx="1597.99"
-       cy="258.84"
-       r="4.62"
-       style="stroke-width: 0.71; stroke: none; fill: #228B22;"
+       cx="1592.6123"
+       cy="268.93295"
+       r="5.7393584"
+       style="fill:#228b22;stroke:none;stroke-width:0.882023"
        id="circle13669" />
     <circle
-       cx="1597.99"
-       cy="276.12"
-       r="4.62"
-       style="stroke-width: 0.71; stroke: none; fill: #3A5FCD;"
+       cx="1592.6123"
+       cy="290.39966"
+       r="5.7393584"
+       style="fill:#3a5fcd;stroke:none;stroke-width:0.882023"
        id="circle13670" />
     <circle
-       cx="1597.99"
-       cy="293.40"
-       r="4.62"
-       style="stroke-width: 0.71; stroke: none; fill: #87CEFA;"
+       cx="1592.6123"
+       cy="311.86633"
+       r="5.7393584"
+       style="fill:#87cefa;stroke:none;stroke-width:0.882023"
        id="circle13671" />
     <circle
-       cx="1597.99"
-       cy="310.68"
-       r="4.62"
-       style="stroke-width: 0.71; stroke: none; fill: #000000;"
+       cx="1592.6123"
+       cy="333.33304"
+       r="5.7393584"
+       style="fill:#000000;stroke:none;stroke-width:0.882023"
        id="circle13672" />
     <circle
-       cx="1597.99"
-       cy="327.96"
-       r="4.62"
-       style="stroke-width: 0.71; stroke: none; fill: #20B2AA;"
+       cx="1592.6123"
+       cy="354.79974"
+       r="5.7393584"
+       style="fill:#20b2aa;stroke:none;stroke-width:0.882023"
        id="circle13673" />
     <circle
-       cx="1597.99"
-       cy="345.24"
-       r="4.62"
-       style="stroke-width: 0.71; stroke: none; fill: #F4A460;"
+       cx="1592.6123"
+       cy="376.26642"
+       r="5.7393584"
+       style="fill:#f4a460;stroke:none;stroke-width:0.882023"
        id="circle13674" />
     <circle
-       cx="1597.99"
-       cy="362.52"
-       r="4.62"
-       style="stroke-width: 0.71; stroke: none; fill: #8B4513;"
+       cx="1592.6123"
+       cy="397.73312"
+       r="5.7393584"
+       style="fill:#8b4513;stroke:none;stroke-width:0.882023"
        id="circle13675" />
     <text
        x="1612.61"
        y="228.58"
-       style="font-size: 12.00px; font-family: &quot;Arial&quot;;"
-       textLength="66.71px"
+       style="font-size:12px;font-family:Arial"
+       textLength="66.709999"
        lengthAdjust="spacingAndGlyphs"
-       id="text13675">Human Host</text>
+       id="text13675"
+       transform="matrix(1.2422854,0,0,1.2422854,-392.54732,-52.620165)">Human Host</text>
     <text
        x="1612.61"
        y="245.86"
-       style="font-size: 12.00px; font-family: &quot;Arial&quot;;"
-       textLength="64.70px"
+       style="font-size:12px;font-family:Arial"
+       textLength="64.699997"
        lengthAdjust="spacingAndGlyphs"
-       id="text13676">Animal Host</text>
+       id="text13676"
+       transform="matrix(1.2422854,0,0,1.2422854,-392.54732,-52.620165)">Animal Host</text>
     <text
        x="1612.61"
-       y="263.14"
-       style="font-size: 12.00px; font-family: &quot;Arial&quot;;"
-       textLength="55.37px"
+       y="263.14001"
+       style="font-size:12px;font-family:Arial"
+       textLength="55.369999"
        lengthAdjust="spacingAndGlyphs"
-       id="text13677">Plant Host</text>
+       id="text13677"
+       transform="matrix(1.2422854,0,0,1.2422854,-392.54732,-52.620165)">Plant Host</text>
     <text
        x="1612.61"
-       y="280.42"
-       style="font-size: 12.00px; font-family: &quot;Arial&quot;;"
-       textLength="69.38px"
+       y="280.42001"
+       style="font-size:12px;font-family:Arial"
+       textLength="69.379997"
        lengthAdjust="spacingAndGlyphs"
-       id="text13678">Groundwater</text>
+       id="text13678"
+       transform="matrix(1.2422854,0,0,1.2422854,-392.54732,-52.620165)">Groundwater</text>
     <text
        x="1612.61"
-       y="297.70"
-       style="font-size: 12.00px; font-family: &quot;Arial&quot;;"
-       textLength="60.03px"
+       y="297.70001"
+       style="font-size:12px;font-family:Arial"
+       textLength="60.029999"
        lengthAdjust="spacingAndGlyphs"
-       id="text13679">Freshwater</text>
+       id="text13679"
+       transform="matrix(1.2422854,0,0,1.2422854,-392.54732,-52.620165)">Freshwater</text>
     <text
        x="1612.61"
-       y="314.98"
-       style="font-size: 12.00px; font-family: &quot;Arial&quot;;"
-       textLength="62.91px"
+       y="314.98001"
+       style="font-size:12px;font-family:Arial"
+       textLength="62.91"
        lengthAdjust="spacingAndGlyphs"
-       id="text13680">Wastewater</text>
+       id="text13680"
+       transform="matrix(1.2422854,0,0,1.2422854,-392.54732,-52.620165)">Wastewater</text>
     <text
        x="1612.61"
-       y="332.26"
-       style="font-size: 12.00px; font-family: &quot;Arial&quot;;"
-       textLength="68.25px"
+       y="332.26001"
+       style="font-size:12px;font-family:Arial"
+       textLength="68.25"
        lengthAdjust="spacingAndGlyphs"
-       id="text13681">Saline Water</text>
+       id="text13681"
+       transform="matrix(1.2422854,0,0,1.2422854,-392.54732,-52.620165)">Saline Water</text>
     <text
        x="1612.61"
-       y="349.54"
-       style="font-size: 12.00px; font-family: &quot;Arial&quot;;"
-       textLength="50.70px"
+       y="349.54001"
+       style="font-size:12px;font-family:Arial"
+       textLength="50.700001"
        lengthAdjust="spacingAndGlyphs"
-       id="text13682">Sediment</text>
+       id="text13682"
+       transform="matrix(1.2422854,0,0,1.2422854,-392.54732,-52.620165)">Sediment</text>
     <text
        x="1612.61"
-       y="366.82"
-       style="font-size: 12.00px; font-family: &quot;Arial&quot;;"
-       textLength="20.01px"
+       y="366.82001"
+       style="font-size:12px;font-family:Arial"
+       textLength="20.01"
        lengthAdjust="spacingAndGlyphs"
-       id="text13683">Soil</text>
+       id="text13683"
+       transform="matrix(1.2422854,0,0,1.2422854,-392.54732,-52.620165)">Soil</text>
   </g>
 </svg>
