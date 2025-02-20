@@ -134,8 +134,9 @@ bonafide_barplot_richness_lifestyle <- draw_barplot_simple(
   title_x = "",
   legend_title = "Life Style",
   legend_position = "none",
-  breaks = c(0, 22, 44),
-  break_labels = c("    0", "22", "44"),
+  breaks = c(20, 30, 40),
+  break_labels = c("20", "30", "40"),
+  limits = c(20, 45),
   colors = life_style_colors
 )
 cpr_barplot_richness_lifestyle <- draw_barplot_simple(
@@ -148,8 +149,9 @@ cpr_barplot_richness_lifestyle <- draw_barplot_simple(
   title_x = "Life Style",
   legend_title = "Life Style",
   legend_position = "none",
-  breaks = c(0, 54, 105),
-  break_labels = c("    0", "54", "105"),
+  breaks = c(80, 95, 105),
+  break_labels = c("80", "95", "105"),
+  limits = c(80, 110),
   colors = life_style_colors
 )
 dpann_barplot_richness_lifestyle <- draw_barplot_simple(
@@ -163,7 +165,7 @@ dpann_barplot_richness_lifestyle <- draw_barplot_simple(
   legend_title = "Life Style",
   legend_position = "none",
   breaks = c(0, 3.1, 6.4),
-  break_labels = c("    0", "3.1", "6.4"),
+  break_labels = c("0", "3.1", "6.4"),
   colors = life_style_colors
 )
 
@@ -178,8 +180,9 @@ bonafide_barplot_abundance_lifestyle <- draw_barplot_simple(
   title_x = "",
   legend_title = "Life style",
   legend_position = "none",
-  breaks = c(0, 0.50, 1),
-  break_labels = c("    0", "50", "100"),
+  breaks = c(0.90, 0.95, 1),
+  break_labels = c("90", "95", "100"),
+  limits = c(0.90, 1),
   colors = life_style_colors
 )
 cpr_barplot_abundance_lifestyle <- draw_barplot_simple(
@@ -223,8 +226,9 @@ bonafide_barplot_richness_ecosystem <- draw_barplot_simple(
   title_x = "",
   legend_title = "Ecosystem",
   legend_position = "top",
-  breaks = c(0, 22, 44),
-  break_labels = c("    0", "22", "44"),
+  breaks = c(35, 40, 45),
+  break_labels = c("35", "40", "45"),
+  limits = c(35, 45),
   colors = ecosystem_colors
 )
 cpr_barplot_richness_ecosystem <- draw_barplot_simple(
@@ -237,8 +241,9 @@ cpr_barplot_richness_ecosystem <- draw_barplot_simple(
   title_x = "Ecosystem",
   legend_title = "ecosystem",
   legend_position = "none",
-  breaks = c(0, 55, 110),
-  break_labels = c("    0", "55", "110"),
+  breaks = c(80, 95, 110),
+  break_labels = c("80", "95", "110"),
+  limits = c(80, 110),
   colors = ecosystem_colors
 )
 dpann_barplot_richness_ecosystem <- draw_barplot_simple(
@@ -266,8 +271,9 @@ bonafide_barplot_abundance_ecosystem <- draw_barplot_simple(
   title_x = "",
   legend_title = "",
   legend_position = "none",
-  breaks = c(0, 0.5, 1),
-  break_labels = c("    0", "50", "100"),
+  breaks = c(0.9, 0.95, 1),
+  break_labels = c("90", "95", "100"),
+  limits = c(0.9, 1),
   colors = ecosystem_colors
 )
 cpr_barplot_abundance_ecosystem <- draw_barplot_simple(

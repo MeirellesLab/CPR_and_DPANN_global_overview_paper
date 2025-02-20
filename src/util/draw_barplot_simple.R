@@ -29,6 +29,7 @@ draw_barplot_simple <- function(
   legend_position = "none",
   breaks = NULL,
   break_labels = NULL,
+  limits = NULL,
   colors) {
   
   barplot <- ggplot(data) +
@@ -89,7 +90,8 @@ draw_barplot_simple <- function(
     )) +
     
     ## Breaks
-    scale_y_continuous(breaks = breaks, labels = break_labels)
+    scale_y_continuous(breaks = breaks, labels = break_labels) +
+    coord_cartesian(ylim = limits)
   
   return(barplot)
 }
