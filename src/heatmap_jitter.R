@@ -196,10 +196,17 @@ jitter_bonafide <-
 
 ################################### Heatmaps ###################################
 # Create summarized df for heatmap that group by taxon and comparison_1 and create a column mean_contribution that is the mean of contribution~
-simper_result_sum <- simper_result %>%
+simper_result_sum_1 <- simper_result %>%
   group_by(comparison_1, taxon, microgroup) %>%
-  summarise(mean_contribution = mean(contribution)) %>%
-  ungroup()
+  summarise(mean_contribution = mean(contribution), .groups = "drop") %>%
+  rename(category = comparison_1)
+
+simper_result_sum_2 <- simper_result %>%
+  group_by(comparison_2, taxon, microgroup) %>%
+  summarise(mean_contribution = mean(contribution), .groups = "drop") %>%
+  rename(category = comparison_2)
+
+simper_result_sum <- bind_rows(simper_result_sum_1, simper_result_sum_2)
 
 ## Candidate --------------------------
 
@@ -207,7 +214,7 @@ heatmap_contribution_candidate <- ggplot(data = subset(simper_result_sum, microg
   labs(x = "Ecosystem", y = "", title = "") +
   geom_tile(
     aes(
-      x = comparison_1, y = taxon, fill = mean_contribution
+      x = category, y = taxon, fill = mean_contribution
     ),
     colour = "gray80"
   ) +
@@ -294,7 +301,7 @@ heatmap_contribution_bonafide <- ggplot(data = subset(simper_result_sum, microgr
   labs(x = "Ecosystem", y = "", title = "") +
   geom_tile(
     aes(
-      x = comparison_1, y = taxon, fill = mean_contribution
+      x = category, y = taxon, fill = mean_contribution
     ),
     colour = "gray80"
   ) +
@@ -417,7 +424,7 @@ panel_3 <- plot_grid(
   jitter_candidate,
   holo_vs_free_candidate,
   heatmap_contribution_candidate,
-  rel_widths = c(0.7, 0.1, 0.3),
+  rel_widths = c(0.7, 0.1, 0.25),
   ncol = 3, labels = c("A", "B", "C"),
   label_fontfamily = "Arial",
   label_x = c(0, -0.12, -0.017),
@@ -445,13 +452,13 @@ supplementary <- plot_grid(
   jitter_bonafide,
   holo_vs_free_bonafide,
   heatmap_contribution_bonafide,
-  rel_widths = c(0.7, 0.1, 0.3),
+  rel_widths = c(0.7, 0.1, 0.25),
   ncol = 3, labels = c("A", "B", "C"),
-  label_size = 26,
   label_fontfamily = "Arial",
+  label_x = c(0, -0.12, -0.017),
+  label_size = 26,
   align = "h",
-  axis = "l",
-  label_x = c(0, -.12, -.017)
+  axis = "l"
 ) + theme(plot.background = element_rect(fill = "white", colour = NA))
 
 supplementary <- ggdraw() +
