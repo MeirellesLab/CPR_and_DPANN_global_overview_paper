@@ -106,7 +106,7 @@ jitter_candidate <-
     ),
     legend.key.size = unit(1.3, "points"),
     legend.direction = "horizontal",
-    legend.position = "none",
+    legend.position = "bottom",
     strip.background = element_blank(),
     strip.text.x = element_text(
       size = unit(20, "points"), face = "bold", family = "Arial"
@@ -404,7 +404,11 @@ lifestyle_legend <- lifestyle_grob_plot$grobs[[lifestyle_legend_index]]
 holo_vs_free_candidate <- holo_vs_free_candidate +
   theme(legend.position = "none")
 
-ecosystem_legend <- get_legend(jitter_candidate)
+ecosystem_grob_plot <- ggplotGrob(jitter_candidate)
+# Find which part of the grob layout contains the legend
+ecosystem_legend_index <- which(ecosystem_grob_plot$layout$name == "guide-box-bottom")
+# Extract the legend
+ecosystem_legend <- ecosystem_grob_plot$grobs[[ecosystem_legend_index]]
 jitter_candidate <- jitter_candidate +
   theme(legend.position = "none")
 
