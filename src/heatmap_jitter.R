@@ -218,7 +218,11 @@ heatmap_contribution_candidate <- ggplot(data = subset(simper_result_sum, microg
     ),
     colour = "gray80"
   ) +
-  scale_fill_gradient(low = "lightblue", high = "darkblue", na.value = "gray", name = "Contribution") +  # Change gradient here
+  scale_fill_gradient(low = "lightblue",
+                      high = "darkblue", 
+                      na.value = "gray", 
+                      name = "Contribution to total\ncommunity cummulative\ndissimilarity") +
+  guides(fill = guide_colorbar()) +  
   #scale_x_discrete(expand = c(0, 0)) +  # Decrease spacing between x-axis categories
   theme_pubr() +
   theme(
@@ -231,10 +235,10 @@ heatmap_contribution_candidate <- ggplot(data = subset(simper_result_sum, microg
     ),
     axis.line = element_blank(),
     legend.position = "right",
-    legend.text = element_text(size = unit(25, "points"), family = "Arial"),
+    legend.text = element_text(size = unit(20, "points"), family = "Arial"),
     # legend.key.size = unit(1, "points"),
     legend.title = element_text(
-      size = unit(30, "points"), face = "bold", family = "Arial"
+      size = unit(20, "points"), face = "bold", family = "Arial"
     ),
     strip.placement = "outside",
     panel.grid.major = element_blank(),
@@ -305,7 +309,11 @@ heatmap_contribution_bonafide <- ggplot(data = subset(simper_result_sum, microgr
     ),
     colour = "gray80"
   ) +
-  scale_fill_gradient(low = "lightblue", high = "darkblue", na.value = "gray", name = "Contribution") +  # Change gradient here
+  scale_fill_gradient(low = "lightblue",
+                      high = "darkblue", 
+                      na.value = "gray", 
+                      name = "Contribution to total\ncommunity cummulative dissimilarity",
+                      breaks = range(simper_result_sum$mean_contribution)) +  
   #scale_x_discrete(expand = c(0, 0)) +  # Decrease spacing between x-axis categories
   theme_pubr() +
   theme(
@@ -321,7 +329,7 @@ heatmap_contribution_bonafide <- ggplot(data = subset(simper_result_sum, microgr
     legend.text = element_text(size = unit(25, "points"), family = "Arial"),
     # legend.key.size = unit(1, "points"),
     legend.title = element_text(
-      size = unit(30, "points"), face = "bold", family = "Arial"
+      size = unit(25, "points"), face = "bold", family = "Arial"
     ),
     strip.placement = "outside",
     panel.grid.major = element_blank(),
@@ -361,7 +369,7 @@ holo_vs_free_candidate <-
     ),
     legend.key.size = unit(20, "points"),
     legend.text = element_text(size = unit(20, "points"), family = "Arial"),
-    plot.margin = margin(t = 6, r = 0, b = 2, l = 6)
+    plot.margin = margin(t = 6, r = 5, b = 2, l = 6)
   ) +
   labs(fill = "Life Style")
 
@@ -391,7 +399,7 @@ holo_vs_free_bonafide <-
     ),
     legend.key.size = unit(20, "points"),
     legend.text = element_text(size = unit(20, "points"), family = "Arial"),
-    plot.margin = margin(t = 6, r = 0, b = 2, l = 6)
+    plot.margin = margin(t = 6, r = 5, b = 2, l = 6)
   ) +
   labs(fill = "Life Style")
 
