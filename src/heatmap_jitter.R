@@ -312,7 +312,7 @@ heatmap_contribution_bonafide <- ggplot(data = subset(simper_result_sum, microgr
   scale_fill_gradient(low = "lightblue",
                       high = "darkblue", 
                       na.value = "gray", 
-                      name = "Contribution to total\ncommunity cummulative dissimilarity",
+                      name = "Mean contribution\nto total community\ncummulative dissimilarity",
                       breaks = range(simper_result_sum$mean_contribution)) +  
   #scale_x_discrete(expand = c(0, 0)) +  # Decrease spacing between x-axis categories
   theme_pubr() +
@@ -325,7 +325,7 @@ heatmap_contribution_bonafide <- ggplot(data = subset(simper_result_sum, microgr
       size = unit(25, "points"), face = "bold", family = "Arial"
     ),
     axis.line = element_blank(),
-    legend.position = "none",
+    legend.position = "right",
     legend.text = element_text(size = unit(25, "points"), family = "Arial"),
     # legend.key.size = unit(1, "points"),
     legend.title = element_text(
@@ -478,7 +478,7 @@ for (format in formats){
   ggsave(
     supplementary,
     filename = paste0(supplementary_dir, "bonafides_sup_panel.", format),
-    width = 190, height = 110,
+    width = 220, height = 110,
     units = "mm", scale = 4
   )
 }
