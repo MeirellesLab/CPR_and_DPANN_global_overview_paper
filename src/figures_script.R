@@ -1129,7 +1129,7 @@ eco_barplot_legend <- cowplot::plot_grid(
 )
 
 
-panel_2_barplot <- plot_grid(
+panel_3_barplot <- plot_grid(
  ls_barplot_legend,
  eco_barplot_legend,
  nrow = 2,
@@ -1140,24 +1140,24 @@ panel_2_barplot <- plot_grid(
 
 
 ggsave(
-  paste0(result_dir, "panel_2_barplot.svg"),
-  plot = panel_2_barplot,
+  paste0(result_dir, "panel_3_barplot.svg"),
+  plot = panel_3_barplot,
   width = 27.6,
   height = 23,
   units = "cm"
 )
 
 ggsave(
-  paste0(result_dir, "panel_2_barplot.png"),
-  plot = panel_2_barplot,
+  paste0(result_dir, "panel_3_barplot.png"),
+  plot = panel_3_barplot,
   width = 27.6,
   height = 23,
   units = "cm"
 )
 
 ggsave(
-  paste0(result_dir, "panel_2_barplot.pdf"),
-  plot = panel_2_barplot,
+  paste0(result_dir, "panel_3_barplot.pdf"),
+  plot = panel_3_barplot,
   width = 27.6,
   height = 23,
   units = "cm"
@@ -1230,8 +1230,8 @@ ggsave(
 # )
 
 # Panel 4 (GAM plots)
-panel_4 <- plot_grid(
-  bonafide_latitude_plot, cpr_latitude_plot, dpann_latitude_plot,
+panel_2 <- plot_grid(
+  cpr_latitude_plot, dpann_latitude_plot, bonafide_latitude_plot,
   ncol = 3,
   rel_widths = c(1, 1, 1),
   labels = c("A", "B", "C"),
@@ -1240,26 +1240,11 @@ panel_4 <- plot_grid(
 )
 
 ggsave(
-  paste0(result_dir, "panel_4.svg"),
-  plot = panel_4,
+  paste0(result_dir, "panel_2.svg"),
+  plot = panel_2,
   width = 18,
   height = 6,
   units = "cm"
 )
 
-ggsave(
-  paste0(result_dir, "panel_4.png"),
-  plot = panel_4,
-  width = 18,
-  height = 6,
-  units = "cm"
-)
-
-ggsave(
-  paste0(result_dir, "panel_4.pdf"),
-  plot = panel_4,
-  width = 18,
-  height = 6,
-  units = "cm"
-)
 
