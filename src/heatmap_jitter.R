@@ -195,15 +195,24 @@ jitter_bonafide <-
   coord_flip()
 
 ################################### Heatmaps ###################################
+
 # Create summarized df for heatmap that group by taxon and comparison_1 and create a column mean_contribution that is the mean of contribution~
 simper_result_sum_1 <- simper_result %>%
   group_by(comparison_1, taxon, microgroup) %>%
-  summarise(mean_contribution = mean(contribution), .groups = "drop") %>%
+  summarise(
+    mean_contribution = mean(contribution),
+    sd_contribution = sd(contribution),
+    .groups = "drop"
+  ) %>%
   rename(category = comparison_1)
 
 simper_result_sum_2 <- simper_result %>%
   group_by(comparison_2, taxon, microgroup) %>%
-  summarise(mean_contribution = mean(contribution), .groups = "drop") %>%
+  summarise(
+    mean_contribution = mean(contribution),
+    sd_contribution = sd(contribution),
+    .groups = "drop"
+  ) %>%
   rename(category = comparison_2)
 
 simper_result_sum <- bind_rows(simper_result_sum_1, simper_result_sum_2)
