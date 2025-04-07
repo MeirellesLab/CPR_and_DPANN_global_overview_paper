@@ -195,6 +195,10 @@ jitter_bonafide <-
   coord_flip()
 
 ################################### Heatmaps ###################################
+statistics_dir <- "data/statistics/"
+if (!dir.exists(statistics_dir)) {
+  dir.create(statistics_dir)
+}
 
 # Create summarized df for heatmap that group by taxon and comparison_1 and create a column mean_contribution that is the mean of contribution~
 simper_result_sum_1 <- simper_result %>%
@@ -216,6 +220,80 @@ simper_result_sum_2 <- simper_result %>%
   rename(category = comparison_2)
 
 simper_result_sum <- bind_rows(simper_result_sum_1, simper_result_sum_2)
+## General stats tables for mean contribution
+# For all taxa
+general_stats_mean_contribution <- simper_result_sum %>%
+  group_by(category) %>%
+  summarise(
+    mean = mean(mean_contribution),
+    median = median(mean_contribution),
+    min = min(mean_contribution),
+    max = max(mean_contribution),
+    sd = sd(mean_contribution),
+    .groups = "drop"
+  ) 
+
+# Save table
+write_csv(
+  general_stats_mean_contribution,
+  "data/statistics/general_stats_mean_contribution_general.csv"
+)
+
+# For CPR only
+general_stats_mean_contribution_CPR <- simper_result_sum %>%
+  filter(microgroup == "CPR") %>%
+  group_by(category) %>%
+  summarise(
+    mean = mean(mean_contribution),
+    median = median(mean_contribution),
+    min = min(mean_contribution),
+    max = max(mean_contribution),
+    sd = sd(mean_contribution),
+    .groups = "drop"
+  ) 
+
+# Save table
+write_csv(
+  general_stats_mean_contribution_CPR,
+  "data/statistics/general_stats_mean_contribution_CPR.csv"
+)
+
+# For DPANN only
+general_stats_mean_contribution_DPANN <- simper_result_sum %>%
+  filter(microgroup == "DPANN") %>%
+  group_by(category) %>%
+  summarise(
+    mean = mean(mean_contribution),
+    median = median(mean_contribution),
+    min = min(mean_contribution),
+    max = max(mean_contribution),
+    sd = sd(mean_contribution),
+    .groups = "drop"
+  )
+
+# Save table
+write_csv(
+  general_stats_mean_contribution_DPANN,
+  "data/statistics/general_stats_mean_contribution_DPANN.csv"
+)
+# For Bonafide only
+general_stats_mean_contribution_Bonafide <- simper_result_sum %>%
+  filter(microgroup == "Bonafide") %>%
+  group_by(category) %>%
+  summarise(
+    mean = mean(mean_contribution),
+    median = median(mean_contribution),
+    min = min(mean_contribution),
+    max = max(mean_contribution),
+    sd = sd(mean_contribution),
+    .groups = "drop"
+  )
+
+# Save table
+write_csv(
+  general_stats_mean_contribution_Bonafide,
+  "data/statistics/general_stats_mean_contribution_Bonafide.csv"
+)
 
 ## Candidate --------------------------
 
