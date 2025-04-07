@@ -219,7 +219,35 @@ simper_result_sum_2 <- simper_result %>%
   ) %>%
   rename(category = comparison_2)
 
-simper_result_sum <- bind_rows(simper_result_sum_1, simper_result_sum_2)
+simper_result_sum <- bind_rows(simper_result_sum_1, simper_result_sum_2) %>%
+  group_by(category, taxon, microgroup) %>%
+  summarise(
+    mean_contribution = mean(mean_contribution),
+    sd_contribution = mean(sd_contribution, na.rm = TRUE),
+    .groups = "drop"
+  ) 
+
+# How manyu times a pattern of taxon - category repeats?
+how_many <- simper_result_sum %>%
+  group_by(taxon, category) %>%
+  summarise(
+    n = n(),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(n))
+
+
+#  Check the number of unique mean_contribution values.
+unique_mean_contribution <- simper_result_sum %>%
+  group_by(taxon, category) %>%
+  summarise(
+    unique_means = n_distinct(mean_contribution),
+    .groups = "drop"
+  )
+
+    
+
+
 ## General stats tables for mean contribution
 # For all taxa
 general_stats_mean_contribution <- simper_result_sum %>%
@@ -293,6 +321,33 @@ general_stats_mean_contribution_Bonafide <- simper_result_sum %>%
 write_csv(
   general_stats_mean_contribution_Bonafide,
   "data/statistics/general_stats_mean_contribution_Bonafide.csv"
+)
+
+## See how many taxa have mean contribution above 0.01
+mean_contribution_above_0.01 <- simper_result_sum %>%
+  filter(mean_contribution > 0.01) %>%
+  group_by(category) %>%
+  summarise(
+    taxa_above_0.01 = n(),
+    .groups = "drop"
+  )
+## How many taxa do we have?
+total_taxa <- length(unique(simper_result_sum$taxon))
+
+# which taxa have mean contribution above 0.01 in all ecosystems?
+mean_contribution_above_0.01_all <- simper_result_sum %>%
+  filter(mean_contribution > 0.01) %>%
+  group_by(taxon) %>%
+  summarise(
+    taxa_above_0.01 = n(),
+    .groups = "drop"
+  ) %>%
+  filter(taxa_above_0.01 == length(unique(simper_result_sum$category)))
+
+# Save table
+write_csv(
+  mean_contribution_above_0.01_all,
+  "data/statistics/mean_contribution_above_0.01_alleco.csv"
 )
 
 ## Candidate --------------------------
