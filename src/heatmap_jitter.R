@@ -350,6 +350,22 @@ write_csv(
   "data/statistics/mean_contribution_above_0.01_alleco.csv"
 )
 
+# Check the taxa that have mean contribution above 0.01 in at leas 1 ecosystem
+mean_contribution_above_0.01_any <- simper_result_sum %>%
+  filter(mean_contribution > 0.01) %>%
+  group_by(taxon) %>%
+  summarise(
+    eco_above_0.01 = n(),
+    .groups = "drop"
+  ) %>%
+  filter(eco_above_0.01 >= 1)
+
+# Save table
+write_csv(
+  mean_contribution_above_0.01_any,
+  "data/statistics/mean_contribution_above_0.01_anyeco.csv"
+)
+
 ## Candidate --------------------------
 
 heatmap_contribution_candidate <- ggplot(data = subset(simper_result_sum, microgroup != "Bonafide")) +
