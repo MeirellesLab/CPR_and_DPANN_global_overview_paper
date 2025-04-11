@@ -366,6 +366,11 @@ write_csv(
   "data/statistics/mean_contribution_above_0.01_anyeco.csv"
 )
 
+# Check in what ecosystems the taxa Ca. Absconditabacteria and Ca. Abawacabacteria have contribution above 0.01
+mean_contribution_above_0.01_Ca <- simper_result_sum %>%
+  filter(mean_contribution > 0.01) %>%
+  filter(taxon %in% c("Ca. Absconditabacteria", "Ca. Abawacabacteria"))
+
 ## Candidate --------------------------
 
 heatmap_contribution_candidate <- ggplot(data = subset(simper_result_sum, microgroup != "Bonafide")) +
