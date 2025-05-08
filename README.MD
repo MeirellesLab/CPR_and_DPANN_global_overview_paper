@@ -13,13 +13,13 @@ All steps for the download and annotation of the samples from public databases a
 The procedure to remove bad quality samples (low quality metagenomes or bad metadata description) are described in: https://github.com/MeirellesLab/metagenomic_public_database/tree/main
 
 After these steps the database ended up with a total of 3467 samples.
-
-#### 4.1. Run summarizations and analysis
+### 3. Analysis for the paper
+#### 3.1. Run summarizations and analysis
 
  - The script "general_prospect.R" contains all the code that generates the analyses and summarization for figures 1, 2 and 3, as well as for some supplementary tables and also for SIMPER, which is used in figure 4.
  - In order, he does the following:
     - Remove all habitats with less than 5 samples;
-      - After that, we ended up with **2860** samples in the database.
+      - After that, we ended up with **2860 samples** in the database.
     - Sample counting for Table S6;
     - General NMDS analysis and General PERMANOVA analysis (lifestyle and ecosystem)
         - For figure 1
@@ -34,7 +34,7 @@ After these steps the database ended up with a total of 3467 samples.
     - PerANOVA analysis for abundance and richness by group
         - For figure 3
 
-#### 4.2 Run scripts to generate figures
+#### 3.2 Run scripts to generate figures
  - The script "figures_script.R" contains all the code to generate figure 1, 2 and 3 for the paper. It utilizes the RData generated for the analysis in the previous step and generate the figures.
 
  - The script "heatmap_jitter.R" contains all the code to generate figure 4 and figure S5. 
