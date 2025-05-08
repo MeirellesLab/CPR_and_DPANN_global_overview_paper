@@ -39,6 +39,4 @@ After these steps the database ended up with a total of 3467 samples.
 
  - The script "heatmap_jitter.R" contains all the code to generate figure 4 and figure S5. 
 
- _Observation to following work: I need to find the scripts that generate the other supplementary figures to describe here_
-
  
