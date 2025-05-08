@@ -4,18 +4,22 @@ This repository stores the data and scripts for all steps, analyses and figures 
 
 Below is a breakdown of each step taken to obtain the results of the article:
 
-### 1. Samples download
+### 1. Samples download and Annotation
 
-### 2. Kraken database assembly
+All steps for the download and annotation of the samples from public databases are in: https://github.com/MeirellesLab/CM-Ferreira-et-al.-reprodutibility
 
-### 3. Metagenome annotation
+### 2. Database curation
 
-### 4. Analysis and figures
+The procedure to remove bad quality samples (low quality metagenomes or bad metadata description) are described in: https://github.com/MeirellesLab/metagenomic_public_database/tree/main
+
+After these steps the database ended up with a total of 3467 samples.
 
 #### 4.1. Run summarizations and analysis
 
  - The script "general_prospect.R" contains all the code that generates the analyses and summarization for figures 1, 2 and 3, as well as for some supplementary tables and also for SIMPER, which is used in figure 4.
  - In order, he does the following:
+    - Remove all habitats with less than 5 samples;
+      - After that, we ended up with **2860** samples in the database.
     - Sample counting for Table S6;
     - General NMDS analysis and General PERMANOVA analysis (lifestyle and ecosystem)
         - For figure 1
