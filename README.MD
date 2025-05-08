@@ -10,7 +10,7 @@ All steps for the download and annotation of the samples from public databases a
 
 ### 2. Database curation
 
-The procedure to remove bad quality samples (low quality metagenomes or bad metadata description) are described in: https://github.com/MeirellesLab/metagenomic_public_database/tree/main
+The procedure to remove bad quality samples (low quality metagenomes or bad metadata description) are described in: https://github.com/MeirellesLab/metagenomic_public_database
 
 After these steps the database ended up with a total of 3467 samples.
 ### 3. Analysis for the paper
