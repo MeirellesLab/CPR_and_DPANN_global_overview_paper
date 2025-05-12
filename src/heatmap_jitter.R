@@ -227,6 +227,16 @@ simper_result_sum <- bind_rows(simper_result_sum_1, simper_result_sum_2) %>%
     .groups = "drop"
   ) 
 
+# Turn all NaN values into 0
+simper_result_sum[is.na(simper_result_sum)] <- 0
+
+# Save table
+
+write_csv(
+  simper_result_sum,
+  "data/statistics/simper_ecosystem_summary.csv"
+)
+
 # How manyu times a pattern of taxon - category repeats?
 how_many <- simper_result_sum %>%
   group_by(taxon, category) %>%
@@ -237,6 +247,7 @@ how_many <- simper_result_sum %>%
   arrange(desc(n))
 
 
+
 #  Check the number of unique mean_contribution values.
 unique_mean_contribution <- simper_result_sum %>%
   group_by(taxon, category) %>%
@@ -244,9 +255,6 @@ unique_mean_contribution <- simper_result_sum %>%
     unique_means = n_distinct(mean_contribution),
     .groups = "drop"
   )
-
-    
-
 
 ## General stats tables for mean contribution
 # For all taxa
