@@ -96,20 +96,20 @@ jitter_candidate <-
     title.hjust = 1,
   )) +
   theme(
-    text = element_text(size = unit(20, "points"), family = "Arial"),
+    text = element_text(size = unit(40, "points"), family = "Arial"),
     axis.text.x = element_text(
-      size = unit(20, "points"),  hjust = 1, family = "Arial"
+      size = unit(40, "points"),  hjust = 1, family = "Arial"
     ),
     legend.key = element_rect(fill = "transparent"),
     axis.text.y = element_text(
-      size = unit(20, "points"),  hjust = 1, family = "Arial"
+      size = unit(40, "points"),  hjust = 1, family = "Arial"
     ),
-    legend.key.size = unit(1.3, "points"),
+    legend.key.size = unit(1.9, "points"),
     legend.direction = "horizontal",
     legend.position = "bottom",
     strip.background = element_blank(),
     strip.text.x = element_text(
-      size = unit(20, "points"), face = "bold", family = "Arial"
+      size = unit(40, "points"), face = "bold", family = "Arial"
     ),
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
@@ -117,11 +117,11 @@ jitter_candidate <-
     axis.line = element_line(colour = "black"),
     axis.ticks = element_line(colour = "black"),
     axis.title = element_text(
-      face = "bold", family = "Arial", size = unit(32, "points")
+      face = "bold", family = "Arial", size = unit(45, "points")
     ),
-    panel.spacing = unit(0.1, "lines"),
+    panel.spacing = unit(2.5, "lines"),
     legend.title = element_text(
-      face = "bold", family = "Arial", size = unit(20, "points")
+      face = "bold", family = "Arial", size = unit(40, "points")
     ),
     plot.margin = margin(t = 6, r = 0, b = 2, l = 0)
   ) +
@@ -161,20 +161,20 @@ jitter_bonafide <-
     title.hjust = 1,
   )) +
   theme(
-    text = element_text(size = unit(20, "points"), family = "Arial"),
+    text = element_text(size = unit(40, "points"), family = "Arial"),
     axis.text.x = element_text(
-      size = unit(20, "points"),  hjust = 1, family = "Arial"
+      size = unit(40, "points"),  hjust = 1, family = "Arial"
     ),
     legend.key = element_rect(fill = "transparent"),
     axis.text.y = element_text(
-      size = unit(20, "points"),  hjust = 1, family = "Arial"
+      size = unit(40, "points"),  hjust = 1, family = "Arial"
     ),
-    legend.key.size = unit(1.3, "points"),
+    legend.key.size = unit(1.9, "points"),
     legend.direction = "horizontal",
     legend.position = "none",
     strip.background = element_blank(),
     strip.text.x = element_text(
-      size = unit(20, "points"), face = "bold", family = "Arial"
+      size = unit(40, "points"), face = "bold", family = "Arial"
     ),
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
@@ -182,11 +182,11 @@ jitter_bonafide <-
     axis.line = element_line(colour = "black"),
     axis.ticks = element_line(colour = "black"),
     axis.title = element_text(
-      face = "bold", family = "Arial", size = unit(32, "points")
+      face = "bold", family = "Arial", size = unit(45, "points")
     ),
-    panel.spacing = unit(0.1, "lines"),
+    panel.spacing = unit(10, "lines"),
     legend.title = element_text(
-      face = "bold", family = "Arial", size = unit(20, "points")
+      face = "bold", family = "Arial", size = unit(40, "points")
     ),
     plot.margin = margin(t = 6, r = 0, b = 2, l = 0)
   ) +
@@ -393,23 +393,23 @@ heatmap_contribution_candidate <- ggplot(data = subset(simper_result_sum, microg
                       high = "darkblue", 
                       na.value = "gray", 
                       name = "Contribution to total\ncommunity cummulative\ndissimilarity") +
-  guides(fill = guide_colorbar()) +  
+  guides(fill = guide_colorbar(barwidth = 2, barheight = 10)) +  
   #scale_x_discrete(expand = c(0, 0)) +  # Decrease spacing between x-axis categories
   theme_pubr() +
   theme(
     axis.text.x = element_text(
-      hjust = 1, size = unit(24, "points"), angle = 90,
+      hjust = 1, size = unit(40, "points"), angle = 90,
       vjust = 0.5, family = "Arial"
     ),
     axis.title.x = element_text(
-      size = unit(25, "points"), face = "bold", family = "Arial"
+      size = unit(40, "points"), face = "bold", family = "Arial"
     ),
     axis.line = element_blank(),
     legend.position = "right",
-    legend.text = element_text(size = unit(20, "points"), family = "Arial"),
+    legend.text = element_text(size = unit(40, "points"), family = "Arial"),
     # legend.key.size = unit(1, "points"),
     legend.title = element_text(
-      size = unit(20, "points"), face = "bold", family = "Arial"
+      size = unit(40, "points"), face = "bold", family = "Arial"
     ),
     strip.placement = "outside",
     panel.grid.major = element_blank(),
@@ -489,18 +489,18 @@ heatmap_contribution_bonafide <- ggplot(data = subset(simper_result_sum, microgr
   theme_pubr() +
   theme(
     axis.text.x = element_text(
-      hjust = 1, size = unit(24, "points"), angle = 90,
+      hjust = 1, size = unit(40, "points"), angle = 90,
       vjust = 0.5, family = "Arial"
     ),
     axis.title.x = element_text(
-      size = unit(25, "points"), face = "bold", family = "Arial"
+      size = unit(45, "points"), face = "bold", family = "Arial"
     ),
     axis.line = element_blank(),
     legend.position = "right",
-    legend.text = element_text(size = unit(25, "points"), family = "Arial"),
+    legend.text = element_text(size = unit(40, "points"), family = "Arial"),
     # legend.key.size = unit(1, "points"),
     legend.title = element_text(
-      size = unit(25, "points"), face = "bold", family = "Arial"
+      size = unit(40, "points"), face = "bold", family = "Arial"
     ),
     strip.placement = "outside",
     panel.grid.major = element_blank(),
@@ -531,15 +531,15 @@ holo_vs_free_candidate <-
   theme_void() +
   theme(
     axis.title = element_text(
-      size = unit(20, "points"), face = "bold", family = "Arial"
+      size = unit(45, "points"), face = "bold", family = "Arial"
     ),
-    axis.text.x = element_text(size = unit(25, "points"), family = "Arial"),
+    axis.text.x = element_text(size = unit(40, "points"), family = "Arial"),
     legend.position = "bottom",
     legend.title = element_text(
-      size = unit(20, "points"), face = "bold", family = "Arial"
+      size = unit(40, "points"), face = "bold", family = "Arial"
     ),
-    legend.key.size = unit(20, "points"),
-    legend.text = element_text(size = unit(20, "points"), family = "Arial"),
+    legend.key.size = unit(40, "points"),
+    legend.text = element_text(size = unit(40, "points"), family = "Arial"),
     plot.margin = margin(t = 6, r = 5, b = 2, l = 6)
   ) +
   labs(fill = "Life Style")
@@ -561,15 +561,15 @@ holo_vs_free_bonafide <-
   theme_void() +
   theme(
     axis.title = element_text(
-      size = unit(20, "points"), face = "bold", family = "Arial"
+      size = unit(45, "points"), face = "bold", family = "Arial"
     ),
-    axis.text.x = element_text(size = unit(25, "points"), family = "Arial"),
+    axis.text.x = element_text(size = unit(40, "points"), family = "Arial"),
     legend.position = "none",
     legend.title = element_text(
-      size = unit(20, "points"), face = "bold", family = "Arial"
+      size = unit(40, "points"), face = "bold", family = "Arial"
     ),
-    legend.key.size = unit(20, "points"),
-    legend.text = element_text(size = unit(20, "points"), family = "Arial"),
+    legend.key.size = unit(40, "points"),
+    legend.text = element_text(size = unit(40, "points"), family = "Arial"),
     plot.margin = margin(t = 6, r = 5, b = 2, l = 6)
   ) +
   labs(fill = "Life Style")
@@ -603,11 +603,11 @@ panel_3 <- plot_grid(
   jitter_candidate,
   holo_vs_free_candidate,
   heatmap_contribution_candidate,
-  rel_widths = c(0.7, 0.1, 0.25),
+  rel_widths = c(0.6, 0.1, 0.35),
   ncol = 3, labels = c("A", "B", "C"),
   label_fontfamily = "Arial",
   label_x = c(0, -0.12, -0.017),
-  label_size = 26,
+  label_size = 30,
   align = "h",
   axis = "l"
 ) + theme(plot.background = element_rect(fill = "white", colour = NA))
@@ -617,25 +617,25 @@ panel_3 <- ggdraw() +
   draw_plot(ecosystem_legend, x = .24, y = - .46, width = .004) +
   draw_plot(lifestyle_legend, x = .50, y = - .46, width = .004)
 
-formats <- c("pdf", "svg")
+formats <- c("png", "svg")
 for(format in formats){
   ggsave(
-    panel_3, filename = paste0(supplementary_dir, "panel_3.", format),
-    width = 190, height = 200,
-    units = "mm", scale = 4, dpi = 500
+    panel_3, filename = paste0(supplementary_dir, "panel_4.", format),
+    width = 50, height = 100,
+    units = "cm", dpi = 500
   )
-}
+  }
 
 # Panel supplementary ------------------
 supplementary <- plot_grid(
   jitter_bonafide,
   holo_vs_free_bonafide,
   heatmap_contribution_bonafide,
-  rel_widths = c(0.7, 0.1, 0.25),
+  rel_widths = c(0.6, 0.1, 0.38),
   ncol = 3, labels = c("A", "B", "C"),
   label_fontfamily = "Arial",
   label_x = c(0, -0.12, -0.017),
-  label_size = 26,
+  label_size = 30,
   align = "h",
   axis = "l"
 ) + theme(plot.background = element_rect(fill = "white", colour = NA))

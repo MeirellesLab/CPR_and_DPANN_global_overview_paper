@@ -109,6 +109,19 @@ standarized_abundances <- merged_df %>%
   dplyr::select(-c(samples, latitude, longitude, ecosystem, life_style, habitat)) %>%
   decostand(method = "hellinger") %>%
   vegdist(method = "jaccard")
+
+# Check homogenity of variances
+if (!file.exists(paste0(rdata_dir, "homogeneity_of_variances.RData"))) {
+  print("Checking homogeneity of variances...")
+  homogeneity <- betadisper(standarized_abundances, merged_df$ecosystem)
+  save(homogeneity, file = paste0(rdata_dir, "homogeneity_of_variances.RData"))
+  print(paste0("Homogeneity saved in: ", rdata_dir))
+} else {
+  print("Homogeneity of variances check found! Jumping!")
+  load(paste0(rdata_dir, "homogeneity.RData"))
+}
+
+
 if (!file.exists(paste0(rdata_dir, "nmds.RData"))) {
   print("NMDS not found! Running...")
   nmds <- metaMDS(
