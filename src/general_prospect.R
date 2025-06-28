@@ -16,6 +16,7 @@ install_and_load(libs = c(
   "tidyverse" = "2.0.0",
   "funrar" = "1.5.0"
 ))
+library(pairwiseAdonis)
 
 ################################# Load data ####################################
 print("Loading data...")
@@ -185,6 +186,51 @@ if (!file.exists(paste0(rdata_dir, "permanova_ecosystem.RData"))) {
 } else {
   print("Permanova for ecosystem found! Jumping!")
   load(paste0(rdata_dir, "permanova_ecosystem.RData"))
+}
+
+# Pairwise permanova -----------------
+print("Running pairwise Permanova...")
+
+# Running pairwise permanova for ecosystem
+if (!file.exists(paste0(rdata_dir, "pairwise_permanova.RData"))) {
+  print("Pairwise Permanova for ecosystem not found! Running...")
+  pairwise_permanova_ecosystem <- pairwise.adonis(
+    standarized_abundances_persite_matrix,
+    phyla_abundances_persite$ecosystem,
+    p.adjust.m = "fdr", perm = 4999
+  )
+  save(pairwise_permanova_ecosystem, file = paste0(rdata_dir, "pairwise_permanova_ecosystem.RData"))
+  print(paste0("Pairwise Permanova saved in: ", rdata_dir))
+  capture.output(
+    pairwise_permanova_ecosystem,
+    file = paste0(statistics_dir, "pairwise_permanova_ecosystem.txt")
+  )
+  print(paste0("Pairwise permanova results sabed in: ", statistics_dir))
+} else {
+  print("Pairwise Permanova found! Jumping!")
+  load(paste0(rdata_dir, "pairwise_permanova_ecosystem.RData"))
+}
+
+# Running pairwise permanova for lifestyle
+if (!file.exists(paste0(rdata_dir, "pairwise_permanova_lifestyle.RData"))) {
+  print("Pairwise Permanova for lifestyle not found! Running...")
+  pairwise_permanova_lifestyle <- pairwise.adonis(
+    standarized_abundances_persite_matrix,
+    phyla_abundances_persite$life_style,
+    p.adjust.m = "fdr", perm = 4999
+  )
+  save(
+    pairwise_permanova_lifestyle,
+    file = paste0(rdata_dir, "pairwise_permanova_lifestyle.RData")
+  )
+  print(paste0("Pairwise Permanova for lifestyle saved in: ", rdata_dir))
+  capture.output(
+    pairwise_permanova_lifestyle,
+    file = paste0(statistics_dir, "pairwise_permanova_lifestyle.txt")
+  )
+} else {
+  print("Pairwise Permanova for lifestyle found! Jumping!")
+  load(paste0(rdata_dir, "pairwise_permanova_lifestyle.RData"))
 }
 
 # Simper -------------------------------

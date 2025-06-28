@@ -1,0 +1,4 @@
+                     pairs Df SumsOfSqs F.Model        R2 p.value p.adjusted
+1 Free-living vs Holobiont  1  5.240778 48.1935 0.0779586   2e-04      2e-04
+  sig
+1  **
